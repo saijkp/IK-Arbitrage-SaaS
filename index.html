@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IK ENG | Sourcing Terminal</title>
+    <style>
+        :root { 
+            --navy: #0a192f; 
+            --gold: #d4af37; 
+            --green: #27ae60; 
+            --slate: #64748b;
+            --light: #f4f7f6;
+        }
+        body { font-family: 'Inter', system-ui, sans-serif; background: var(--light); margin: 0; color: #333; }
+        .hero { background: var(--navy); color: white; padding: 60px 20px; text-align: center; border-bottom: 4px solid var(--gold); }
+        .hero h1 { margin: 0; font-size: 2.5rem; letter-spacing: -1px; }
+        .hero p { opacity: 0.8; margin-top: 10px; font-size: 1.1rem; }
+        .search-container { max-width: 700px; margin: -35px auto 40px; padding: 0 20px; }
+        .search-box { 
+            background: white; border-radius: 50px; padding: 8px; 
+            display: flex; box-shadow: 0 10px 25px rgba(0,0,0,0.1); border: 1px solid #e2e8f0;
+        }
+        .search-box input { flex: 1; border: none; padding: 15px 25px; border-radius: 50px; outline: none; font-size: 16px; }
+        .search-box button { background: var(--gold); border: none; padding: 0 40px; border-radius: 50px; font-weight: bold; color: var(--navy); cursor: pointer; transition: transform 0.2s; }
+        #results { max-width: 1100px; margin: 0 auto; padding: 20px; display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 25px; }
+        .card { background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); border: 1px solid #eef2f6; display: flex; flex-direction: column; }
+        .card img { width: 100%; height: 200px; object-fit: cover; background: #eee; }
+        .card-content { padding: 20px; flex: 1; display: flex; flex-direction: column; }
+        .trust-badge { 
+            display: inline-block; background: #f1f5f9; color: #475569; padding: 4px 12px; 
+            border-radius: 20px; font-size: 11px; font-weight: 600; margin-bottom: 12px;
+            filter: blur(3px); user-select: none;
+        }
+        .card h3 { margin: 0 0 15px; font-size: 16px; line-height: 1.4; height: 45px; overflow: hidden; }
+        .price-grid { 
+            display: grid; grid-template-columns: 1fr 1fr; gap: 10px; 
+            background: #f8fafc; padding: 15px; border-radius: 10px; margin-bottom: 20px;
+        }
+        .p-label { font-size: 10px; color: var(--slate); font-weight: bold; text-transform: uppercase; }
+        .p-value { font-size: 18px; font-weight: 800; display: block; margin-top: 2px; }
+        .btn-main { 
+            background: var(--gold); color: var(--navy); text-decoration: none; 
+            text-align: center; padding: 12px; border-radius: 8px; font-weight: 800; 
+            font-size: 13px; margin-bottom: 10px; transition: background 0.2s;
+        }
+        .btn-secondary { text-align: center; color: var(--slate); font-size: 11px; text-decoration: none; }
+        .compare-section { max-width: 800px; margin: 60px auto; background: var(--navy); color: white; border-radius: 20px; padding: 40px; text-align: center; }
+        .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 30px; }
+        .c-item h4 { color: var(--gold); margin-bottom: 10px; }
+        .c-item ul { list-style: none; padding: 0; font-size: 14px; opacity: 0.8; line-height: 1.8; }
+        /* Waitlist Modal */
+        #waitlist-modal { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.7); z-index:1000; align-items:center; justify-content:center; }
+        .modal-box { background:white; padding:30px; border-radius:20px; max-width:400px; text-align:center; }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <h1>IK ARBITRAGE TERMINAL</h1>
+        <p>Expert 1688 Sourcing & Guaranteed UK Logistics</p>
+    </div>
+    <div class="search-container">
+        <div class="search-box">
+            <input type="text" id="query" placeholder="Enter Amazon product keywords...">
+            <button onclick="search()">SCAN DEALS</button>
+        </div>
+    </div>
+    <div id="results"><div style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--slate);"><p>Enter a search above to find high-margin UK arbitrage opportunities.</p></div></div>
+    <div class="compare-section">
+        <h3>Why Order Through IK ENG?</h3>
+        <div class="compare-grid">
+            <div class="c-item"><h4>DIY Sourcing (Risky)</h4><ul><li>❌ Language barriers with 1688</li><li>❌ Hidden China shipping costs</li><li>❌ Surprise UK Customs bills</li><li>❌ No quality inspection</li></ul></div>
+            <div class="c-item"><h4>IK ENG (Guaranteed)</h4><ul><li>✅ 25+ Years China Export Expertise</li><li>✅ Fixed Door-to-Door Pricing</li><li>✅ Inspection at our China Warehouse</li><li>✅ Safe UK Business Escrow</li></ul></div>
+        </div>
+    </div>
+    <script>
+        const WHATSAPP = "447767990007";
+        async function search() {
+            const query = document.getElementById('query').value;
+            const resDiv = document.getElementById('results');
+            if(!query) return;
+            resDiv.innerHTML = '<div style="grid-column:1/-1; text-align:center;"><h3>Calculating Landed Costs...</h3></div>';
+            try {
+                const response = await fetch('/.netlify/functions/search', { method: 'POST', body: JSON.stringify({ q: query }) });
+                const data = await response.json();
+                resDiv.innerHTML = data.map(item => `
+                    <div class="card">
+                        <img src="${item.img || ''}">
+                        <div class="card-content">
+                            <span class="trust-badge">Verified Factory Score</span>
+                            <h3>${item.title || 'Product'}</h3>
+                            <div class="price-grid">
+                                <div class="p-item"><span class="p-label">EST. PROFIT</span><span class="p-value" style="color:var(--green)">£${item.net_profit || '0.00'}</span></div>
+                                <div class="p-item"><span class="p-label">LANDED COST</span><span class="p-value">£${item.landed_gbp || '0.00'}</span></div>
+                            </div>
+                            <a href="https://wa.me/${WHATSAPP}?text=Hi IK ENG, I found this on your terminal and want a guaranteed UK delivery quote: ${item.link}" class="btn-main" target="_blank">SECURE THIS DEAL</a>
+                            <a href="${item.link}" target="_blank" class="btn-secondary">View Original 1688 Factory (At Your Own Risk)</a>
+                        </div>
+                    </div>`).join('');
+            } catch (e) { resDiv.innerHTML = '<p>Search ready. Connect your Netlify functions to see live data.</p>'; }
+        }
+    </script>
+</body>
+</html>

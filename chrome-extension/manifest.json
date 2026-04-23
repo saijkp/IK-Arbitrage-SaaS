@@ -1,0 +1,9 @@
+{
+  "manifest_version": 3,
+  "name": "IK Arbitrage Terminal (Free Beta)",
+  "version": "1.0.0",
+  "description": "Scan Amazon for 1688 arbitrage opportunities with UK delivery support.",
+  "permissions": ["storage", "activeTab"],
+  "action": { "default_popup": "popup.html" },
+  "content_scripts": [{ "matches": ["*://*.amazon.co.uk/*", "*://*.amazon.com/*"], "js": ["content.js"] }]
+}
