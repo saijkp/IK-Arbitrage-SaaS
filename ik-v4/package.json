@@ -1,0 +1,12 @@
+{
+  "name": "ik-arbitrage-saas",
+  "version": "1.0.0",
+  "description": "IK Arbitrage Sourcing & Logistics Terminal",
+  "main": "index.html",
+  "dependencies": {
+    "axios": "^1.6.0",
+    "openai": "^4.28.0"
+  },
+  "author": "IK ENG",
+  "license": "ISC"
+}

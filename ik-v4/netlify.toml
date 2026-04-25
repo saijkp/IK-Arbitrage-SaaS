@@ -1,0 +1,15 @@
+[build]
+  command = "npm install"
+  publish = "."
+  functions = "netlify/functions"
+
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
+
+# Ensure deal.html is served correctly
+[[redirects]]
+  from = "/deal"
+  to = "/deal.html"
+  status = 200

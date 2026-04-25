@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>China Landed Cost Calculator | IK ENG — UK Import Specialists</title>
+    <meta name="description" content="Free tool for UK construction firms, architects and wholesalers. Real China-to-UK landed cost with duties, freight and QC fees. No signup required.">
+
+    <!-- IK ENG favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%231a1a18'/%3E%3Crect x='10' y='10' width='7' height='44' rx='2' fill='%23c8922a'/%3E%3Cpolygon points='21,10 21,36 37,10 46,10 30,33 46,54 37,54 21,36 21,54' fill='white'/%3E%3C/svg%3E">
+    <link rel="shortcut icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%231a1a18'/%3E%3Crect x='10' y='10' width='7' height='44' rx='2' fill='%23c8922a'/%3E%3Cpolygon points='21,10 21,36 37,10 46,10 30,33 46,54 37,54 21,36 21,54' fill='white'/%3E%3C/svg%3E">
+
+    <!-- jsPDF — programmatic PDF (fixes blank output from html2pdf DOM capture) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <!-- Firebase -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+        const app = initializeApp({
+            apiKey: "AIzaSyBIxfuNn866jeP2GLRKTLPW2SdNoL7iH64",
+            authDomain: "ik-terminal-viral.firebaseapp.com",
+            projectId: "ik-terminal-viral",
+            storageBucket: "ik-terminal-viral.firebasestorage.app",
+            messagingSenderId: "1097651789102",
+            appId: "1:1097651789102:web:027d4c86f5d1f8cf1e6ebf"
+        });
+        const db = getFirestore(app);
+        // Expose log function globally for main script
+        window.logLead = async (data) => {
+            try { await addDoc(collection(db, "leads"), { ...data, ts: serverTimestamp() }); }
+            catch(e) { console.warn("Lead log failed:", e.message); }
+        };
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=DM+Mono&display=swap" rel="stylesheet">
+
+    <style>
+        :root{--ink:#1a1a18;--paper:#f5f3ee;--cream:#ede9e0;--gold:#c8922a;--gold-light:#f0d090;--teal:#1d6b5e;--teal-light:#d0e8e4;--red:#c0392b;--muted:#7a7870;--border:#d8d4cc;--white:#ffffff;}
+        *{box-sizing:border-box;margin:0;padding:0;}
+        body{font-family:'DM Sans',sans-serif;background:var(--paper);color:var(--ink);min-height:100vh;}
+        .site-header{background:var(--ink);padding:16px 5%;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+        .brand{font-family:'DM Serif Display',serif;font-size:1.4rem;color:var(--white);}
+        .brand em{color:var(--gold);font-style:normal;}
+        .header-tag{font-size:.72rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:#666;}
+        .wa-link{display:flex;align-items:center;gap:8px;background:#25d366;color:white;padding:8px 16px;border-radius:30px;text-decoration:none;font-size:.8rem;font-weight:600;transition:opacity .2s;}
+        .wa-link:hover{opacity:.9;}
+        .hero{background:var(--ink);padding:60px 5% 80px;text-align:center;position:relative;overflow:hidden;}
+        .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 100%,rgba(200,146,42,.12) 0%,transparent 70%);pointer-events:none;}
+        .hero-eyebrow{display:inline-block;font-size:.72rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);background:rgba(200,146,42,.1);border:1px solid rgba(200,146,42,.25);padding:5px 16px;border-radius:20px;margin-bottom:22px;}
+        .hero h1{font-family:'DM Serif Display',serif;font-size:clamp(2rem,5vw,3.2rem);color:var(--white);line-height:1.15;margin-bottom:16px;max-width:680px;margin-left:auto;margin-right:auto;}
+        .hero h1 span{color:var(--gold);}
+        .hero-sub{font-size:clamp(.9rem,2vw,1.05rem);color:#a09e98;max-width:520px;margin:0 auto 32px;line-height:1.7;font-weight:300;}
+        .trust-row{display:flex;justify-content:center;gap:24px;flex-wrap:wrap;}
+        .trust-item{display:flex;align-items:center;gap:7px;font-size:.78rem;color:#888;}
+        .trust-dot{width:6px;height:6px;border-radius:50%;background:var(--gold);flex-shrink:0;}
+        .calc-wrap{max-width:1080px;margin:-40px auto 0;padding:0 4% 80px;position:relative;z-index:10;}
+        .calc-card{background:var(--white);border-radius:20px;box-shadow:0 4px 40px rgba(0,0,0,.12);overflow:hidden;}
+        .calc-section{padding:32px 36px;border-bottom:1px solid var(--border);}
+        .calc-section:last-child{border-bottom:none;}
+        .section-label{font-size:.7rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+        .section-num{width:20px;height:20px;border-radius:50%;background:var(--gold);color:white;font-size:.68rem;font-weight:700;display:inline-flex;align-items:center;justify-content:center;}
+        .input-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;}
+        @media(max-width:640px){.input-grid{grid-template-columns:1fr;}}
+        label{font-size:.75rem;font-weight:500;color:var(--muted);display:block;margin-bottom:6px;}
+        input[type="text"],input[type="number"],select{width:100%;padding:12px 16px;border:1.5px solid var(--border);border-radius:10px;font-family:'DM Sans',sans-serif;font-size:.9rem;color:var(--ink);background:var(--white);outline:none;transition:border-color .2s,box-shadow .2s;appearance:none;}
+        input:focus,select:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(29,107,94,.1);}
+        .product-search-wrap{position:relative;}
+        .product-search-wrap input{padding-right:120px;font-size:.95rem;}
+        .search-btn{position:absolute;right:6px;top:6px;background:var(--ink);color:white;border:none;padding:8px 18px;border-radius:8px;font-size:.8rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .2s;}
+        .search-btn:hover{background:var(--teal);}
+        .freight-toggle{display:flex;border:1.5px solid var(--border);border-radius:10px;overflow:hidden;}
+        .ftog{flex:1;padding:12px 10px;background:var(--white);border:none;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:.82rem;font-weight:500;color:var(--muted);transition:all .2s;text-align:center;}
+        .ftog:first-child{border-right:1px solid var(--border);}
+        .ftog.active{background:var(--ink);color:white;}
+        .ftog-sub{font-size:.68rem;opacity:.75;display:block;margin-top:2px;}
+        .run-btn{width:100%;padding:16px;background:var(--teal);color:white;border:none;border-radius:12px;font-family:'DM Serif Display',serif;font-size:1.1rem;cursor:pointer;transition:all .2s;margin-top:20px;letter-spacing:.02em;}
+        .run-btn:hover{background:#15554a;transform:translateY(-1px);box-shadow:0 6px 20px rgba(29,107,94,.3);}
+        #results-section{display:none;}
+        .results-grid{display:grid;grid-template-columns:1fr 380px;}
+        @media(max-width:840px){.results-grid{grid-template-columns:1fr;}}
+        .ai-panel{padding:28px 32px;border-right:1px solid var(--border);}
+        @media(max-width:840px){.ai-panel{border-right:none;border-bottom:1px solid var(--border);}}
+        .ai-loading{display:flex;align-items:center;gap:12px;color:var(--muted);font-size:.88rem;}
+        .spinner{width:18px;height:18px;border:2px solid var(--border);border-top-color:var(--teal);border-radius:50%;animation:spin .7s linear infinite;flex-shrink:0;}
+        @keyframes spin{to{transform:rotate(360deg);}}
+        .ai-result-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+        .ai-stat{background:var(--paper);border-radius:10px;padding:12px 14px;}
+        .ai-stat-label{font-size:.68rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:4px;}
+        .ai-stat-val{font-size:.95rem;font-weight:600;color:var(--ink);font-family:'DM Mono',monospace;}
+        .ai-stat.hi{background:var(--teal-light);}
+        .ai-stat.hi .ai-stat-val{color:var(--teal);}
+        .cost-sidebar{background:var(--ink);color:white;padding:28px;}
+        .sidebar-title{font-family:'DM Serif Display',serif;font-size:1.1rem;color:var(--gold-light);margin-bottom:20px;}
+        .cost-row{display:flex;justify-content:space-between;align-items:baseline;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.06);font-size:.83rem;}
+        .cost-label{color:rgba(255,255,255,.6);}
+        .cost-val{font-weight:500;font-family:'DM Mono',monospace;}
+        .cost-section-head{font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.3);padding:14px 0 4px;}
+        .cost-total-row{display:flex;justify-content:space-between;align-items:center;margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,.15);}
+        .cost-total-label{font-size:.85rem;font-weight:600;}
+        .cost-total-val{font-family:'DM Serif Display',serif;font-size:2rem;color:var(--gold);}
+        .vat-box{margin-top:12px;padding:12px;background:rgba(200,146,42,.1);border:1px solid rgba(200,146,42,.2);border-radius:10px;font-size:.75rem;line-height:1.6;color:rgba(255,255,255,.7);}
+        .per-unit-badge{display:inline-block;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:6px;padding:3px 10px;font-size:.72rem;font-family:'DM Mono',monospace;margin-bottom:16px;color:rgba(255,255,255,.7);}
+        .pi-btn{width:100%;padding:14px;background:var(--gold);color:var(--ink);border:none;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:.88rem;font-weight:700;cursor:pointer;transition:all .2s;margin-top:16px;}
+        .pi-btn:hover{background:#e0a830;transform:translateY(-1px);}
+        .share-btn{width:100%;padding:11px 14px;background:rgba(255,255,255,.07);color:rgba(255,255,255,.85);border:1px solid rgba(255,255,255,.15);border-radius:10px;font-family:'DM Sans',sans-serif;font-size:.82rem;font-weight:600;cursor:pointer;transition:all .2s;margin-top:8px;display:flex;align-items:center;justify-content:center;gap:7px;}
+        .share-btn:hover{background:rgba(255,255,255,.13);border-color:rgba(255,255,255,.3);}
+        .share-btn.copied{background:rgba(29,107,94,.4);border-color:rgba(29,200,150,.4);color:#7de8c8;}
+        .wa-strip{display:flex;align-items:center;gap:12px;padding:14px 16px;background:#f0faf5;border:1.5px solid #b2dfcc;border-radius:12px;text-decoration:none;color:var(--ink);transition:border-color .2s;margin-top:14px;}
+        .wa-strip:hover{border-color:#25d366;}
+        .wa-icon-c{width:36px;height:36px;background:#25d366;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+        .wa-icon-c svg{width:18px;height:18px;fill:white;}
+        .wa-strip-title{font-size:.8rem;font-weight:700;}
+        .wa-strip-sub{font-size:.72rem;color:var(--muted);line-height:1.4;}
+        .how-section{max-width:1080px;margin:0 auto;padding:60px 4%;}
+        .how-title{font-family:'DM Serif Display',serif;font-size:1.8rem;text-align:center;margin-bottom:8px;}
+        .how-sub{text-align:center;color:var(--muted);font-size:.9rem;margin-bottom:40px;}
+        .steps-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;}
+        .step-card{background:var(--white);border-radius:16px;padding:24px;border:1px solid var(--border);}
+        .step-num{font-family:'DM Serif Display',serif;font-size:2.5rem;color:var(--cream);line-height:1;margin-bottom:10px;}
+        .step-card h3{font-size:.95rem;font-weight:600;margin-bottom:8px;}
+        .step-card p{font-size:.82rem;color:var(--muted);line-height:1.6;}
+        .about-strip{background:var(--ink);padding:50px 5%;display:flex;align-items:center;justify-content:space-between;gap:30px;flex-wrap:wrap;}
+        .about-left h2{font-family:'DM Serif Display',serif;color:white;font-size:1.6rem;margin-bottom:10px;}
+        .about-left p{color:#888;font-size:.88rem;max-width:480px;line-height:1.7;}
+        .about-stats{display:flex;gap:32px;flex-wrap:wrap;}
+        .stat-box{text-align:center;}
+        .stat-num{font-family:'DM Serif Display',serif;font-size:2rem;color:var(--gold);line-height:1;}
+        .stat-lbl{font-size:.72rem;color:#666;margin-top:4px;}
+        footer{background:#111;padding:24px 5%;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+        footer p{font-size:.75rem;color:#555;}
+        footer a{color:#555;text-decoration:none;}
+        footer a:hover{color:var(--gold);}
+        #toast{display:none;position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--red);color:white;padding:12px 24px;border-radius:30px;font-size:.85rem;font-weight:600;z-index:9999;box-shadow:0 4px 20px rgba(0,0,0,.2);}
+        @keyframes fadeUp{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+        .fade-up{animation:fadeUp .4s ease forwards;}
+        /* Currency & Incoterms */
+        .price-row{display:grid;grid-template-columns:110px 90px 1fr;gap:8px;align-items:end;}
+        @media(max-width:640px){.price-row{grid-template-columns:1fr 1fr;} .price-row .inco-col{grid-column:1/-1;}}
+        .currency-select,.inco-select{padding:12px 10px;border:1.5px solid var(--border);border-radius:10px;font-family:'DM Sans',sans-serif;font-size:.85rem;color:var(--ink);background:var(--white);outline:none;cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%237a7870'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;padding-right:26px;}
+        .rate-badge{font-size:.7rem;color:var(--muted);margin-top:4px;height:14px;}
+        .rate-badge.loading{color:var(--gold);}
+        /* Report Panel */
+        .report-section{padding:28px 32px;border-top:1px solid var(--border);background:var(--paper);}
+        .report-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px;}
+        @media(max-width:640px){.report-grid{grid-template-columns:1fr;}}
+        .report-card{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:14px 16px;}
+        .report-card-label{font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
+        .report-card-val{font-size:.88rem;color:var(--ink);line-height:1.55;}
+        .report-card-val strong{color:var(--ink);}
+        .risk-low{border-left:3px solid #1d9e75;} .risk-low .risk-badge{background:#d0e8e4;color:#1d6b5e;}
+        .risk-med{border-left:3px solid #e09a00;} .risk-med .risk-badge{background:#fff3cd;color:#7a5c00;}
+        .risk-high{border-left:3px solid #c0392b;} .risk-high .risk-badge{background:#fde8e8;color:#8b1a1a;}
+        .risk-badge{display:inline-block;font-size:.7rem;font-weight:700;letter-spacing:.08em;padding:2px 10px;border-radius:20px;margin-bottom:6px;}
+        .rec-proceed{border-left:3px solid #1d9e75;} .rec-optimise{border-left:3px solid #e09a00;} .rec-avoid{border-left:3px solid #c0392b;}
+        .rec-badge{display:inline-block;font-size:.7rem;font-weight:700;padding:2px 10px;border-radius:20px;margin-bottom:6px;}
+        .rec-proceed .rec-badge{background:#d0e8e4;color:#1d6b5e;}
+        .rec-optimise .rec-badge{background:#fff3cd;color:#7a5c00;}
+        .rec-avoid .rec-badge{background:#fde8e8;color:#8b1a1a;}
+        .carbon-bar-wrap{height:6px;background:var(--border);border-radius:3px;margin-top:8px;overflow:hidden;}
+        .carbon-bar{height:100%;border-radius:3px;transition:width .6s ease;}
+        .carbon-sea-bar{background:#1d9e75;} .carbon-air-bar{background:#c8922a;}
+        .report-full-width{grid-column:1/-1;}
+    </style>
+</head>
+<body>
+
+<header class="site-header">
+    <div class="brand">IK <em>ENG</em></div>
+    <div class="header-tag">UK · China Import Specialists · Guangzhou Office</div>
+    <a href="https://wa.me/447767990007?text=Hi%20IK%20ENG%2C%20I%20want%20to%20discuss%20sourcing%20from%20China" target="_blank" class="wa-link" rel="noopener">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        WhatsApp
+    </a>
+</header>
+
+<section class="hero">
+    <div class="hero-eyebrow">Free · No signup · Instant results</div>
+    <h1>Know your exact <span>China landed cost</span><br>before you commit</h1>
+    <p class="hero-sub">Built for UK construction firms, architects and material wholesalers. Real duties, real freight, real QC costs — not guesswork.</p>
+    <div class="trust-row">
+        <div class="trust-item"><span class="trust-dot"></span> 25 years in China</div>
+        <div class="trust-item"><span class="trust-dot"></span> Real UK tariff rates via AI</div>
+        <div class="trust-item"><span class="trust-dot"></span> LED &amp; acoustic panel specialists</div>
+        <div class="trust-item"><span class="trust-dot"></span> Free proforma invoice PDF</div>
+    </div>
+</section>
+
+<div class="calc-wrap">
+    <div class="calc-card">
+
+        <div class="calc-section">
+            <div class="section-label"><span class="section-num">1</span> Describe your product &amp; order</div>
+            <div class="product-search-wrap" style="margin-bottom:16px;">
+                <input type="text" id="productInput" placeholder="e.g. LED panel 60x60cm, acoustic foam tiles, aluminium extrusion…">
+                <button class="search-btn" onclick="runCalc()">Calculate ↓</button>
+            </div>
+            <div class="input-grid">
+                <div>
+                    <label>Supplier price, currency &amp; terms</label>
+                    <div class="price-row">
+                        <select class="currency-select" id="currencySelect" onchange="onCurrencyChange()">
+                            <option value="GBP">£ GBP</option>
+                            <option value="USD">$ USD</option>
+                            <option value="CNY" selected>¥ RMB</option>
+                        </select>
+                        <input type="number" id="unitPrice" placeholder="e.g. 38" min="0" step="0.01" style="min-width:0;">
+                        <select class="inco-select" id="incoterms" onchange="tryRecalc()" style="width:100%;">
+                            <option value="EXW">EXW</option>
+                            <option value="FOB" selected>FOB</option>
+                            <option value="CIF">CIF</option>
+                        </select>
+                    </div>
+                    <div class="rate-badge" id="rateBadge">Loading live rates…</div>
+                </div>
+                <div>
+                    <label>Order quantity (units)</label>
+                    <input type="number" id="orderQty" placeholder="e.g. 500" min="1" value="100">
+                </div>
+                <div>
+                    <label>Company name (for invoice)</label>
+                    <input type="text" id="companyName" placeholder="Your company name">
+                </div>
+            </div>
+            <div style="margin-top:16px;">
+                <label style="margin-bottom:8px;">Shipping method</label>
+                <div class="freight-toggle">
+                    <button class="ftog" id="togAir" onclick="setFreight('air')">✈ Air freight<span class="ftog-sub">5–10 days · First orders</span></button>
+                    <button class="ftog active" id="togSea" onclick="setFreight('sea')">🚢 Sea freight<span class="ftog-sub">4–8 weeks · Best margin</span></button>
+                </div>
+            </div>
+            <button class="run-btn" onclick="runCalc()">Get Full Landed Cost Breakdown →</button>
+        </div>
+
+        <div id="results-section">
+            <div class="results-grid">
+                <div class="ai-panel">
+                    <div class="section-label"><span class="section-num">2</span> UK Customs Intelligence</div>
+                    <div id="aiOut"><div class="ai-loading"><div class="spinner"></div> Analysing UK tariff schedule…</div></div>
+                </div>
+                <div class="cost-sidebar">
+                    <div class="sidebar-title">Landed Cost Breakdown</div>
+                    <div class="per-unit-badge" id="perUnitBadge">— per unit</div>
+                    <div class="cost-section-head">Product</div>
+                    <div class="cost-row"><span class="cost-label">Unit price (ex-factory)</span><span class="cost-val" id="rUnit">—</span></div>
+                    <div class="cost-row"><span class="cost-label">Subtotal (<span id="rQtyLbl">100</span> units)</span><span class="cost-val" id="rSub">—</span></div>
+                    <div class="cost-section-head">Logistics</div>
+                    <div class="cost-row"><span class="cost-label" id="rFreightLbl">Sea freight</span><span class="cost-val" id="rFreight">—</span></div>
+                    <div id="incoExtraLines" style="display:none;"></div>
+                    <div class="cost-row"><span class="cost-label" id="rPortLbl">Port &amp; documentation</span><span class="cost-val" id="rPort">—</span></div>
+                    <div class="cost-section-head">Sourcing &amp; QC</div>
+                    <div class="cost-row"><span class="cost-label">QC inspection &amp; factory liaison</span><span class="cost-val" id="rSvc">—</span></div>
+                    <div class="cost-section-head">UK Import Duty</div>
+                    <div class="cost-row"><span class="cost-label">Duty (<span id="rDutyPct">5</span>%)</span><span class="cost-val" id="rDuty">—</span></div>
+                    <div class="cost-total-row"><span class="cost-total-label">Net total (ex-VAT)</span><span class="cost-total-val" id="rTotal">—</span></div>
+                    <div class="vat-box">
+                        <div style="display:flex;justify-content:space-between;margin-bottom:4px;"><span>+ VAT (20%)</span><strong id="rVat">—</strong></div>
+                        <div style="display:flex;justify-content:space-between;"><span>Grand total (inc. VAT)</span><strong id="rGrand" style="color:var(--gold-light);">—</strong></div>
+                        <div style="margin-top:8px;font-size:.7rem;opacity:.8;">VAT fully reclaimable for VAT-registered businesses</div>
+                    </div>
+                    <button class="pi-btn" id="piBtn" onclick="generatePI()" disabled style="opacity:.45;cursor:not-allowed;">⏳ Awaiting customs verification…</button>
+                    <button class="share-btn" id="shareBtn" onclick="copyShareLink()" disabled style="opacity:.35;cursor:not-allowed;">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+                        Share this quote
+                    </button>
+                    <a class="wa-strip" id="waStrip" href="https://wa.me/447767990007?text=Hi%20IK%20ENG%2C%20I%27ve%20used%20your%20cost%20calculator%20and%20want%20to%20discuss%20a%20sourcing%20project" target="_blank" rel="noopener">
+                        <div class="wa-icon-c"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></div>
+                        <div><div class="wa-strip-title">Ready to proceed? Talk to us</div><div class="wa-strip-sub">QC · Consolidation · UK delivery<br>+44 7767 990 007</div></div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- ADVANCED REPORT PANEL -->
+            <div class="report-section" id="reportSection" style="display:none;">
+                <div class="section-label"><span class="section-num">3</span> IK Strategic Import Report</div>
+                <div class="report-grid" id="reportGrid">
+                    <!-- populated by renderReport() -->
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<section class="how-section">
+    <h2 class="how-title">What this calculator actually includes</h2>
+    <p class="how-sub">Most China quotes show factory price only. We show what you'll actually pay when it clears UK customs.</p>
+    <div class="steps-grid">
+        <div class="step-card"><div class="step-num">01</div><h3>Real HS code &amp; UK duty</h3><p>AI looks up the correct commodity code and applies the actual UK Global Tariff rate — not a generic guess.</p></div>
+        <div class="step-card"><div class="step-num">02</div><h3>2025 freight benchmarks</h3><p>Air and sea estimates calibrated to current China–UK rates including LCL surcharges and UK port levies.</p></div>
+        <div class="step-card"><div class="step-num">03</div><h3>QC fee shown upfront</h3><p>Our 5% sourcing and QC fee is always included. No surprise charges. Minimum £199 for small orders.</p></div>
+        <div class="step-card"><div class="step-num">04</div><h3>VAT shown separately</h3><p>Import VAT is 100% reclaimable for UK VAT-registered businesses — your effective cost is the net total.</p></div>
+    </div>
+</section>
+
+<section class="about-strip">
+    <div class="about-left">
+        <h2>25+ years on the ground in China</h2>
+        <p>Guangzhou/Ningbo trading offices. UK base in Manchester. We handle sourcing, factory vetting, QC inspection, consolidation and delivery. LED lighting and acoustic panels are our speciality — but we work across all building material categories.</p>
+    </div>
+    <div class="about-stats">
+        <div class="stat-box"><div class="stat-num">25</div><div class="stat-lbl">Years in Guangzhou</div></div>
+        <div class="stat-box"><div class="stat-num">£0</div><div class="stat-lbl">Cost to use this tool</div></div>
+        <div class="stat-box"><div class="stat-num">UK</div><div class="stat-lbl">Escrow Service</div></div>
+    </div>
+</section>
+
+<footer>
+    <p>© 2025 IK Eng Ltd · 125 Great Clowes Street, Manchester M7 1AL · <a href="mailto:sai@ikeng.co.uk">sai@ikeng.co.uk</a></p>
+    <p><a href="privacy.html">Privacy Policy</a> &nbsp;·&nbsp; <a href="https://wa.me/447767990007" target="_blank">WhatsApp +44 7767 990 007</a></p>
+</footer>
+
+<div id="toast"></div>
+
+<script>
+// ── EXCHANGE RATES ────────────────────────────────────────────────────────────
+let FX = { GBP: 1, USD: 1.27, CNY: 9.18 }; // fallback defaults
+let fxLoaded = false;
+
+async function loadRates() {
+    try {
+        const r = await fetch('https://api.exchangerate-api.com/v4/latest/GBP');
+        if (!r.ok) throw new Error();
+        const d = await r.json();
+        FX.USD = d.rates.USD; FX.CNY = d.rates.CNY;
+        fxLoaded = true;
+    } catch(e) {
+        // silently use fallback rates
+        fxLoaded = true;
+    }
+    onCurrencyChange();
+}
+
+function onCurrencyChange() {
+    const cur = document.getElementById('currencySelect').value;
+    const badge = document.getElementById('rateBadge');
+    if (cur === 'GBP') {
+        badge.textContent = '1 GBP = 1.00 GBP';
+    } else if (cur === 'USD') {
+        badge.textContent = `1 USD = £${(1 / FX.USD).toFixed(4)} GBP  (live rate)`;
+    } else {
+        badge.textContent = `1 RMB = £${(1 / FX.CNY).toFixed(4)} GBP  (live rate)`;
+    }
+    if (aiReady && aiData) recalc();
+}
+
+function getPriceGBP() {
+    const raw = parseFloat(document.getElementById('unitPrice').value) || 0;
+    const cur = document.getElementById('currencySelect').value;
+    return Math.max(raw / FX[cur], 0);  // pure currency conversion only — incoterms costs handled separately in recalc()
+}
+
+// Returns itemised incoterms surcharges per unit in GBP
+// EXW: buyer responsible for everything from factory gate — inland haulage, export customs, origin THC
+// FOB: supplier delivers to port cleared for export — baseline, no surcharge
+// CIF: supplier pays main freight + insurance to UK port — deduct main freight leg
+function getIncoSurcharges(qty, frPU, isAir) {
+    const inco = document.getElementById('incoterms').value;
+    if (inco === 'FOB') return { lines: [], totalPerUnit: 0, freightDeduct: 0 };
+
+    if (inco === 'EXW') {
+        // Scale inland haulage: larger orders spread the truck cost further
+        const inlandPU  = qty <= 100 ? 1.80 : qty <= 500 ? 1.20 : 0.80;  // factory→port truck per unit
+        const exportCus = qty <= 100 ? 0.60 : qty <= 500 ? 0.35 : 0.20;  // China export customs declaration per unit
+        const originTHC = qty <= 100 ? 0.50 : qty <= 500 ? 0.30 : 0.18;  // origin terminal handling charge per unit
+        return {
+            lines: [
+                { label: 'EXW: China inland haulage (factory→port)', perUnit: inlandPU },
+                { label: 'EXW: China export customs & declaration',   perUnit: exportCus },
+                { label: 'EXW: Origin terminal handling (THC)',       perUnit: originTHC },
+            ],
+            totalPerUnit: inlandPU + exportCus + originTHC,
+            freightDeduct: 0
+        };
+    }
+
+    if (inco === 'CIF') {
+        // CIF: supplier has paid the main freight leg — remove it entirely
+        // We keep port charges (UK side) and origin THC is supplier's problem
+        return {
+            lines: [{ label: 'CIF: Main freight included in supplier price', perUnit: -frPU }],
+            totalPerUnit: -frPU,
+            freightDeduct: frPU   // used to zero out the freight row display
+        };
+    }
+
+    return { lines: [], totalPerUnit: 0, freightDeduct: 0 };
+}
+
+// ── STATE ────────────────────────────────────────────────────────────────────
+let aiData = null;
+let freight = 'sea';
+let aiReady = false;
+let aiConfidence = null;
+
+const MIN_SVC = 199, SVC_RATE = .05, PORT_AIR = 45, PORT_SEA = 145, VAT_RATE = .2;
+const gbp = v => '£' + Number(v).toFixed(2);
+
+// ── HELPERS ───────────────────────────────────────────────────────────────────
+function showToast(msg, col) {
+    const t = document.getElementById('toast');
+    t.textContent = msg; t.style.background = col || '#c0392b';
+    t.style.display = 'block'; setTimeout(() => t.style.display = 'none', 5000);
+}
+
+function setFreight(m) {
+    freight = m;
+    document.getElementById('togAir').classList.toggle('active', m === 'air');
+    document.getElementById('togSea').classList.toggle('active', m === 'sea');
+    if (aiReady && aiData) recalc();
+}
+
+function tryRecalc() { if (aiReady && aiData) recalc(); }
+
+// ── CALCULATE ─────────────────────────────────────────────────────────────────
+function recalc() {
+    if (!aiData) return;
+    const price = getPriceGBP();
+    const qty   = parseInt(document.getElementById('orderQty').value) || 0;
+    if (!price || !qty) return;
+
+    const isAir    = freight === 'air';
+    const frPU     = isAir ? aiData.freight_air_per_unit_gbp : aiData.freight_sea_per_unit_gbp;
+    const inco     = document.getElementById('incoterms').value;
+    const port     = isAir ? PORT_AIR : PORT_SEA;
+
+    // Itemised incoterms surcharges
+    const incoS    = getIncoSurcharges(qty, frPU, isAir);
+    const effectiveFrPU = Math.max(frPU + incoS.freightDeduct, 0); // CIF zeroes out main freight
+    const frTot    = effectiveFrPU * qty;
+    const incoExtra= incoS.totalPerUnit > 0 ? incoS.totalPerUnit * qty : 0; // EXW surcharges total
+
+    const prodTot  = price * qty;
+    const svc      = Math.max(prodTot * SVC_RATE, MIN_SVC);
+    const dutyBase = prodTot + frTot + incoExtra + port + svc;
+    const dutyTot  = dutyBase * (aiData.duty_rate / 100);
+    const net      = dutyBase + dutyTot;
+    const vat      = net * VAT_RATE;
+    const grand    = net + vat;
+
+    document.getElementById('perUnitBadge').textContent = gbp(net / qty) + ' per unit · ' + qty + ' units';
+    document.getElementById('rQtyLbl').textContent  = qty;
+    document.getElementById('rUnit').textContent    = gbp(price) + ' (GBP equiv.)';
+    document.getElementById('rSub').textContent     = gbp(prodTot);
+    document.getElementById('rFreightLbl').textContent = inco === 'CIF'
+        ? 'Main freight (included in CIF price)'
+        : isAir ? '✈ Air freight (China→UK)' : '🚢 Sea freight LCL (China→UK)';
+    document.getElementById('rFreight').textContent = inco === 'CIF' ? '£0.00' : gbp(frTot);
+    document.getElementById('rPort').textContent    = gbp(port);
+    document.getElementById('rSvc').textContent     = gbp(svc);
+    document.getElementById('rDuty').textContent    = gbp(dutyTot);
+    document.getElementById('rDutyPct').textContent = aiData.duty_rate.toFixed(1);
+    document.getElementById('rTotal').textContent   = gbp(net);
+    document.getElementById('rVat').textContent     = gbp(vat);
+    document.getElementById('rGrand').textContent   = gbp(grand);
+    document.getElementById('rPortLbl').textContent = isAir ? 'Air port & documentation' : 'UK port levies (LCL 2025)';
+
+    // Render EXW surcharge lines dynamically
+    const incoLinesEl = document.getElementById('incoExtraLines');
+    if (inco === 'EXW' && incoS.lines.length > 0) {
+        incoLinesEl.innerHTML = incoS.lines.map(l =>
+            `<div class="cost-row">
+                <span class="cost-label" style="font-size:.75rem;">${l.label}</span>
+                <span class="cost-val">${gbp(l.perUnit * qty)}</span>
+            </div>`
+        ).join('');
+        incoLinesEl.style.display = 'block';
+    } else {
+        incoLinesEl.innerHTML = '';
+        incoLinesEl.style.display = 'none';
+    }
+
+    // Unlock PI & share
+    const piBtn = document.getElementById('piBtn');
+    piBtn.disabled = false; piBtn.style.opacity = '1'; piBtn.style.cursor = 'pointer';
+    piBtn.textContent = '⬇ Download Proforma Invoice (PDF)';
+    if (aiConfidence === 'estimated') { piBtn.style.opacity = '.85'; piBtn.textContent = '⬇ Download PI (estimated duty rate)'; }
+    unlockShareBtn();
+    updateWaLink(net, qty);
+
+    // Silent Firebase lead log (only once per calculation)
+    if (window.logLead && !window._logged) {
+        window._logged = true;
+        const cur = document.getElementById('currencySelect').value;
+        const rawPrice = parseFloat(document.getElementById('unitPrice').value) || 0;
+        window.logLead({
+            product: document.getElementById('productInput').value.trim(),
+            qty, currency: cur, raw_price: rawPrice, price_gbp: price,
+            incoterms: document.getElementById('incoterms').value,
+            freight_mode: freight,
+            hs_code: aiData.hs_code, duty_rate: aiData.duty_rate,
+            net_landed: parseFloat(net.toFixed(2)),
+            company: document.getElementById('companyName').value.trim() || null
+        });
+    }
+}
+
+// ── RENDER AI RESULTS ─────────────────────────────────────────────────────────
+function renderAI(d) {
+    const confMap = {
+        confirmed: { label: 'Duty rate confirmed', col: '#1d6b5e', bg: '#d0e8e4' },
+        likely:    { label: 'Duty rate likely',     col: '#7a5c00', bg: '#fff8ed' },
+        estimated: { label: 'Duty rate estimated',  col: '#8b1a1a', bg: '#fde8e8' }
+    };
+    const conf = confMap[d.duty_confidence] || confMap.estimated;
+    aiConfidence = d.duty_confidence;
+
+    let riskHtml = '';
+    if (d.risk_flags && d.risk_flags.length > 0) {
+        riskHtml = `<div style="margin-top:12px;padding:12px 14px;background:#fde8e8;border:1px solid #f5b7b7;border-radius:10px;">
+            <div style="font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#8b1a1a;margin-bottom:6px;">Import Risk Flags</div>
+            ${d.risk_flags.map(r => `<div style="font-size:.8rem;color:#8b1a1a;padding:3px 0;border-bottom:1px solid rgba(245,183,183,.4);">• ${r}</div>`).join('')}
+        </div>`;
+    }
+
+    document.getElementById('aiOut').innerHTML = `
+        <div style="display:inline-flex;align-items:center;gap:7px;padding:5px 12px;border-radius:20px;background:${conf.bg};margin-bottom:14px;">
+            <span style="width:7px;height:7px;border-radius:50%;background:${conf.col};flex-shrink:0;"></span>
+            <span style="font-size:.72rem;font-weight:600;color:${conf.col};">${conf.label}</span>
+        </div>
+        <div class="ai-result-grid">
+            <div class="ai-stat hi"><div class="ai-stat-label">UK HS Code</div><div class="ai-stat-val">${d.hs_code || '—'}</div></div>
+            <div class="ai-stat hi"><div class="ai-stat-label">UK Import Duty</div><div class="ai-stat-val">${d.duty_rate !== null ? d.duty_rate.toFixed(1) + '%' : '—'}</div></div>
+            <div class="ai-stat"><div class="ai-stat-label">UKCA / CE</div><div class="ai-stat-val" style="font-size:.82rem;">${d.ukca_required ? '⚠️ UKCA Required' : 'Not required'}</div></div>
+            <div class="ai-stat"><div class="ai-stat-label">Import VAT</div><div class="ai-stat-val">20%${d.vat_reclaimable ? ' (reclaimable)' : ''}</div></div>
+            <div class="ai-stat"><div class="ai-stat-label">Air Lead Time</div><div class="ai-stat-val">${d.lead_time_air_days || '—'} days</div></div>
+            <div class="ai-stat"><div class="ai-stat-label">Sea Lead Time</div><div class="ai-stat-val">${d.lead_time_sea_weeks || '—'} weeks</div></div>
+        </div>
+        ${d.compliance_notes ? `<div style="margin-top:12px;padding:12px 14px;background:#fff8ed;border:1px solid #f0d090;border-radius:10px;font-size:.8rem;color:#7a5c00;line-height:1.6;"><strong>Compliance:</strong> ${d.compliance_notes}</div>` : ''}
+        ${d.duty_note ? `<div style="margin-top:8px;padding:10px 14px;background:var(--paper);border-radius:10px;font-size:.77rem;color:var(--muted);line-height:1.5;"><strong style="color:var(--ink);">Duty note:</strong> ${d.duty_note}</div>` : ''}
+        ${riskHtml}
+        ${d.freight_basis ? `<div style="margin-top:10px;font-size:.75rem;color:var(--muted);background:var(--paper);padding:8px 12px;border-radius:8px;">📦 Freight basis: ${d.freight_basis}</div>` : ''}
+    `;
+}
+
+// ── RENDER STRATEGIC REPORT ───────────────────────────────────────────────────
+function renderReport(d) {
+    const riskClass = { LOW: 'risk-low', MEDIUM: 'risk-med', HIGH: 'risk-high' }[d.risk_rating] || 'risk-med';
+    const recClass  = { Proceed: 'rec-proceed', Optimise: 'rec-optimise', Avoid: 'rec-avoid' }[d.recommendation] || 'rec-proceed';
+    const recIcon   = { Proceed: '✅', Optimise: '⚠️', Avoid: '🚫' }[d.recommendation] || '✅';
+
+    const retailLow  = d.uk_retail_price_low  ? gbp(d.uk_retail_price_low)  : '—';
+    const retailHigh = d.uk_retail_price_high ? gbp(d.uk_retail_price_high) : '—';
+    const whlLow     = d.uk_wholesale_price_low  ? gbp(d.uk_wholesale_price_low)  : '—';
+    const whlHigh    = d.uk_wholesale_price_high ? gbp(d.uk_wholesale_price_high) : '—';
+    const marginLow  = d.margin_pct_low  || '—';
+    const marginHigh = d.margin_pct_high || '—';
+
+    // Carbon comparison — scale bars relative to air (always higher)
+    const maxCarbon   = Math.max(d.carbon_air_kg_co2e_per_unit || 1, 0.01);
+    const seaPct      = Math.round(((d.carbon_sea_kg_co2e_per_unit || 0) / maxCarbon) * 100);
+    const airPct      = 100;
+
+    document.getElementById('reportGrid').innerHTML = `
+        <div class="report-card ${riskClass}">
+            <div class="report-card-label">Strategic Risk Rating</div>
+            <div class="risk-badge">${d.risk_rating || 'MEDIUM'}</div>
+            <div class="report-card-val">${d.veteran_advisory || '—'}</div>
+        </div>
+
+        <div class="report-card ${recClass}">
+            <div class="report-card-label">IK Recommendation</div>
+            <div class="rec-badge">${recIcon} ${d.recommendation || 'Proceed'}</div>
+            <div class="report-card-val">${d.recommendation_reason || '—'}</div>
+        </div>
+
+        <div class="report-card">
+            <div class="report-card-label">UK Market Intelligence</div>
+            <div class="report-card-val">
+                <strong>Retail:</strong> ${retailLow} – ${retailHigh}<br>
+                <strong>Wholesale:</strong> ${whlLow} – ${whlHigh}<br>
+                <strong>Margin potential:</strong> ${marginLow}% – ${marginHigh}%
+            </div>
+        </div>
+
+        <div class="report-card">
+            <div class="report-card-label">Logistics Strategy</div>
+            <div class="report-card-val">
+                <strong>Consolidation:</strong> ${d.consolidation_tip || '—'}<br>
+                <strong>Sea:</strong> ${d.lead_time_sea_weeks || '—'} weeks &nbsp;|&nbsp;
+                <strong>Air:</strong> ${d.lead_time_air_days || '—'} days
+            </div>
+        </div>
+
+        <div class="report-card report-full-width">
+            <div class="report-card-label">🌱 Carbon Footprint Estimate (per unit)</div>
+            <div class="report-card-val" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:4px;">
+                <div>
+                    <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
+                        <span>🚢 Sea freight</span>
+                        <strong style="color:#1d6b5e;">${(d.carbon_sea_kg_co2e_per_unit || 0).toFixed(3)} kg CO₂e</strong>
+                    </div>
+                    <div class="carbon-bar-wrap"><div class="carbon-bar carbon-sea-bar" style="width:${seaPct}%"></div></div>
+                </div>
+                <div>
+                    <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
+                        <span>✈ Air freight</span>
+                        <strong style="color:#c8922a;">${(d.carbon_air_kg_co2e_per_unit || 0).toFixed(3)} kg CO₂e</strong>
+                    </div>
+                    <div class="carbon-bar-wrap"><div class="carbon-bar carbon-air-bar" style="width:${airPct}%"></div></div>
+                </div>
+            </div>
+            <div style="font-size:.7rem;color:var(--muted);margin-top:8px;">Sea freight emits ~${Math.round((1 - (d.carbon_sea_kg_co2e_per_unit / d.carbon_air_kg_co2e_per_unit)) * 100) || 95}% less CO₂ per unit than air. Relevant for BREEAM-rated projects and sustainability reporting.</div>
+        </div>
+    `;
+
+    document.getElementById('reportSection').style.display = 'block';
+}
+
+// ── RUN CALCULATION ───────────────────────────────────────────────────────────
+async function runCalc() {
+    const prod  = document.getElementById('productInput').value.trim();
+    if (!prod) { showToast('Please describe your product first.'); return; }
+
+    window._logged = false; // reset log flag for new calculation
+
+    const rs = document.getElementById('results-section');
+    rs.style.display = 'block';
+    rs.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+    aiReady = false; aiData = null; aiConfidence = null;
+    document.getElementById('reportSection').style.display = 'none';
+    document.getElementById('aiOut').innerHTML = '<div class="ai-loading"><div class="spinner"></div> Classifying "' + prod + '" under UK Global Tariff 2025…</div>';
+    ['rUnit','rSub','rFreight','rPort','rSvc','rDuty','rTotal','rVat','rGrand'].forEach(id => document.getElementById(id).textContent = '—');
+    document.getElementById('perUnitBadge').textContent = 'calculating…';
+    const piBtn = document.getElementById('piBtn');
+    piBtn.disabled = true; piBtn.style.opacity = '.45'; piBtn.textContent = '⏳ Awaiting customs verification…';
+    const shareBtn = document.getElementById('shareBtn');
+    shareBtn.disabled = true; shareBtn.style.opacity = '.35'; shareBtn.style.cursor = 'not-allowed';
+
+    const qty      = parseInt(document.getElementById('orderQty').value) || 100;
+    const rawPrice = parseFloat(document.getElementById('unitPrice').value) || 0;
+    const priceGbp = rawPrice ? getPriceGBP() : null;
+
+    try {
+        const r = await fetch('/.netlify/functions/customs-ai', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ product: prod, qty, unit_price_gbp: priceGbp })
+        });
+        if (!r.ok) throw new Error('Server error ' + r.status);
+        const d = await r.json();
+        if (d.error) throw new Error(d.error);
+        if (d.duty_rate === null || d.duty_rate === undefined) {
+            document.getElementById('aiOut').innerHTML = `<div style="color:#8b1a1a;padding:14px;background:#fde8e8;border-radius:10px;font-size:.88rem;line-height:1.6;">Could not confirm duty rate for this product. Contact us on WhatsApp and we'll classify it manually.</div>`;
+            return;
+        }
+        aiData = d; aiReady = true;
+        renderAI(d);
+        renderReport(d);
+        const price = getPriceGBP();
+        if (price && qty) recalc();
+        else if (!rawPrice) { document.getElementById('unitPrice').focus(); showToast('Customs data confirmed — enter your supplier price to complete the calculation.', '#1d6b5e'); }
+    } catch(e) {
+        console.error(e);
+        document.getElementById('aiOut').innerHTML = `<div style="padding:14px;background:#fde8e8;border-radius:10px;font-size:.85rem;color:#8b1a1a;line-height:1.6;">Customs lookup failed. ${e.message || ''}<br><span style="font-size:.78rem;margin-top:4px;display:block;">WhatsApp us and we'll classify this manually.</span></div>`;
+        piBtn.textContent = 'Customs lookup failed — contact us';
+    }
+}
+
+// ── PDF GENERATION ────────────────────────────────────────────────────────────
+function generatePI() {
+    if (!aiData) { showToast('Customs verification must complete first.'); return; }
+    const rawPrice = parseFloat(document.getElementById('unitPrice').value) || 0;
+    if (!rawPrice) { showToast('Enter a supplier price first.'); return; }
+    const price  = getPriceGBP();
+    const qty    = parseInt(document.getElementById('orderQty').value) || 0;
+    if (!qty) { showToast('Enter order quantity first.'); return; }
+    if (!window.jspdf)  { showToast('PDF library still loading — please try again.'); return; }
+
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ unit: 'mm', format: 'a4' });
+    const W = 210, H = 297, M = 14, CW = W - M * 2;
+
+    const today  = new Date();
+    const expiry = new Date(); expiry.setDate(today.getDate() + 7);
+    const fmt    = d => d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+    const ref    = 'IK-' + Math.floor(10000 + Math.random() * 90000);
+
+    const isAir    = freight === 'air';
+    const inco     = document.getElementById('incoterms').value;
+    const frPU     = isAir ? aiData.freight_air_per_unit_gbp : aiData.freight_sea_per_unit_gbp;
+    const port     = isAir ? PORT_AIR : PORT_SEA;
+    const incoS    = getIncoSurcharges(qty, frPU, isAir);
+    const effectiveFrPU = Math.max(frPU + incoS.freightDeduct, 0);
+    const frTot    = effectiveFrPU * qty;
+    const incoExtra= incoS.totalPerUnit > 0 ? incoS.totalPerUnit * qty : 0;
+    const prodTot  = price * qty;
+    const svc      = Math.max(prodTot * SVC_RATE, MIN_SVC);
+    const dutyBase = prodTot + frTot + incoExtra + port + svc;
+    const dutyTot  = dutyBase * (aiData.duty_rate / 100);
+    const net      = dutyBase + dutyTot;
+    const vatAmt   = net * VAT_RATE;
+    const grand    = net + vatAmt;
+
+    const company  = document.getElementById('companyName').value.trim() || 'Valued Client';
+    const product  = document.getElementById('productInput').value.trim() || 'Imported Goods';
+    const cur      = document.getElementById('currencySelect').value;
+    const curSymbol= { GBP: '£', USD: '$', CNY: '¥' }[cur];
+    const frLabel  = inco === 'CIF' ? 'Freight (Included in CIF — supplier paid)' : (isAir ? 'Air Freight (China to UK)' : 'Sea Freight LCL (China to UK)');
+    const portLbl  = isAir ? 'Port Handling & Documentation' : 'UK Port Levies (2025 rates)';
+    const incoNote = `Incoterms: ${inco}  |  ${isAir ? 'Air Freight' : 'Sea Freight LCL'}  |  Original quote: ${curSymbol}${rawPrice.toFixed(2)} ${cur}`;
+
+    const INK=[26,26,24],GOLD=[200,146,42],TEAL=[29,107,94],PAPER=[245,243,238],GREY=[100,116,139],WHITE=[255,255,255],GREEN=[27,107,54],GREEN_BG=[240,250,244],AMBER_BG=[255,248,237],DARK=[17,17,17],TEAL_BG=[234,244,241],ROW_ALT=[249,249,249],ROW_HEAD=[228,234,238],DIVIDER=[230,230,230];
+    const fill=(x,y,w,h,c)=>{doc.setFillColor(...c);doc.rect(x,y,w,h,'F');};
+    const hline=(x1,y1,x2,c,lw=.2)=>{doc.setDrawColor(...c);doc.setLineWidth(lw);doc.line(x1,y1,x2,y1);};
+    const sf=(sty,sz,c)=>{doc.setFont('helvetica',sty);doc.setFontSize(sz);if(c)doc.setTextColor(...c);};
+    const tx=(t,x,y,opt={})=>doc.text(String(t),x,y,opt);
+    let y=0;
+
+    fill(0,0,W,40,INK);fill(M,9,5,22,GOLD);
+    sf('bold',20,WHITE);tx('IK ENG LTD',M+9,21);
+    sf('normal',7,[150,148,142]);
+    tx('125 Great Clowes Street, Manchester M7 1AL',M+9,27.5);
+    tx('sai@i-z.me  |  +44 (0) 7767 990 007  |  www.ikeng.co.uk',M+9,33.5);
+    sf('bold',12,GOLD);tx('PROFORMA INVOICE',W-M,18,{align:'right'});
+    sf('normal',7.5,[150,148,142]);
+    tx('Date:   '+fmt(today),W-M,25,{align:'right'});
+    tx('Ref:    '+ref,W-M,30.5,{align:'right'});
+    tx('Valid:  '+fmt(expiry),W-M,36,{align:'right'});
+    y=48;
+
+    fill(M,y,CW,18,PAPER);
+    sf('bold',6.5,GREY);tx('BILL TO',M+5,y+6.5);
+    sf('bold',11,INK);tx(company,M+5,y+14);
+    y+=23;
+
+    fill(M,y,CW,7,INK);sf('bold',6.5,GOLD);tx('PRODUCT',M+4,y+5);y+=7;
+    fill(M,y,CW,20,[250,250,250]);
+    sf('bold',9,INK);doc.text(product,M+5,y+7,{maxWidth:CW-10});
+    sf('normal',7,GREY);tx(incoNote,M+5,y+13.5);
+    sf('italic',6.5,[180,50,50]);tx('QC Pending — Pre-shipment inspection conducted post-payment',M+5,y+18);
+    y+=24;
+
+    const C={desc:M+4,qty:M+98,unit:M+116,total:W-M-4};
+    fill(M,y,CW,8,ROW_HEAD);
+    hline(M,y,W-M,[180,190,200],.3);hline(M,y+8,W-M,[180,190,200],.3);
+    sf('bold',6.5,GREY);
+    tx('Description',C.desc,y+5.5);tx('Qty',C.qty,y+5.5);tx('Unit Price',C.unit,y+5.5);tx('Total (GBP)',C.total,y+5.5,{align:'right'});
+    y+=8;
+
+    const secHead=(label)=>{fill(M,y,CW,7,TEAL_BG);sf('bold',6.5,TEAL);tx(label,M+4,y+5);y+=7;};
+    let rs=false;
+    const dataRow=(desc,q,unit,total)=>{const rh=9;fill(M,y,CW,rh,rs?ROW_ALT:WHITE);rs=!rs;hline(M,y+rh,W-M,DIVIDER,.15);sf('normal',7.5,INK);doc.text(desc,C.desc,y+6.5,{maxWidth:90});sf('normal',7.5,GREY);if(q)tx(q,C.qty,y+6.5);if(unit)tx(unit,C.unit,y+6.5);sf('normal',7.5,INK);tx(total,C.total,y+6.5,{align:'right'});y+=rh;};
+
+    secHead('PRODUCT ('+inco+' — converted to GBP)');
+    dataRow(product,String(qty),gbp(price),gbp(prodTot));
+    secHead('LOGISTICS');
+    if(inco==='CIF'){
+        dataRow('Main Freight — included in CIF supplier price','','',gbp(0));
+    } else {
+        dataRow(frLabel,String(qty),gbp(effectiveFrPU),gbp(frTot));
+    }
+    // EXW surcharge lines
+    if(inco==='EXW'){
+        for(const l of incoS.lines){
+            dataRow(l.label,String(qty),gbp(l.perUnit),gbp(l.perUnit*qty));
+        }
+    }
+    dataRow(portLbl,'1','Fixed',gbp(port));
+    secHead('SOURCING & QC');
+    dataRow('QC Inspection & Factory Liaison  (5% of product value, min £199)','','',gbp(svc));
+    secHead('UK IMPORT DUTY');
+    dataRow('UK Import Duty  |  HS: '+(aiData.hs_code||'—')+'  |  Rate: '+aiData.duty_rate.toFixed(1)+'%','','',gbp(dutyTot));
+
+    y+=2;hline(M,y,W-M,INK,.5);y+=1;
+    fill(M,y,CW,10,PAPER);sf('bold',9,INK);tx('NET TOTAL  (excluding VAT)',W-M-64,y+7);tx(gbp(net),C.total,y+7,{align:'right'});y+=10;
+    fill(M,y,CW,8,WHITE);sf('normal',8,GREY);tx('UK Import VAT @ 20%',W-M-64,y+5.5);tx(gbp(vatAmt),C.total,y+5.5,{align:'right'});y+=8;
+    fill(M,y,CW,7,GREEN_BG);sf('normal',6.5,GREEN);tx('VAT is 100% reclaimable for UK VAT-registered businesses',M+4,y+4.8);y+=9;
+    fill(M,y,CW,14,INK);sf('bold',11,GOLD);tx('GRAND TOTAL  (including VAT)',M+5,y+9.5);sf('bold',13,GOLD);tx(gbp(grand),C.total,y+9.5,{align:'right'});y+=18;
+
+    const hw=(CW-6)/2;
+    fill(M,y,hw,15,TEAL_BG);sf('bold',6.5,TEAL);tx('Net landed cost per unit (ex-VAT)',M+5,y+6.5);sf('bold',10,TEAL);tx(gbp(net/qty),M+5,y+12.5);
+    fill(M+hw+6,y,hw,15,AMBER_BG);sf('bold',6.5,[122,92,0]);tx('Total units ordered',M+hw+11,y+6.5);sf('bold',10,[122,92,0]);tx(String(qty)+' units',M+hw+11,y+12.5);
+    y+=21;
+
+    fill(M,y,CW,6,INK);sf('bold',6.5,GOLD);tx('PAYMENT DETAILS',M+4,y+4.5);y+=6;
+    const bankRows=[['Bank','Tide Bank','IBAN','GB19 CLRB 0406 0530 4934 03'],['Beneficiary','IK Eng LTD','SWIFT / BIC','CLRBGB22'],['Sort Code','04-06-05','Payment Ref',ref],['Account No.','30493403','','']];
+    const ROW_H=5.5; const bankH=bankRows.length*ROW_H+5;
+    fill(M,y,CW,bankH,PAPER);
+    let by=y+5;
+    const bc1=M+5,bc2=M+37,bc3=M+CW/2+5,bc4=M+CW/2+40;
+    for(const[l1,v1,l2,v2]of bankRows){sf('bold',6,GREY);if(l1)tx(l1+':',bc1,by);sf('normal',7.5,INK);if(v1)tx(v1,bc2,by);sf('bold',6,GREY);if(l2)tx(l2+':',bc3,by);sf('normal',7.5,INK);if(v2)tx(v2,bc4,by);by+=ROW_H;}
+
+    const fH=13;
+    const footerY=H-fH; fill(0,footerY,W,fH,DARK);
+    sf('normal',6,[85,85,85]);
+    tx('IK ENG LTD  |  Registered in England & Wales  |  sai@i-z.me  |  +44 7767 990 007',M,footerY+5);
+    tx('Payment confirms order. All prices in GBP. Original quote: '+curSymbol+rawPrice.toFixed(2)+' '+cur+' '+inco+'. Valid 7 days.',M,footerY+10);
+    sf('bold',6.5,[110,110,110]);tx('Ref: '+ref,W-M,footerY+10,{align:'right'});
+
+    const safe=company.replace(/[^a-zA-Z0-9]/g,'_').slice(0,28);
+    doc.save('IK_Proforma_'+safe+'_'+ref+'.pdf');
+}
+
+// ── SHARE LINK ────────────────────────────────────────────────────────────────
+function buildShareHash() {
+    return '#q=' + btoa(unescape(encodeURIComponent(JSON.stringify({
+        p:  document.getElementById('productInput').value.trim(),
+        px: parseFloat(document.getElementById('unitPrice').value) || 0,
+        cur:document.getElementById('currencySelect').value,
+        q:  parseInt(document.getElementById('orderQty').value)    || 0,
+        c:  document.getElementById('companyName').value.trim(),
+        f:  freight,
+        inc:document.getElementById('incoterms').value
+    }))));
+}
+
+function copyShareLink() {
+    const url = window.location.href.split('#')[0] + buildShareHash();
+    const btn = document.getElementById('shareBtn');
+    const restoreLabel = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg> Share this quote';
+    navigator.clipboard.writeText(url).then(() => {
+        btn.classList.add('copied');
+        btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Link copied!';
+        setTimeout(() => { btn.classList.remove('copied'); btn.innerHTML = restoreLabel; }, 3000);
+    }).catch(() => {
+        const el = document.createElement('textarea');
+        el.value = url; document.body.appendChild(el); el.select();
+        document.execCommand('copy'); document.body.removeChild(el);
+        showToast('Link copied to clipboard', '#1d6b5e');
+    });
+}
+
+function unlockShareBtn() {
+    const btn = document.getElementById('shareBtn');
+    btn.disabled = false; btn.style.opacity = '1'; btn.style.cursor = 'pointer';
+}
+
+// ── DYNAMIC WHATSAPP ──────────────────────────────────────────────────────────
+function updateWaLink(net, qty) {
+    const prod  = document.getElementById('productInput').value.trim();
+    const price = getPriceGBP();
+    const cur   = document.getElementById('currencySelect').value;
+    const raw   = parseFloat(document.getElementById('unitPrice').value) || 0;
+    const inco  = document.getElementById('incoterms').value;
+    const mode  = freight === 'air' ? 'air freight' : 'sea freight';
+    const curSym= { GBP: '£', USD: '$', CNY: '¥' }[cur];
+    const msg = `Hi IK ENG — I've used your landed cost calculator and want to proceed.\n\nProduct: ${prod}\nQty: ${qty} units @ ${curSym}${raw.toFixed(2)} ${cur} ${inco} (£${price.toFixed(2)} GBP equiv.)\nDuty: ${aiData.duty_rate.toFixed(1)}% (HS ${aiData.hs_code})\nShipping: ${mode}\nEst. net landed total: £${net.toFixed(2)}\n\nPlease confirm and let's proceed.`;
+    document.getElementById('waStrip').href = 'https://wa.me/447767990007?text=' + encodeURIComponent(msg);
+}
+
+// ── RESTORE FROM HASH ─────────────────────────────────────────────────────────
+(function restoreFromHash() {
+    try {
+        const m = window.location.hash.match(/^#q=(.+)/);
+        if (!m) return;
+        const s = JSON.parse(decodeURIComponent(escape(atob(m[1]))));
+        if (s.p)   document.getElementById('productInput').value  = s.p;
+        if (s.px)  document.getElementById('unitPrice').value     = s.px;
+        if (s.cur) document.getElementById('currencySelect').value= s.cur;
+        if (s.q)   document.getElementById('orderQty').value      = s.q;
+        if (s.c)   document.getElementById('companyName').value   = s.c;
+        if (s.inc) document.getElementById('incoterms').value     = s.inc;
+        if (s.f)   { freight = s.f; setFreight(s.f); }
+        if (s.p)   setTimeout(runCalc, 400);
+    } catch(e) { /* malformed hash */ }
+})();
+
+// ── EVENT LISTENERS ───────────────────────────────────────────────────────────
+document.getElementById('productInput').addEventListener('keypress', e => { if(e.key==='Enter') runCalc(); });
+document.getElementById('unitPrice').addEventListener('input', tryRecalc);
+document.getElementById('orderQty').addEventListener('input', tryRecalc);
+
+// Load exchange rates on startup
+loadRates();
+</script>
+</body>
+</html>
