@@ -1,868 +1,1390 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>China Landed Cost Calculator | IK ENG — UK Import Specialists</title>
-    <meta name="description" content="Free tool for UK construction firms, architects and wholesalers. Real China-to-UK landed cost with duties, freight and QC fees. No signup required.">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IK ENG — China Sourcing for UK Developers, Architects & Builders | FF&E, LED, Acoustic, Building Materials</title>
+<meta name="description" content="20+ years sourcing from China. Furniture, LED lighting, acoustic panels, kitchen cabinets, building materials — everything a building needs. One brief, one contact, delivered to UK site. Manchester based.">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%231a1a18'/%3E%3Crect x='10' y='10' width='7' height='44' rx='2' fill='%23c8922a'/%3E%3Cpolygon points='21,10 21,36 37,10 46,10 30,33 46,54 37,54 21,36 21,54' fill='white'/%3E%3C/svg%3E">
 
-    <!-- IK ENG favicon -->
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%231a1a18'/%3E%3Crect x='10' y='10' width='7' height='44' rx='2' fill='%23c8922a'/%3E%3Cpolygon points='21,10 21,36 37,10 46,10 30,33 46,54 37,54 21,36 21,54' fill='white'/%3E%3C/svg%3E">
-    <link rel="shortcut icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%231a1a18'/%3E%3Crect x='10' y='10' width='7' height='44' rx='2' fill='%23c8922a'/%3E%3Cpolygon points='21,10 21,36 37,10 46,10 30,33 46,54 37,54 21,36 21,54' fill='white'/%3E%3C/svg%3E">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const app = initializeApp({ apiKey:"AIzaSyBIxfuNn866jeP2GLRKTLPW2SdNoL7iH64", authDomain:"ik-terminal-viral.firebaseapp.com", projectId:"ik-terminal-viral", storageBucket:"ik-terminal-viral.firebasestorage.app", messagingSenderId:"1097651789102", appId:"1:1097651789102:web:027d4c86f5d1f8cf1e6ebf" });
+  const db = getFirestore(app);
+  window.logLead  = async d => { try { await addDoc(collection(db,"leads"), {...d,ts:serverTimestamp()}); } catch(e){} };
+  window.logBrief = async d => { try { await addDoc(collection(db,"briefs"),{...d,ts:serverTimestamp()}); } catch(e){} };
+  window.logGuide = async d => { try { await addDoc(collection(db,"guide_leads"),{...d,ts:serverTimestamp()}); } catch(e){} };
+</script>
 
-    <!-- jsPDF — programmatic PDF (fixes blank output from html2pdf DOM capture) -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <!-- Firebase -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-        import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-        const app = initializeApp({
-            apiKey: "AIzaSyBIxfuNn866jeP2GLRKTLPW2SdNoL7iH64",
-            authDomain: "ik-terminal-viral.firebaseapp.com",
-            projectId: "ik-terminal-viral",
-            storageBucket: "ik-terminal-viral.firebasestorage.app",
-            messagingSenderId: "1097651789102",
-            appId: "1:1097651789102:web:027d4c86f5d1f8cf1e6ebf"
-        });
-        const db = getFirestore(app);
-        // Expose log function globally for main script
-        window.logLead = async (data) => {
-            try { await addDoc(collection(db, "leads"), { ...data, ts: serverTimestamp() }); }
-            catch(e) { console.warn("Lead log failed:", e.message); }
-        };
-    </script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Outfit:wght@300;400;500;600&family=DM+Mono&display=swap" rel="stylesheet">
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=DM+Mono&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink:     #16140f;
+  --ink-mid: #4a4638;
+  --mute:    #8a8070;
+  --gold:    #c8922a;
+  --gold-lt: #e8c870;
+  --gold-bg: rgba(200,146,42,.08);
+  --teal:    #1d6b5e;
+  --teal-lt: #d0e8e4;
+  --paper:   #f8f5ef;
+  --cream:   #ede9df;
+  --white:   #ffffff;
+  --rule:    #ddd8cc;
+  --red:     #b84040;
+  --sans:    'Outfit', sans-serif;
+  --serif:   'Cormorant Garamond', serif;
+  --mono:    'DM Mono', monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--sans);background:var(--paper);color:var(--ink);line-height:1.6;overflow-x:hidden;}
 
-    <style>
-        :root{--ink:#1a1a18;--paper:#f5f3ee;--cream:#ede9e0;--gold:#c8922a;--gold-light:#f0d090;--teal:#1d6b5e;--teal-light:#d0e8e4;--red:#c0392b;--muted:#7a7870;--border:#d8d4cc;--white:#ffffff;}
-        *{box-sizing:border-box;margin:0;padding:0;}
-        body{font-family:'DM Sans',sans-serif;background:var(--paper);color:var(--ink);min-height:100vh;}
-        .site-header{background:var(--ink);padding:16px 5%;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
-        .brand{font-family:'DM Serif Display',serif;font-size:1.4rem;color:var(--white);}
-        .brand em{color:var(--gold);font-style:normal;}
-        .header-tag{font-size:.72rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:#666;}
-        .wa-link{display:flex;align-items:center;gap:8px;background:#25d366;color:white;padding:8px 16px;border-radius:30px;text-decoration:none;font-size:.8rem;font-weight:600;transition:opacity .2s;}
-        .wa-link:hover{opacity:.9;}
-        .hero{background:var(--ink);padding:60px 5% 80px;text-align:center;position:relative;overflow:hidden;}
-        .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 100%,rgba(200,146,42,.12) 0%,transparent 70%);pointer-events:none;}
-        .hero-eyebrow{display:inline-block;font-size:.72rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);background:rgba(200,146,42,.1);border:1px solid rgba(200,146,42,.25);padding:5px 16px;border-radius:20px;margin-bottom:22px;}
-        .hero h1{font-family:'DM Serif Display',serif;font-size:clamp(2rem,5vw,3.2rem);color:var(--white);line-height:1.15;margin-bottom:16px;max-width:680px;margin-left:auto;margin-right:auto;}
-        .hero h1 span{color:var(--gold);}
-        .hero-sub{font-size:clamp(.9rem,2vw,1.05rem);color:#a09e98;max-width:520px;margin:0 auto 32px;line-height:1.7;font-weight:300;}
-        .trust-row{display:flex;justify-content:center;gap:24px;flex-wrap:wrap;}
-        .trust-item{display:flex;align-items:center;gap:7px;font-size:.78rem;color:#888;}
-        .trust-dot{width:6px;height:6px;border-radius:50%;background:var(--gold);flex-shrink:0;}
-        .calc-wrap{max-width:1080px;margin:-40px auto 0;padding:0 4% 80px;position:relative;z-index:10;}
-        .calc-card{background:var(--white);border-radius:20px;box-shadow:0 4px 40px rgba(0,0,0,.12);overflow:hidden;}
-        .calc-section{padding:32px 36px;border-bottom:1px solid var(--border);}
-        .calc-section:last-child{border-bottom:none;}
-        .section-label{font-size:.7rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;display:flex;align-items:center;gap:8px;}
-        .section-num{width:20px;height:20px;border-radius:50%;background:var(--gold);color:white;font-size:.68rem;font-weight:700;display:inline-flex;align-items:center;justify-content:center;}
-        .input-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;}
-        @media(max-width:640px){.input-grid{grid-template-columns:1fr;}}
-        label{font-size:.75rem;font-weight:500;color:var(--muted);display:block;margin-bottom:6px;}
-        input[type="text"],input[type="number"],select{width:100%;padding:12px 16px;border:1.5px solid var(--border);border-radius:10px;font-family:'DM Sans',sans-serif;font-size:.9rem;color:var(--ink);background:var(--white);outline:none;transition:border-color .2s,box-shadow .2s;appearance:none;}
-        input:focus,select:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(29,107,94,.1);}
-        .product-search-wrap{position:relative;}
-        .product-search-wrap input{padding-right:120px;font-size:.95rem;}
-        .search-btn{position:absolute;right:6px;top:6px;background:var(--ink);color:white;border:none;padding:8px 18px;border-radius:8px;font-size:.8rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .2s;}
-        .search-btn:hover{background:var(--teal);}
-        .freight-toggle{display:flex;border:1.5px solid var(--border);border-radius:10px;overflow:hidden;}
-        .ftog{flex:1;padding:12px 10px;background:var(--white);border:none;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:.82rem;font-weight:500;color:var(--muted);transition:all .2s;text-align:center;}
-        .ftog:first-child{border-right:1px solid var(--border);}
-        .ftog.active{background:var(--ink);color:white;}
-        .ftog-sub{font-size:.68rem;opacity:.75;display:block;margin-top:2px;}
-        .run-btn{width:100%;padding:16px;background:var(--teal);color:white;border:none;border-radius:12px;font-family:'DM Serif Display',serif;font-size:1.1rem;cursor:pointer;transition:all .2s;margin-top:20px;letter-spacing:.02em;}
-        .run-btn:hover{background:#15554a;transform:translateY(-1px);box-shadow:0 6px 20px rgba(29,107,94,.3);}
-        #results-section{display:none;}
-        .results-grid{display:grid;grid-template-columns:1fr 380px;}
-        @media(max-width:840px){.results-grid{grid-template-columns:1fr;}}
-        .ai-panel{padding:28px 32px;border-right:1px solid var(--border);}
-        @media(max-width:840px){.ai-panel{border-right:none;border-bottom:1px solid var(--border);}}
-        .ai-loading{display:flex;align-items:center;gap:12px;color:var(--muted);font-size:.88rem;}
-        .spinner{width:18px;height:18px;border:2px solid var(--border);border-top-color:var(--teal);border-radius:50%;animation:spin .7s linear infinite;flex-shrink:0;}
-        @keyframes spin{to{transform:rotate(360deg);}}
-        .ai-result-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
-        .ai-stat{background:var(--paper);border-radius:10px;padding:12px 14px;}
-        .ai-stat-label{font-size:.68rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:4px;}
-        .ai-stat-val{font-size:.95rem;font-weight:600;color:var(--ink);font-family:'DM Mono',monospace;}
-        .ai-stat.hi{background:var(--teal-light);}
-        .ai-stat.hi .ai-stat-val{color:var(--teal);}
-        .cost-sidebar{background:var(--ink);color:white;padding:28px;}
-        .sidebar-title{font-family:'DM Serif Display',serif;font-size:1.1rem;color:var(--gold-light);margin-bottom:20px;}
-        .cost-row{display:flex;justify-content:space-between;align-items:baseline;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.06);font-size:.83rem;}
-        .cost-label{color:rgba(255,255,255,.6);}
-        .cost-val{font-weight:500;font-family:'DM Mono',monospace;}
-        .cost-section-head{font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.3);padding:14px 0 4px;}
-        .cost-total-row{display:flex;justify-content:space-between;align-items:center;margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,.15);}
-        .cost-total-label{font-size:.85rem;font-weight:600;}
-        .cost-total-val{font-family:'DM Serif Display',serif;font-size:2rem;color:var(--gold);}
-        .vat-box{margin-top:12px;padding:12px;background:rgba(200,146,42,.1);border:1px solid rgba(200,146,42,.2);border-radius:10px;font-size:.75rem;line-height:1.6;color:rgba(255,255,255,.7);}
-        .per-unit-badge{display:inline-block;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:6px;padding:3px 10px;font-size:.72rem;font-family:'DM Mono',monospace;margin-bottom:16px;color:rgba(255,255,255,.7);}
-        .pi-btn{width:100%;padding:14px;background:var(--gold);color:var(--ink);border:none;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:.88rem;font-weight:700;cursor:pointer;transition:all .2s;margin-top:16px;}
-        .pi-btn:hover{background:#e0a830;transform:translateY(-1px);}
-        .share-btn{width:100%;padding:11px 14px;background:rgba(255,255,255,.07);color:rgba(255,255,255,.85);border:1px solid rgba(255,255,255,.15);border-radius:10px;font-family:'DM Sans',sans-serif;font-size:.82rem;font-weight:600;cursor:pointer;transition:all .2s;margin-top:8px;display:flex;align-items:center;justify-content:center;gap:7px;}
-        .share-btn:hover{background:rgba(255,255,255,.13);border-color:rgba(255,255,255,.3);}
-        .share-btn.copied{background:rgba(29,107,94,.4);border-color:rgba(29,200,150,.4);color:#7de8c8;}
-        .wa-strip{display:flex;align-items:center;gap:12px;padding:14px 16px;background:#f0faf5;border:1.5px solid #b2dfcc;border-radius:12px;text-decoration:none;color:var(--ink);transition:border-color .2s;margin-top:14px;}
-        .wa-strip:hover{border-color:#25d366;}
-        .wa-icon-c{width:36px;height:36px;background:#25d366;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-        .wa-icon-c svg{width:18px;height:18px;fill:white;}
-        .wa-strip-title{font-size:.8rem;font-weight:700;}
-        .wa-strip-sub{font-size:.72rem;color:var(--muted);line-height:1.4;}
-        .how-section{max-width:1080px;margin:0 auto;padding:60px 4%;}
-        .how-title{font-family:'DM Serif Display',serif;font-size:1.8rem;text-align:center;margin-bottom:8px;}
-        .how-sub{text-align:center;color:var(--muted);font-size:.9rem;margin-bottom:40px;}
-        .steps-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;}
-        .step-card{background:var(--white);border-radius:16px;padding:24px;border:1px solid var(--border);}
-        .step-num{font-family:'DM Serif Display',serif;font-size:2.5rem;color:var(--cream);line-height:1;margin-bottom:10px;}
-        .step-card h3{font-size:.95rem;font-weight:600;margin-bottom:8px;}
-        .step-card p{font-size:.82rem;color:var(--muted);line-height:1.6;}
-        .about-strip{background:var(--ink);padding:50px 5%;display:flex;align-items:center;justify-content:space-between;gap:30px;flex-wrap:wrap;}
-        .about-left h2{font-family:'DM Serif Display',serif;color:white;font-size:1.6rem;margin-bottom:10px;}
-        .about-left p{color:#888;font-size:.88rem;max-width:480px;line-height:1.7;}
-        .about-stats{display:flex;gap:32px;flex-wrap:wrap;}
-        .stat-box{text-align:center;}
-        .stat-num{font-family:'DM Serif Display',serif;font-size:2rem;color:var(--gold);line-height:1;}
-        .stat-lbl{font-size:.72rem;color:#666;margin-top:4px;}
-        footer{background:#111;padding:24px 5%;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
-        footer p{font-size:.75rem;color:#555;}
-        footer a{color:#555;text-decoration:none;}
-        footer a:hover{color:var(--gold);}
-        #toast{display:none;position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--red);color:white;padding:12px 24px;border-radius:30px;font-size:.85rem;font-weight:600;z-index:9999;box-shadow:0 4px 20px rgba(0,0,0,.2);}
-        @keyframes fadeUp{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
-        .fade-up{animation:fadeUp .4s ease forwards;}
-        /* Currency & Incoterms */
-        .price-row{display:grid;grid-template-columns:110px 90px 1fr;gap:8px;align-items:end;}
-        @media(max-width:640px){.price-row{grid-template-columns:1fr 1fr;} .price-row .inco-col{grid-column:1/-1;}}
-        .currency-select,.inco-select{padding:12px 10px;border:1.5px solid var(--border);border-radius:10px;font-family:'DM Sans',sans-serif;font-size:.85rem;color:var(--ink);background:var(--white);outline:none;cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%237a7870'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;padding-right:26px;}
-        .rate-badge{font-size:.7rem;color:var(--muted);margin-top:4px;height:14px;}
-        .rate-badge.loading{color:var(--gold);}
-        /* Report Panel */
-        .report-section{padding:28px 32px;border-top:1px solid var(--border);background:var(--paper);}
-        .report-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px;}
-        @media(max-width:640px){.report-grid{grid-template-columns:1fr;}}
-        .report-card{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:14px 16px;}
-        .report-card-label{font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
-        .report-card-val{font-size:.88rem;color:var(--ink);line-height:1.55;}
-        .report-card-val strong{color:var(--ink);}
-        .risk-low{border-left:3px solid #1d9e75;} .risk-low .risk-badge{background:#d0e8e4;color:#1d6b5e;}
-        .risk-med{border-left:3px solid #e09a00;} .risk-med .risk-badge{background:#fff3cd;color:#7a5c00;}
-        .risk-high{border-left:3px solid #c0392b;} .risk-high .risk-badge{background:#fde8e8;color:#8b1a1a;}
-        .risk-badge{display:inline-block;font-size:.7rem;font-weight:700;letter-spacing:.08em;padding:2px 10px;border-radius:20px;margin-bottom:6px;}
-        .rec-proceed{border-left:3px solid #1d9e75;} .rec-optimise{border-left:3px solid #e09a00;} .rec-avoid{border-left:3px solid #c0392b;}
-        .rec-badge{display:inline-block;font-size:.7rem;font-weight:700;padding:2px 10px;border-radius:20px;margin-bottom:6px;}
-        .rec-proceed .rec-badge{background:#d0e8e4;color:#1d6b5e;}
-        .rec-optimise .rec-badge{background:#fff3cd;color:#7a5c00;}
-        .rec-avoid .rec-badge{background:#fde8e8;color:#8b1a1a;}
-        .carbon-bar-wrap{height:6px;background:var(--border);border-radius:3px;margin-top:8px;overflow:hidden;}
-        .carbon-bar{height:100%;border-radius:3px;transition:width .6s ease;}
-        .carbon-sea-bar{background:#1d9e75;} .carbon-air-bar{background:#c8922a;}
-        .report-full-width{grid-column:1/-1;}
-    </style>
+/* ─ NAV ─────────────────────────────────────────────────────────── */
+.nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(22,20,15,.97);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,.06);padding:0 5%;display:flex;align-items:center;justify-content:space-between;height:60px;}
+.nav-brand{font-family:var(--serif);font-size:1.5rem;font-weight:600;color:var(--white);text-decoration:none;}
+.nav-brand em{color:var(--gold);font-style:normal;}
+.nav-links{display:flex;align-items:center;gap:24px;}
+.nav-links a{font-size:.8rem;color:rgba(255,255,255,.5);text-decoration:none;letter-spacing:.04em;transition:color .2s;}
+.nav-links a:hover{color:var(--gold);}
+.nav-wa{display:flex;align-items:center;gap:7px;background:#25d366;color:white;padding:8px 16px;border-radius:30px;text-decoration:none;font-size:.78rem;font-weight:600;transition:opacity .2s;white-space:nowrap;}
+.nav-wa:hover{opacity:.88;}
+@media(max-width:700px){.nav-links{display:none;}}
+
+/* ─ HERO ─────────────────────────────────────────────────────────── */
+.hero{min-height:100vh;background:var(--ink);display:flex;flex-direction:column;justify-content:center;padding:120px 5% 80px;position:relative;overflow:hidden;}
+.hero-glow{position:absolute;bottom:-80px;left:50%;transform:translateX(-50%);width:900px;height:400px;background:radial-gradient(ellipse,rgba(200,146,42,.1) 0%,transparent 70%);pointer-events:none;}
+.hero-inner{max-width:960px;position:relative;z-index:1;}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:.7rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);background:rgba(200,146,42,.1);border:1px solid rgba(200,146,42,.22);padding:6px 16px;border-radius:30px;margin-bottom:28px;}
+.hero h1{font-family:var(--serif);font-size:clamp(2.8rem,6.5vw,5.2rem);font-weight:500;line-height:1.08;color:var(--white);margin-bottom:24px;}
+.hero h1 em{color:var(--gold);font-style:italic;}
+.hero h1 .dim{color:rgba(255,255,255,.3);}
+.hero-sub{font-size:clamp(.95rem,2vw,1.12rem);font-weight:300;color:rgba(255,255,255,.52);max-width:600px;line-height:1.82;margin-bottom:44px;}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:64px;}
+.btn-gold{display:inline-flex;align-items:center;gap:8px;background:var(--gold);color:var(--ink);padding:14px 28px;border-radius:4px;font-size:.9rem;font-weight:600;text-decoration:none;border:none;cursor:pointer;transition:all .2s;}
+.btn-gold:hover{background:var(--gold-lt);transform:translateY(-1px);box-shadow:0 8px 24px rgba(200,146,42,.28);}
+.btn-ghost{display:inline-flex;align-items:center;gap:8px;background:transparent;color:rgba(255,255,255,.65);padding:14px 28px;border-radius:4px;font-size:.9rem;font-weight:400;text-decoration:none;border:1px solid rgba(255,255,255,.18);cursor:pointer;transition:all .2s;}
+.btn-ghost:hover{border-color:rgba(255,255,255,.45);color:white;}
+.hero-stats{display:flex;gap:40px;flex-wrap:wrap;padding-top:40px;border-top:1px solid rgba(255,255,255,.08);}
+.stat-num{font-family:var(--serif);font-size:2.6rem;font-weight:500;color:var(--gold);line-height:1;}
+.stat-label{font-size:.72rem;color:rgba(255,255,255,.38);margin-top:5px;text-transform:uppercase;letter-spacing:.08em;}
+
+/* ─ TRUST BAR ────────────────────────────────────────────────────── */
+.trust-bar{background:var(--ink);border-top:1px solid rgba(255,255,255,.05);border-bottom:1px solid rgba(255,255,255,.05);padding:18px 5%;display:flex;gap:28px;justify-content:center;flex-wrap:wrap;}
+.trust-item{display:flex;align-items:center;gap:7px;font-size:.75rem;color:rgba(255,255,255,.42);}
+.trust-dot{width:5px;height:5px;background:var(--gold);border-radius:50%;flex-shrink:0;}
+
+/* ─ SECTIONS ─────────────────────────────────────────────────────── */
+.section{padding:90px 5%;}
+.section-white{background:var(--white);}
+.section-dark{background:var(--ink);}
+.section-cream{background:var(--cream);}
+.inner{max-width:1100px;margin:0 auto;}
+.sec-label{font-size:.68rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:10px;margin-bottom:14px;}
+.sec-label::before{content:'';display:block;width:18px;height:1px;background:var(--gold);}
+.sec-title{font-family:var(--serif);font-size:clamp(2rem,4.5vw,3.2rem);font-weight:500;line-height:1.12;margin-bottom:16px;}
+.section-dark .sec-title{color:var(--white);}
+.section-dark .sec-label{color:var(--gold);}
+.sec-sub{font-size:.98rem;font-weight:300;color:var(--mute);max-width:580px;line-height:1.82;}
+.section-dark .sec-sub{color:rgba(255,255,255,.42);}
+
+/* ─ WHO WE SERVE ─────────────────────────────────────────────────── */
+.audience-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:8px;overflow:hidden;margin-top:52px;}
+.audience-card{background:var(--white);padding:28px 26px;transition:background .2s;}
+.audience-card:hover{background:#fdfbf7;}
+.aud-icon{font-size:20px;margin-bottom:14px;}
+.aud-title{font-size:.95rem;font-weight:600;margin-bottom:6px;}
+.aud-desc{font-size:.8rem;color:var(--ink-mid);line-height:1.68;margin-bottom:12px;}
+.aud-val{font-size:.75rem;font-weight:600;color:var(--teal);}
+
+/* ─ WHAT WE DO ───────────────────────────────────────────────────── */
+.services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.07);border-radius:8px;overflow:hidden;margin-top:52px;}
+@media(max-width:720px){.services-grid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:480px){.services-grid{grid-template-columns:1fr;}}
+.service-card{background:var(--ink);padding:28px 24px;transition:background .2s;}
+.service-card:hover{background:#1e1c15;}
+.svc-icon{width:36px;height:36px;background:rgba(200,146,42,.12);border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:16px;margin-bottom:16px;}
+.svc-title{font-size:.9rem;font-weight:600;color:var(--white);margin-bottom:7px;}
+.svc-desc{font-size:.78rem;color:rgba(255,255,255,.42);line-height:1.68;}
+
+/* ─ HOW IT WORKS ─────────────────────────────────────────────────── */
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:0;margin-top:52px;}
+.step{padding:0 18px;}
+.step-num{width:52px;height:52px;border-radius:50%;background:rgba(200,146,42,.1);border:1.5px solid rgba(200,146,42,.3);color:var(--gold);font-family:var(--serif);font-size:1.4rem;display:flex;align-items:center;justify-content:center;margin-bottom:18px;}
+.step-title{font-size:.88rem;font-weight:600;color:var(--white);margin-bottom:7px;}
+.step-desc{font-size:.76rem;color:rgba(255,255,255,.42);line-height:1.68;}
+
+/* ─ VS TABLE ─────────────────────────────────────────────────────── */
+.vs-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:48px;}
+@media(max-width:600px){.vs-grid{grid-template-columns:1fr;}}
+.vs-col{border-radius:6px;padding:22px 22px;}
+.vs-bad{background:var(--paper);border:1px solid var(--rule);}
+.vs-good{background:#e8f5ee;border:1px solid #9fd4b2;}
+.vs-head{font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px;}
+.vs-bad .vs-head{color:var(--mute);}
+.vs-good .vs-head{color:var(--teal);}
+.vs-item{font-size:.82rem;color:var(--ink-mid);padding:5px 0;border-bottom:1px solid rgba(0,0,0,.06);display:flex;gap:8px;line-height:1.5;}
+.vs-item:last-child{border-bottom:none;}
+
+/* ─ CATEGORIES ───────────────────────────────────────────────────── */
+.cats{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin-top:48px;}
+.cat-card{background:var(--ink);border:1px solid rgba(255,255,255,.07);border-radius:6px;padding:18px 14px;text-align:center;transition:border-color .2s,transform .2s;cursor:default;}
+.cat-card:hover{border-color:rgba(200,146,42,.35);transform:translateY(-2px);}
+.cat-icon{font-size:22px;margin-bottom:8px;}
+.cat-name{font-size:.76rem;font-weight:500;color:rgba(255,255,255,.7);}
+
+/* ─ LEAD MAGNETS ─────────────────────────────────────────────────── */
+.magnets{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px;margin-top:48px;}
+.magnet{background:var(--white);border:1px solid var(--rule);border-radius:8px;padding:26px;position:relative;overflow:hidden;transition:box-shadow .2s,transform .2s;}
+.magnet:hover{box-shadow:0 8px 32px rgba(0,0,0,.08);transform:translateY(-2px);}
+.magnet::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--gold);}
+.magnet-tag{display:inline-block;font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:3px 10px;border-radius:20px;background:var(--gold-bg);color:var(--gold);margin-bottom:12px;}
+.magnet-title{font-family:var(--serif);font-size:1.25rem;font-weight:500;color:var(--ink);margin-bottom:8px;line-height:1.3;}
+.magnet-desc{font-size:.8rem;color:var(--mute);line-height:1.72;margin-bottom:18px;}
+.magnet-btn{display:inline-flex;align-items:center;gap:7px;background:var(--ink);color:white;border:none;border-radius:4px;padding:10px 18px;font-size:.8rem;font-weight:600;cursor:pointer;transition:all .2s;text-decoration:none;}
+.magnet-btn:hover{background:var(--teal);}
+
+/* ─ MODAL ────────────────────────────────────────────────────────── */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(22,20,15,.7);backdrop-filter:blur(4px);z-index:500;align-items:center;justify-content:center;padding:20px;}
+.modal-overlay.open{display:flex;}
+.modal{background:var(--white);border-radius:10px;width:100%;max-width:560px;max-height:90vh;overflow-y:auto;box-shadow:0 24px 80px rgba(0,0,0,.25);}
+.modal-header{background:var(--ink);padding:22px 28px;display:flex;justify-content:space-between;align-items:flex-start;border-radius:10px 10px 0 0;}
+.modal-title{font-family:var(--serif);font-size:1.3rem;font-weight:500;color:var(--white);}
+.modal-sub{font-size:.75rem;color:rgba(255,255,255,.45);margin-top:3px;}
+.modal-close{background:none;border:none;color:rgba(255,255,255,.5);font-size:22px;cursor:pointer;line-height:1;padding:0;transition:color .2s;}
+.modal-close:hover{color:white;}
+.modal-body{padding:24px 28px;}
+
+/* ─ FORMS ────────────────────────────────────────────────────────── */
+.fg{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.fg.one{grid-template-columns:1fr;}
+@media(max-width:520px){.fg{grid-template-columns:1fr;}}
+.field{display:flex;flex-direction:column;gap:5px;}
+.field.full{grid-column:1/-1;}
+label.lbl{font-size:.68rem;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-mid);}
+label.lbl .req{color:var(--gold);}
+input[type=text],input[type=email],input[type=tel],input[type=number],input[type=date],select,textarea{font-family:var(--sans);font-size:.87rem;font-weight:300;color:var(--ink);background:var(--paper);border:1.5px solid var(--rule);border-radius:5px;padding:11px 13px;width:100%;outline:none;transition:border-color .2s,box-shadow .2s;appearance:none;}
+input::placeholder,textarea::placeholder{color:var(--mute);}
+input:focus,select:focus,textarea:focus{border-color:var(--gold);background:var(--white);box-shadow:0 0 0 3px rgba(200,146,42,.1);}
+textarea{resize:vertical;min-height:78px;line-height:1.6;}
+select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%238a8070' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:34px;cursor:pointer;}
+.hint{font-size:.7rem;color:var(--mute);line-height:1.5;}
+.err-msg{font-size:.7rem;color:var(--red);display:none;margin-top:2px;}
+.err-msg.show{display:block;}
+.check-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:7px;}
+.chk{display:flex;align-items:center;gap:8px;background:var(--paper);border:1.5px solid var(--rule);border-radius:5px;padding:9px 11px;cursor:pointer;user-select:none;transition:all .15s;}
+.chk:hover{border-color:var(--gold);}
+.chk input[type=checkbox]{width:14px;height:14px;border:1.5px solid var(--rule);border-radius:3px;background:var(--white);flex-shrink:0;cursor:pointer;position:relative;appearance:none;transition:all .15s;}
+.chk input[type=checkbox]:checked{background:var(--gold);border-color:var(--gold);}
+.chk input[type=checkbox]:checked::after{content:'';position:absolute;top:1px;left:4px;width:4px;height:8px;border:2px solid white;border-top:none;border-left:none;transform:rotate(42deg);}
+.chk-label{font-size:.8rem;color:var(--ink);}
+.radio-row{display:flex;flex-wrap:wrap;gap:7px;}
+.rpill input[type=radio]{display:none;}
+.rpill label{font-size:.8rem;padding:8px 15px;border:1.5px solid var(--rule);border-radius:30px;background:var(--paper);color:var(--ink-mid);cursor:pointer;transition:all .15s;}
+.rpill input[type=radio]:checked+label{background:var(--ink);border-color:var(--ink);color:var(--white);}
+
+/* ─ BRIEF SECTION ────────────────────────────────────────────────── */
+.brief-wrap{background:var(--white);border-radius:12px;border:1px solid var(--rule);overflow:hidden;margin-top:48px;box-shadow:0 4px 32px rgba(0,0,0,.06);}
+.brief-hdr{background:var(--ink);padding:26px 32px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+.brief-hdr-title{font-family:var(--serif);font-size:1.35rem;font-weight:500;color:var(--white);}
+.brief-hdr-sub{font-size:.75rem;color:rgba(255,255,255,.4);margin-top:3px;}
+.brief-promises{display:flex;gap:16px;flex-wrap:wrap;}
+.bp{font-size:.72rem;color:var(--gold);display:flex;align-items:center;gap:5px;}
+.brief-body{padding:28px 32px;}
+@media(max-width:580px){.brief-body,.brief-hdr{padding:18px;}}
+.fsec{margin-bottom:28px;}
+.fsec-title{font-size:.68rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);padding-bottom:9px;border-bottom:1px solid var(--rule);margin-bottom:16px;display:flex;align-items:center;gap:8px;}
+.fsec-num{width:17px;height:17px;background:var(--gold);color:white;border-radius:50%;font-size:.6rem;font-weight:700;display:inline-flex;align-items:center;justify-content:center;}
+.submit-bar{background:var(--ink);margin:0 -32px -28px;padding:22px 32px;display:flex;align-items:center;gap:18px;flex-wrap:wrap;}
+@media(max-width:580px){.submit-bar{margin:0 -18px -18px;padding:18px;}}
+.submit-btn{background:var(--gold);color:var(--ink);border:none;padding:12px 30px;border-radius:4px;font-family:var(--sans);font-size:.88rem;font-weight:700;cursor:pointer;transition:all .2s;white-space:nowrap;}
+.submit-btn:hover{background:var(--gold-lt);transform:translateY(-1px);}
+.submit-note{font-size:.7rem;color:rgba(255,255,255,.38);line-height:1.5;}
+.success-bar{display:none;background:#e8f5ee;border:1px solid #9fd4b2;border-radius:6px;padding:15px 18px;margin-top:18px;font-size:.87rem;color:var(--teal);align-items:center;gap:10px;}
+.success-bar.show{display:flex;}
+
+/* ─ BUDGET CALCULATOR ────────────────────────────────────────────── */
+.calc-wrap{background:var(--white);border:1px solid var(--rule);border-radius:10px;overflow:hidden;margin-top:48px;box-shadow:0 4px 24px rgba(0,0,0,.06);}
+.calc-hdr{background:var(--ink);padding:22px 28px;}
+.calc-hdr-title{font-family:var(--serif);font-size:1.2rem;color:var(--white);}
+.calc-hdr-sub{font-size:.75rem;color:rgba(255,255,255,.4);margin-top:3px;}
+.calc-body{padding:24px 28px;}
+.calc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:20px;}
+.calc-result{background:var(--ink);border-radius:8px;padding:20px 24px;margin-top:20px;display:none;}
+.calc-result.show{display:block;}
+.result-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-top:14px;}
+.result-card{background:rgba(255,255,255,.06);border-radius:6px;padding:14px;}
+.result-label{font-size:.65rem;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,.4);margin-bottom:4px;}
+.result-val{font-size:1.2rem;font-weight:600;color:var(--gold);font-family:var(--serif);}
+.result-sub{font-size:.72rem;color:rgba(255,255,255,.35);margin-top:3px;}
+.result-note{font-size:.75rem;color:rgba(255,255,255,.45);line-height:1.6;margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,.08);}
+.calc-btn{background:var(--teal);color:white;border:none;padding:12px 24px;border-radius:5px;font-family:var(--sans);font-size:.88rem;font-weight:600;cursor:pointer;transition:all .2s;width:100%;margin-top:4px;}
+.calc-btn:hover{background:#155048;}
+
+/* ─ IMPORT GUIDE GATE ────────────────────────────────────────────── */
+.guide-gate{background:var(--ink);border-radius:10px;padding:36px;display:grid;grid-template-columns:1fr auto;gap:28px;align-items:center;margin-top:0;}
+@media(max-width:640px){.guide-gate{grid-template-columns:1fr;}}
+.guide-cover{width:120px;height:160px;background:var(--gold);border-radius:6px;display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0;padding:14px;text-align:center;box-shadow:8px 8px 0 rgba(255,255,255,.06);}
+.guide-cover-title{font-family:var(--serif);font-size:.9rem;font-weight:600;color:var(--ink);line-height:1.3;margin-top:8px;}
+.guide-cover-sub{font-size:.65rem;color:rgba(22,20,15,.6);margin-top:4px;}
+.guide-body{flex:1;}
+.guide-title{font-family:var(--serif);font-size:1.5rem;font-weight:500;color:var(--white);margin-bottom:8px;line-height:1.3;}
+.guide-desc{font-size:.83rem;color:rgba(255,255,255,.48);line-height:1.72;margin-bottom:16px;}
+.guide-bullets{list-style:none;margin-bottom:20px;}
+.guide-bullets li{font-size:.8rem;color:rgba(255,255,255,.55);padding:4px 0;display:flex;gap:8px;align-items:flex-start;}
+.guide-bullets li::before{content:'→';color:var(--gold);flex-shrink:0;}
+.guide-form{display:flex;gap:8px;flex-wrap:wrap;}
+.guide-form input{flex:1;min-width:200px;}
+.guide-submit{background:var(--gold);color:var(--ink);border:none;padding:11px 22px;border-radius:4px;font-family:var(--sans);font-size:.84rem;font-weight:700;cursor:pointer;transition:all .2s;white-space:nowrap;}
+.guide-submit:hover{background:var(--gold-lt);}
+.guide-success{display:none;background:rgba(29,107,94,.2);border:1px solid rgba(29,107,94,.4);border-radius:6px;padding:14px 18px;font-size:.84rem;color:#9fd4b2;margin-top:12px;}
+.guide-success.show{display:block;}
+
+/* ─ ABOUT ────────────────────────────────────────────────────────── */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start;margin-top:52px;}
+@media(max-width:700px){.about-grid{grid-template-columns:1fr;}}
+.about-text p{font-size:.88rem;color:var(--ink-mid);line-height:1.88;margin-bottom:16px;font-weight:300;}
+.pillar{display:flex;gap:14px;padding:14px 0;border-bottom:1px solid var(--rule);}
+.pillar:last-child{border-bottom:none;}
+.pillar-icon{width:32px;height:32px;flex-shrink:0;background:var(--gold-bg);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:15px;}
+.pillar-title{font-size:.84rem;font-weight:600;margin-bottom:3px;}
+.pillar-desc{font-size:.76rem;color:var(--mute);line-height:1.6;}
+.about-stats{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:6px;overflow:hidden;margin-bottom:16px;}
+.astat{background:var(--white);padding:22px;}
+.astat-num{font-family:var(--serif);font-size:2.5rem;font-weight:500;color:var(--gold);line-height:1;}
+.astat-label{font-size:.7rem;color:var(--mute);margin-top:5px;text-transform:uppercase;letter-spacing:.07em;}
+.contact-box{background:var(--ink);border-radius:8px;padding:22px;}
+.contact-box-title{font-family:var(--serif);font-size:1.1rem;color:white;margin-bottom:7px;}
+.contact-box-sub{font-size:.8rem;color:rgba(255,255,255,.45);margin-bottom:16px;line-height:1.6;}
+
+/* ─ TESTIMONIALS ─────────────────────────────────────────────────── */
+.testimonials{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:14px;margin-top:48px;}
+.tcard{background:var(--white);border:1px solid var(--rule);border-radius:8px;padding:24px;position:relative;}
+.tcard::before{content:'\201C';font-family:var(--serif);font-size:4rem;color:var(--gold);opacity:.25;position:absolute;top:10px;left:18px;line-height:1;}
+.tcard-text{font-size:.85rem;color:var(--ink-mid);line-height:1.78;margin-bottom:16px;padding-top:20px;}
+.tcard-name{font-size:.75rem;font-weight:600;color:var(--ink);}
+.tcard-role{font-size:.7rem;color:var(--mute);}
+
+/* ─ MAIN CALCULATOR (existing tool) ─────────────────────────────── */
+.landed-calc{background:var(--white);border-radius:12px;box-shadow:0 4px 40px rgba(0,0,0,.1);overflow:hidden;border:1px solid var(--rule);margin-top:48px;}
+.lc-panel{padding:28px 32px;border-bottom:1px solid var(--rule);}
+@media(max-width:580px){.lc-panel{padding:18px;}}
+.lc-label{font-size:.68rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;display:flex;align-items:center;gap:7px;}
+.lc-num{width:19px;height:19px;border-radius:50%;background:var(--gold);color:white;font-size:.65rem;font-weight:700;display:inline-flex;align-items:center;justify-content:center;}
+.prod-wrap{position:relative;margin-bottom:14px;}
+.prod-wrap input{padding-right:130px;font-size:.93rem;}
+.search-btn{position:absolute;right:6px;top:6px;background:var(--ink);color:white;border:none;padding:8px 17px;border-radius:5px;font-size:.78rem;font-weight:600;cursor:pointer;font-family:var(--sans);transition:background .2s;}
+.search-btn:hover{background:var(--teal);}
+.inp-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;}
+@media(max-width:600px){.inp-grid{grid-template-columns:1fr;}}
+.ftoggle{display:flex;border:1.5px solid var(--rule);border-radius:7px;overflow:hidden;margin-top:14px;}
+.ftog{flex:1;padding:11px 8px;background:var(--white);border:none;cursor:pointer;font-family:var(--sans);font-size:.8rem;font-weight:500;color:var(--mute);transition:all .2s;text-align:center;}
+.ftog:first-child{border-right:1px solid var(--rule);}
+.ftog.active{background:var(--ink);color:white;}
+.ftog-sub{font-size:.65rem;opacity:.75;display:block;margin-top:2px;}
+.run-btn{width:100%;padding:14px;background:var(--teal);color:white;border:none;border-radius:7px;font-family:var(--serif);font-size:1rem;cursor:pointer;transition:all .2s;margin-top:18px;letter-spacing:.02em;}
+.run-btn:hover{background:#155048;transform:translateY(-1px);}
+#results-section{display:none;}
+.res-grid{display:grid;grid-template-columns:1fr 360px;}
+@media(max-width:800px){.res-grid{grid-template-columns:1fr;}}
+.ai-panel{padding:24px 28px;border-right:1px solid var(--rule);}
+@media(max-width:800px){.ai-panel{border-right:none;border-bottom:1px solid var(--rule);}}
+.ai-loading{display:flex;align-items:center;gap:11px;color:var(--mute);font-size:.86rem;}
+.spinner{width:17px;height:17px;border:2px solid var(--rule);border-top-color:var(--teal);border-radius:50%;animation:spin .7s linear infinite;flex-shrink:0;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.ai-stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;}
+.ai-stat{background:var(--paper);border-radius:7px;padding:11px 13px;}
+.ai-stat-label{font-size:.63rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--mute);margin-bottom:3px;}
+.ai-stat-val{font-size:.9rem;font-weight:600;color:var(--ink);font-family:var(--mono);}
+.ai-stat.hi{background:var(--teal-lt);}
+.ai-stat.hi .ai-stat-val{color:var(--teal);}
+.cost-sidebar{background:var(--ink);color:white;padding:24px;}
+.sidebar-title{font-family:var(--serif);font-size:1.1rem;color:var(--gold-lt);margin-bottom:18px;}
+.cost-row{display:flex;justify-content:space-between;align-items:baseline;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:.8rem;}
+.cost-label{color:rgba(255,255,255,.52);}
+.cost-val{font-weight:500;font-family:var(--mono);}
+.cost-sec-head{font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.28);padding:12px 0 4px;}
+.cost-total-row{display:flex;justify-content:space-between;align-items:center;margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,.14);}
+.cost-total-label{font-size:.84rem;font-weight:600;}
+.cost-total-val{font-family:var(--serif);font-size:1.9rem;color:var(--gold);}
+.vat-box{margin-top:10px;padding:11px;background:rgba(200,146,42,.09);border:1px solid rgba(200,146,42,.18);border-radius:7px;font-size:.72rem;line-height:1.6;color:rgba(255,255,255,.62);}
+.per-unit-badge{display:inline-block;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.09);border-radius:4px;padding:3px 9px;font-size:.7rem;font-family:var(--mono);margin-bottom:14px;color:rgba(255,255,255,.62);}
+.pi-btn{width:100%;padding:12px;background:var(--gold);color:var(--ink);border:none;border-radius:7px;font-family:var(--sans);font-size:.85rem;font-weight:700;cursor:pointer;transition:all .2s;margin-top:14px;}
+.pi-btn:hover{background:var(--gold-lt);transform:translateY(-1px);}
+.share-btn{width:100%;padding:9px;background:rgba(255,255,255,.05);color:rgba(255,255,255,.78);border:1px solid rgba(255,255,255,.1);border-radius:7px;font-family:var(--sans);font-size:.78rem;font-weight:600;cursor:pointer;transition:all .2s;margin-top:7px;display:flex;align-items:center;justify-content:center;gap:6px;}
+.share-btn:hover{background:rgba(255,255,255,.1);}
+.share-btn.copied{background:rgba(29,107,94,.35);border-color:rgba(29,200,150,.35);color:#7de8c8;}
+.wa-strip-calc{display:flex;align-items:center;gap:11px;padding:12px 14px;background:#f0faf5;border:1.5px solid #b2dfcc;border-radius:9px;text-decoration:none;color:var(--ink);transition:border-color .2s;margin-top:10px;}
+.wa-strip-calc:hover{border-color:#25d366;}
+.wa-icon-c{width:33px;height:33px;background:#25d366;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.wa-icon-c svg{width:16px;height:16px;fill:white;}
+.wa-strip-title{font-size:.76rem;font-weight:700;}
+.wa-strip-sub{font-size:.68rem;color:var(--mute);line-height:1.4;}
+.rpt-section{padding:24px 28px;border-top:1px solid var(--rule);background:var(--paper);}
+.rpt-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px;}
+@media(max-width:580px){.rpt-grid{grid-template-columns:1fr;}}
+.rpt-card{background:var(--white);border:1px solid var(--rule);border-radius:8px;padding:13px 15px;}
+.rpt-card-label{font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);margin-bottom:5px;}
+.rpt-card-val{font-size:.84rem;color:var(--ink);line-height:1.55;}
+.risk-low{border-left:3px solid #1d9e75;} .risk-low .risk-badge{background:#d0e8e4;color:#1d6b5e;}
+.risk-med{border-left:3px solid #e09a00;} .risk-med .risk-badge{background:#fff3cd;color:#7a5c00;}
+.risk-high{border-left:3px solid #c0392b;} .risk-high .risk-badge{background:#fde8e8;color:#8b1a1a;}
+.risk-badge,.rec-badge{display:inline-block;font-size:.68rem;font-weight:700;letter-spacing:.06em;padding:2px 10px;border-radius:20px;margin-bottom:5px;}
+.rec-proceed{border-left:3px solid #1d9e75;} .rec-proceed .rec-badge{background:#d0e8e4;color:#1d6b5e;}
+.rec-optimise{border-left:3px solid #e09a00;} .rec-optimise .rec-badge{background:#fff3cd;color:#7a5c00;}
+.rec-avoid{border-left:3px solid #c0392b;} .rec-avoid .rec-badge{background:#fde8e8;color:#8b1a1a;}
+.cb-wrap{height:5px;background:var(--rule);border-radius:3px;margin-top:7px;overflow:hidden;}
+.cb{height:100%;border-radius:3px;transition:width .6s ease;}
+.cb-sea{background:#1d9e75;} .cb-air{background:var(--gold);}
+.rpt-full{grid-column:1/-1;}
+.cur-sel,.inc-sel{padding:11px 9px;border:1.5px solid var(--rule);border-radius:7px;font-family:var(--sans);font-size:.83rem;color:var(--ink);background:var(--white);outline:none;cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%238a8070'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 9px center;padding-right:24px;}
+.rate-badge{font-size:.68rem;color:var(--mute);margin-top:3px;height:14px;}
+.price-row{display:grid;grid-template-columns:105px 85px 1fr;gap:7px;align-items:end;}
+@media(max-width:580px){.price-row{grid-template-columns:1fr 1fr;} .price-row .ic{grid-column:1/-1;}}
+
+/* ─ FAQ ──────────────────────────────────────────────────────────── */
+.faq{margin-top:48px;}
+.faq-item{border-bottom:1px solid var(--rule);padding:18px 0;cursor:pointer;}
+.faq-q{display:flex;justify-content:space-between;align-items:center;gap:14px;}
+.faq-qt{font-size:.9rem;font-weight:500;color:var(--ink);}
+.faq-ch{font-size:18px;color:var(--gold);flex-shrink:0;transition:transform .2s;}
+.faq-item.open .faq-ch{transform:rotate(45deg);}
+.faq-a{font-size:.83rem;color:var(--ink-mid);line-height:1.78;margin-top:11px;display:none;font-weight:300;}
+.faq-item.open .faq-a{display:block;}
+
+/* ─ CTA STRIP ────────────────────────────────────────────────────── */
+.cta-strip{background:var(--gold);padding:56px 5%;text-align:center;}
+.cta-strip h2{font-family:var(--serif);font-size:clamp(1.8rem,4vw,2.8rem);font-weight:500;color:var(--ink);margin-bottom:10px;}
+.cta-strip p{font-size:.9rem;color:rgba(22,20,15,.6);margin-bottom:30px;}
+.cta-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+.btn-dark{display:inline-flex;align-items:center;gap:8px;background:var(--ink);color:white;padding:14px 28px;border-radius:4px;font-size:.9rem;font-weight:600;text-decoration:none;transition:all .2s;}
+.btn-dark:hover{background:#2a2820;transform:translateY(-1px);}
+.btn-ol-dark{display:inline-flex;align-items:center;gap:8px;background:transparent;color:var(--ink);padding:14px 28px;border-radius:4px;font-size:.9rem;font-weight:600;text-decoration:none;border:2px solid var(--ink);transition:all .2s;}
+.btn-ol-dark:hover{background:var(--ink);color:white;}
+
+/* ─ FOOTER ───────────────────────────────────────────────────────── */
+footer{background:#0e0d08;padding:48px 5% 28px;}
+.footer-inner{max-width:1100px;margin:0 auto;}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:36px;margin-bottom:36px;}
+@media(max-width:700px){.footer-grid{grid-template-columns:1fr 1fr;}}
+@media(max-width:420px){.footer-grid{grid-template-columns:1fr;}}
+.footer-brand{font-family:var(--serif);font-size:1.5rem;font-weight:600;color:white;margin-bottom:10px;}
+.footer-brand em{color:var(--gold);font-style:normal;}
+.footer-desc{font-size:.78rem;color:rgba(255,255,255,.32);line-height:1.75;max-width:240px;}
+.footer-col-title{font-size:.67rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
+.footer-links{list-style:none;}
+.footer-links li{margin-bottom:7px;}
+.footer-links a{font-size:.78rem;color:rgba(255,255,255,.38);text-decoration:none;transition:color .2s;}
+.footer-links a:hover{color:var(--gold);}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.06);padding-top:22px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;}
+.footer-copy{font-size:.7rem;color:rgba(255,255,255,.22);}
+
+/* ─ TOAST ────────────────────────────────────────────────────────── */
+#toast{display:none;position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:var(--red);color:white;padding:11px 22px;border-radius:30px;font-size:.83rem;font-weight:600;z-index:9999;box-shadow:0 4px 20px rgba(0,0,0,.2);}
+
+/* ─ ANIMATIONS ───────────────────────────────────────────────────── */
+.fade-in{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease;}
+.fade-in.visible{opacity:1;transform:translateY(0);}
+</style>
 </head>
 <body>
 
-<header class="site-header">
-    <div class="brand">IK <em>ENG</em></div>
-    <div class="header-tag">UK · China Import Specialists · Guangzhou Office</div>
-    <a href="https://wa.me/447767990007?text=Hi%20IK%20ENG%2C%20I%20want%20to%20discuss%20sourcing%20from%20China" target="_blank" class="wa-link" rel="noopener">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-        WhatsApp
-    </a>
-</header>
+<!-- ── NAV ────────────────────────────────────────────────────────── -->
+<nav class="nav">
+  <a href="#" class="nav-brand">IK <em>ENG</em></a>
+  <div class="nav-links">
+    <a href="#who-we-serve">Who we help</a>
+    <a href="#how-it-works">How it works</a>
+    <a href="#magnets">Free tools</a>
+    <a href="#brief">Send a brief</a>
+    <a href="#calculator">Cost calculator</a>
+    <a href="#about">About</a>
+  </div>
+  <a href="https://wa.me/447767990007?text=Hi%20IK%20ENG%2C%20I%20want%20to%20discuss%20a%20sourcing%20project" target="_blank" rel="noopener" class="nav-wa">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    WhatsApp us
+  </a>
+</nav>
 
+<!-- ── HERO ───────────────────────────────────────────────────────── -->
 <section class="hero">
-    <div class="hero-eyebrow">Free · No signup · Instant results</div>
-    <h1>Know your exact <span>China landed cost</span><br>before you commit</h1>
-    <p class="hero-sub">Built for UK construction firms, architects and material wholesalers. Real duties, real freight, real QC costs — not guesswork.</p>
-    <div class="trust-row">
-        <div class="trust-item"><span class="trust-dot"></span> 25 years in China</div>
-        <div class="trust-item"><span class="trust-dot"></span> Real UK tariff rates via AI</div>
-        <div class="trust-item"><span class="trust-dot"></span> LED &amp; acoustic panel specialists</div>
-        <div class="trust-item"><span class="trust-dot"></span> Free proforma invoice PDF</div>
+  <div class="hero-glow"></div>
+  <div class="hero-inner">
+    <div class="eyebrow">China Sourcing — 20+ Years. Manchester Based.</div>
+    <h1>Everything your building<br>needs. <em>One call to China.</em><br><span class="dim">We handle the rest.</span></h1>
+    <p class="hero-sub">Furniture, LED lighting, acoustic panels, kitchen cabinets, building materials, soft furnishings — if it goes in a building, we source it from China. You send a brief. We handle everything else: sourcing across Guangzhou, Shenzhen, Foshan and beyond, factory QC, shipping, UK customs, and delivery to your site.</p>
+    <div class="hero-actions">
+      <a href="#brief" class="btn-gold">Send your project brief →</a>
+      <a href="#magnets" class="btn-ghost">See our free tools</a>
     </div>
+    <div class="hero-stats">
+      <div><div class="stat-num">20+</div><div class="stat-label">Years in China</div></div>
+      <div><div class="stat-num">48h</div><div class="stat-label">Brief to first options</div></div>
+      <div><div class="stat-num">0</div><div class="stat-label">Forms you fill in</div></div>
+      <div><div class="stat-num">1</div><div class="stat-label">Contact for everything</div></div>
+    </div>
+  </div>
 </section>
 
-<div class="calc-wrap">
-    <div class="calc-card">
-
-        <div class="calc-section">
-            <div class="section-label"><span class="section-num">1</span> Describe your product &amp; order</div>
-            <div class="product-search-wrap" style="margin-bottom:16px;">
-                <input type="text" id="productInput" placeholder="e.g. LED panel 60x60cm, acoustic foam tiles, aluminium extrusion…">
-                <button class="search-btn" onclick="runCalc()">Calculate ↓</button>
-            </div>
-            <div class="input-grid">
-                <div>
-                    <label>Supplier price, currency &amp; terms</label>
-                    <div class="price-row">
-                        <select class="currency-select" id="currencySelect" onchange="onCurrencyChange()">
-                            <option value="GBP">£ GBP</option>
-                            <option value="USD">$ USD</option>
-                            <option value="CNY" selected>¥ RMB</option>
-                        </select>
-                        <input type="number" id="unitPrice" placeholder="e.g. 38" min="0" step="0.01" style="min-width:0;">
-                        <select class="inco-select" id="incoterms" onchange="tryRecalc()" style="width:100%;">
-                            <option value="EXW">EXW</option>
-                            <option value="FOB" selected>FOB</option>
-                            <option value="CIF">CIF</option>
-                        </select>
-                    </div>
-                    <div class="rate-badge" id="rateBadge">Loading live rates…</div>
-                </div>
-                <div>
-                    <label>Order quantity (units)</label>
-                    <input type="number" id="orderQty" placeholder="e.g. 500" min="1" value="100">
-                </div>
-                <div>
-                    <label>Company name (for invoice)</label>
-                    <input type="text" id="companyName" placeholder="Your company name">
-                </div>
-            </div>
-            <div style="margin-top:16px;">
-                <label style="margin-bottom:8px;">Shipping method</label>
-                <div class="freight-toggle">
-                    <button class="ftog" id="togAir" onclick="setFreight('air')">✈ Air freight<span class="ftog-sub">5–10 days · First orders</span></button>
-                    <button class="ftog active" id="togSea" onclick="setFreight('sea')">🚢 Sea freight<span class="ftog-sub">4–8 weeks · Best margin</span></button>
-                </div>
-            </div>
-            <button class="run-btn" onclick="runCalc()">Get Full Landed Cost Breakdown →</button>
-        </div>
-
-        <div id="results-section">
-            <div class="results-grid">
-                <div class="ai-panel">
-                    <div class="section-label"><span class="section-num">2</span> UK Customs Intelligence</div>
-                    <div id="aiOut"><div class="ai-loading"><div class="spinner"></div> Analysing UK tariff schedule…</div></div>
-                </div>
-                <div class="cost-sidebar">
-                    <div class="sidebar-title">Landed Cost Breakdown</div>
-                    <div class="per-unit-badge" id="perUnitBadge">— per unit</div>
-                    <div class="cost-section-head">Product</div>
-                    <div class="cost-row"><span class="cost-label">Unit price (ex-factory)</span><span class="cost-val" id="rUnit">—</span></div>
-                    <div class="cost-row"><span class="cost-label">Subtotal (<span id="rQtyLbl">100</span> units)</span><span class="cost-val" id="rSub">—</span></div>
-                    <div class="cost-section-head">Logistics</div>
-                    <div class="cost-row"><span class="cost-label" id="rFreightLbl">Sea freight</span><span class="cost-val" id="rFreight">—</span></div>
-                    <div id="incoExtraLines" style="display:none;"></div>
-                    <div class="cost-row"><span class="cost-label" id="rPortLbl">Port &amp; documentation</span><span class="cost-val" id="rPort">—</span></div>
-                    <div class="cost-section-head">Sourcing &amp; QC</div>
-                    <div class="cost-row"><span class="cost-label">QC inspection &amp; factory liaison</span><span class="cost-val" id="rSvc">—</span></div>
-                    <div class="cost-section-head">UK Import Duty</div>
-                    <div class="cost-row"><span class="cost-label">Duty (<span id="rDutyPct">5</span>%)</span><span class="cost-val" id="rDuty">—</span></div>
-                    <div class="cost-total-row"><span class="cost-total-label">Net total (ex-VAT)</span><span class="cost-total-val" id="rTotal">—</span></div>
-                    <div class="vat-box">
-                        <div style="display:flex;justify-content:space-between;margin-bottom:4px;"><span>+ VAT (20%)</span><strong id="rVat">—</strong></div>
-                        <div style="display:flex;justify-content:space-between;"><span>Grand total (inc. VAT)</span><strong id="rGrand" style="color:var(--gold-light);">—</strong></div>
-                        <div style="margin-top:8px;font-size:.7rem;opacity:.8;">VAT fully reclaimable for VAT-registered businesses</div>
-                    </div>
-                    <button class="pi-btn" id="piBtn" onclick="generatePI()" disabled style="opacity:.45;cursor:not-allowed;">⏳ Awaiting customs verification…</button>
-                    <button class="share-btn" id="shareBtn" onclick="copyShareLink()" disabled style="opacity:.35;cursor:not-allowed;">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-                        Share this quote
-                    </button>
-                    <a class="wa-strip" id="waStrip" href="https://wa.me/447767990007?text=Hi%20IK%20ENG%2C%20I%27ve%20used%20your%20cost%20calculator%20and%20want%20to%20discuss%20a%20sourcing%20project" target="_blank" rel="noopener">
-                        <div class="wa-icon-c"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></div>
-                        <div><div class="wa-strip-title">Ready to proceed? Talk to us</div><div class="wa-strip-sub">QC · Consolidation · UK delivery<br>+44 7767 990 007</div></div>
-                    </a>
-                </div>
-            </div>
-
-            <!-- ADVANCED REPORT PANEL -->
-            <div class="report-section" id="reportSection" style="display:none;">
-                <div class="section-label"><span class="section-num">3</span> IK Strategic Import Report</div>
-                <div class="report-grid" id="reportGrid">
-                    <!-- populated by renderReport() -->
-                </div>
-            </div>
-        </div>
-
-    </div>
+<!-- ── TRUST BAR ──────────────────────────────────────────────────── -->
+<div class="trust-bar">
+  <div class="trust-item"><span class="trust-dot"></span>Guangzhou · Shenzhen · Foshan</div>
+  <div class="trust-item"><span class="trust-dot"></span>20+ years on the ground in China</div>
+  <div class="trust-item"><span class="trust-dot"></span>Manchester, UK managed</div>
+  <div class="trust-item"><span class="trust-dot"></span>Furniture · LED · Acoustic · Kitchens · Materials</div>
+  <div class="trust-item"><span class="trust-dot"></span>QC every order before it ships</div>
+  <div class="trust-item"><span class="trust-dot"></span>All-in GBP pricing · 10–12 weeks to site</div>
 </div>
 
-<section class="how-section">
-    <h2 class="how-title">What this calculator actually includes</h2>
-    <p class="how-sub">Most China quotes show factory price only. We show what you'll actually pay when it clears UK customs.</p>
-    <div class="steps-grid">
-        <div class="step-card"><div class="step-num">01</div><h3>Real HS code &amp; UK duty</h3><p>AI looks up the correct commodity code and applies the actual UK Global Tariff rate — not a generic guess.</p></div>
-        <div class="step-card"><div class="step-num">02</div><h3>2025 freight benchmarks</h3><p>Air and sea estimates calibrated to current China–UK rates including LCL surcharges and UK port levies.</p></div>
-        <div class="step-card"><div class="step-num">03</div><h3>QC fee shown upfront</h3><p>Our 5% sourcing and QC fee is always included. No surprise charges. Minimum £199 for small orders.</p></div>
-        <div class="step-card"><div class="step-num">04</div><h3>VAT shown separately</h3><p>Import VAT is 100% reclaimable for UK VAT-registered businesses — your effective cost is the net total.</p></div>
+<!-- ── WHO WE SERVE ───────────────────────────────────────────────── -->
+<section class="section section-white" id="who-we-serve">
+  <div class="inner">
+    <div class="sec-label">Who we work with</div>
+    <h2 class="sec-title">Built for UK property professionals<br>who buy in volume</h2>
+    <p class="sec-sub">Whether you're furnishing one HMO or a 200-unit BTR scheme, the process is the same — you brief us, we source it, we get it there.</p>
+    <div class="audience-grid fade-in">
+      <div class="audience-card">
+        <div class="aud-icon">🏗</div>
+        <div class="aud-title">Property Developers</div>
+        <div class="aud-desc">New builds, show homes, BTR and PRS schemes. We provide fully costed FF&amp;E schedules from your floor plans and deliver phased to match your handover programme.</div>
+        <div class="aud-val">Typical orders: £15k – £500k+</div>
+      </div>
+      <div class="audience-card">
+        <div class="aud-icon">📐</div>
+        <div class="aud-title">Architects &amp; Interior Designers</div>
+        <div class="aud-desc">Specify confidently. We provide full technical data sheets, fire certificates, and UKCA documentation per product — ready to drop straight into your project file.</div>
+        <div class="aud-val">Typical orders: £5k – £80k</div>
+      </div>
+      <div class="audience-card">
+        <div class="aud-icon">🔧</div>
+        <div class="aud-title">Main Contractors &amp; Builders</div>
+        <div class="aud-desc">One supplier, one PO, one delivery date tied to your programme. We manage the China side so FF&amp;E never becomes your headache on a live build.</div>
+        <div class="aud-val">Typical orders: £10k – £200k</div>
+      </div>
+      <div class="audience-card">
+        <div class="aud-icon">🏠</div>
+        <div class="aud-title">HMO &amp; BTL Landlords</div>
+        <div class="aud-desc">Pre-built room packages — bedroom, living room, kitchen — priced per room. Compliant for rental use. Delivered to your property. No MOQ. No hassle.</div>
+        <div class="aud-val">Typical orders: £800 – £15k</div>
+      </div>
     </div>
+  </div>
 </section>
 
-<section class="about-strip">
-    <div class="about-left">
-        <h2>25+ years on the ground in China</h2>
-        <p>Guangzhou/Ningbo trading offices. UK base in Manchester. We handle sourcing, factory vetting, QC inspection, consolidation and delivery. LED lighting and acoustic panels are our speciality — but we work across all building material categories.</p>
+<!-- ── WHAT WE DO ─────────────────────────────────────────────────── -->
+<section class="section section-dark" id="how-it-works">
+  <div class="inner">
+    <div class="sec-label">Our service</div>
+    <h2 class="sec-title">You send a brief.<br><em style="color:var(--gold)">We handle everything else.</em></h2>
+    <p class="sec-sub">Furniture, LED lighting, acoustic panels, kitchen cabinets, building materials — sourced from factories across China, QC'd, shipped, cleared through UK customs, and delivered to your site. You touch nothing except the brief and the final invoice.</p>
+    <div class="services-grid fade-in">
+      <div class="service-card">
+        <div class="svc-icon">🔍</div>
+        <div class="svc-title">Bespoke sourcing — any product</div>
+        <div class="svc-desc">No catalogue constraints. Give us a spec, a photo, or a description and we'll return factory options within 48–72 hours. If it's made in China, we can source it.</div>
+      </div>
+      <div class="service-card">
+        <div class="svc-icon">📋</div>
+        <div class="svc-title">FF&amp;E schedule preparation</div>
+        <div class="svc-desc">Send your floor plans. We return a fully costed, room-by-room FF&amp;E schedule — product by product, with dimensions, lead times, and GBP pricing. We do the spec work for you.</div>
+      </div>
+      <div class="service-card">
+        <div class="svc-icon">✅</div>
+        <div class="svc-title">Factory QC &amp; pre-shipment</div>
+        <div class="svc-desc">Every order is physically inspected before it ships. Photo report shared with you. Any issues resolved before the container seals. No surprises when the truck arrives.</div>
+      </div>
+      <div class="service-card">
+        <div class="svc-icon">🚢</div>
+        <div class="svc-title">Freight &amp; customs — all handled</div>
+        <div class="svc-desc">Sea freight, UK customs clearance, import duty, port charges — all managed. One all-in GBP price. Zero paperwork for your team. Zero surprises at the port.</div>
+      </div>
+      <div class="service-card">
+        <div class="svc-icon">📦</div>
+        <div class="svc-title">White-glove UK site delivery</div>
+        <div class="svc-desc">2-man delivery to your site on a confirmed date. Phased delivery across handover blocks if needed. We coordinate with your site manager directly.</div>
+      </div>
+      <div class="service-card">
+        <div class="svc-icon">🛡</div>
+        <div class="svc-title">Compliance documentation</div>
+        <div class="svc-desc">Fire safety certificates (BS 7177), UKCA marking, test reports, material specs — prepared per product and ready to insert into your project file. Standard on every order.</div>
+      </div>
     </div>
-    <div class="about-stats">
-        <div class="stat-box"><div class="stat-num">25</div><div class="stat-lbl">Years in Guangzhou</div></div>
-        <div class="stat-box"><div class="stat-num">£0</div><div class="stat-lbl">Cost to use this tool</div></div>
-        <div class="stat-box"><div class="stat-num">UK</div><div class="stat-lbl">Escrow Service</div></div>
+
+    <div style="margin-top:52px;">
+      <div class="sec-label" style="color:var(--gold);margin-bottom:14px;">The process — 6 steps, 10–12 weeks</div>
+      <div class="steps fade-in">
+        <div class="step"><div class="step-num">1</div><div class="step-title">Send your brief</div><div class="step-desc">Floor plans, mood boards, or just a description. We take what you have and ask the right questions.</div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-title">We source options</div><div class="step-desc">2–3 factory options per item with photos, specs, and pricing — back to you within 48–72 hours.</div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-title">Sample approval</div><div class="step-desc">Physical sample shipped to your UK address before bulk production begins. Approve before you commit.</div></div>
+        <div class="step"><div class="step-num">4</div><div class="step-title">Production &amp; QC</div><div class="step-desc">We monitor production and send a full pre-shipment photo report. Issues resolved before the container seals.</div></div>
+        <div class="step"><div class="step-num">5</div><div class="step-title">Shipped &amp; cleared</div><div class="step-desc">Sea freight from China. UK customs cleared. Live tracking link sent to you throughout the journey.</div></div>
+        <div class="step"><div class="step-num">6</div><div class="step-title">Delivered to site</div><div class="step-desc">White-glove delivery on your confirmed date. Phased across blocks if needed. Balance charged on delivery.</div></div>
+      </div>
     </div>
+  </div>
 </section>
 
+<!-- ── VS / WHY US ────────────────────────────────────────────────── -->
+<section class="section section-white">
+  <div class="inner">
+    <div class="sec-label">Why IK ENG</div>
+    <h2 class="sec-title">What makes us different from<br>every other China supplier</h2>
+    <p class="sec-sub">We're not a marketplace. We're not a catalogue. We are a managed procurement partner — we take the risk so you don't have to.</p>
+    <div class="vs-grid fade-in">
+      <div class="vs-col vs-bad">
+        <div class="vs-head">Every other China supplier</div>
+        <div class="vs-item"><span>—</span>Fixed catalogue — take it or leave it</div>
+        <div class="vs-item"><span>—</span>Vague lead times, broken promises</div>
+        <div class="vs-item"><span>—</span>No QC — what arrives may not match photos</div>
+        <div class="vs-item"><span>—</span>You manage customs, duty, paperwork</div>
+        <div class="vs-item"><span>—</span>No compliance documentation</div>
+        <div class="vs-item"><span>—</span>High MOQs shut out smaller orders</div>
+        <div class="vs-item"><span>—</span>No UK presence — you're completely alone</div>
+        <div class="vs-item"><span>—</span>Price excludes duties, freight, delivery</div>
+      </div>
+      <div class="vs-col vs-good">
+        <div class="vs-head">IK ENG</div>
+        <div class="vs-item"><span>→</span>Source anything to your exact specification</div>
+        <div class="vs-item"><span>→</span>Written delivery date tied to your programme</div>
+        <div class="vs-item"><span>→</span>Pre-shipment photo report on every order</div>
+        <div class="vs-item"><span>→</span>All customs and documentation handled for you</div>
+        <div class="vs-item"><span>→</span>Fire certs, UKCA, test reports per product</div>
+        <div class="vs-item"><span>→</span>Single room to full scheme — any scale</div>
+        <div class="vs-item"><span>→</span>UK base, UK phone, UK-managed relationship</div>
+        <div class="vs-item"><span>→</span>One all-in GBP price. Zero hidden charges.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CATEGORIES ─────────────────────────────────────────────────── -->
+<section class="section section-dark" id="what-we-source">
+  <div class="inner">
+    <div class="sec-label">Product categories</div>
+    <h2 class="sec-title">Furniture to foundations —<br><em style="color:var(--gold)">if it's in a building, we source it</em></h2>
+    <p class="sec-sub">20+ years of factory relationships across Guangzhou, Shenzhen and Foshan. From a single sofa to a full building spec — LED lighting, acoustic panels, kitchen joinery, tiles, flooring, and everything in between.</p>
+    <div class="cats fade-in">
+      <div class="cat-card"><div class="cat-icon">🛋</div><div class="cat-name">Sofas &amp; seating</div></div>
+      <div class="cat-card"><div class="cat-icon">🛏</div><div class="cat-name">Beds &amp; bedroom</div></div>
+      <div class="cat-card"><div class="cat-icon">🚪</div><div class="cat-name">Wardrobes &amp; storage</div></div>
+      <div class="cat-card"><div class="cat-icon">🍳</div><div class="cat-name">Kitchen cabinets &amp; joinery</div></div>
+      <div class="cat-card"><div class="cat-icon">🪑</div><div class="cat-name">Dining furniture</div></div>
+      <div class="cat-card"><div class="cat-icon">💡</div><div class="cat-name">LED lighting &amp; electrical</div></div>
+      <div class="cat-card"><div class="cat-icon">🔇</div><div class="cat-name">Acoustic panels</div></div>
+      <div class="cat-card"><div class="cat-icon">🚿</div><div class="cat-name">Bathroom furniture</div></div>
+      <div class="cat-card"><div class="cat-icon">🪟</div><div class="cat-name">Soft furnishings</div></div>
+      <div class="cat-card"><div class="cat-icon">🏗</div><div class="cat-name">Tiles &amp; flooring</div></div>
+      <div class="cat-card"><div class="cat-icon">🧱</div><div class="cat-name">Building materials</div></div>
+      <div class="cat-card"><div class="cat-icon">✦</div><div class="cat-name">Anything else →</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── LEAD MAGNETS ───────────────────────────────────────────────── -->
+<section class="section section-white" id="magnets">
+  <div class="inner">
+    <div class="sec-label">Free tools &amp; resources</div>
+    <h2 class="sec-title">Start here — free,<br>no commitment required</h2>
+    <p class="sec-sub">Four tools built for UK property professionals who want to understand China sourcing before they commit to anything.</p>
+    <div class="magnets fade-in">
+
+      <div class="magnet">
+        <div class="magnet-tag">Most requested</div>
+        <div class="magnet-title">Free FF&amp;E Schedule</div>
+        <div class="magnet-desc">Send us your floor plan and room types. We'll return a fully costed, room-by-room furniture specification document within 48 hours — product names, dimensions, quantities, and GBP pricing. We do the spec work, you review and approve.</div>
+        <a href="#brief" class="magnet-btn">Send your floor plan →</a>
+      </div>
+
+      <div class="magnet">
+        <div class="magnet-tag">Instant result</div>
+        <div class="magnet-title">Scheme Budget Calculator</div>
+        <div class="magnet-desc">Planning a multi-unit scheme? Enter your bedroom mix and finish level. Get an instant indicative FF&amp;E budget per unit and for the whole scheme — with China pricing versus typical UK market rates. Used by QS teams at feasibility stage.</div>
+        <button class="magnet-btn" onclick="openModal('budgetModal')">Calculate your scheme →</button>
+      </div>
+
+      <div class="magnet">
+        <div class="magnet-tag">Free download</div>
+        <div class="magnet-title">UK Buyer's Guide to China Sourcing</div>
+        <div class="magnet-desc">The honest, plain-English guide: import duties, VAT, shipping timelines, how to avoid fake suppliers, fire compliance requirements, and what to put in your contract. 18 pages. Written for UK property professionals, not importers.</div>
+        <button class="magnet-btn" onclick="openModal('guideModal')">Download free guide →</button>
+      </div>
+
+      <div class="magnet">
+        <div class="magnet-tag">Full breakdown</div>
+        <div class="magnet-title">Landed Cost Calculator</div>
+        <div class="magnet-desc">Know your exact China-to-UK cost before you commit. Real HS code lookup, real UK duty rates, 2025 freight benchmarks. Includes a downloadable proforma invoice PDF. No sign-up, instant result.</div>
+        <a href="#calculator" class="magnet-btn">Calculate landed cost →</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── BUDGET CALCULATOR MODAL ────────────────────────────────────── -->
+<div class="modal-overlay" id="budgetModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div>
+        <div class="modal-title">Scheme Budget Calculator</div>
+        <div class="modal-sub">Indicative FF&amp;E cost per unit and whole scheme — China pricing</div>
+      </div>
+      <button class="modal-close" onclick="closeModal('budgetModal')">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="calc-grid">
+        <div class="field">
+          <label class="lbl">Number of units</label>
+          <input type="number" id="bc-units" placeholder="e.g. 24" min="1" value="10">
+        </div>
+        <div class="field">
+          <label class="lbl">Bedroom mix per unit</label>
+          <select id="bc-mix">
+            <option value="studio">Studio</option>
+            <option value="1bed" selected>1-bedroom</option>
+            <option value="2bed">2-bedroom</option>
+            <option value="3bed">3-bedroom</option>
+            <option value="hmo">HMO room</option>
+          </select>
+        </div>
+        <div class="field">
+          <label class="lbl">Finish level</label>
+          <select id="bc-finish">
+            <option value="standard">Standard — rental spec</option>
+            <option value="mid" selected>Mid-range — owner-occupier</option>
+            <option value="premium">Premium — high-end</option>
+            <option value="luxury">Luxury — bespoke</option>
+          </select>
+        </div>
+        <div class="field">
+          <label class="lbl">Scope</label>
+          <select id="bc-scope">
+            <option value="full" selected>Full FF&amp;E (everything)</option>
+            <option value="furniture">Furniture only</option>
+            <option value="kitchen">Kitchen &amp; bedroom</option>
+            <option value="bedroom">Bedroom only</option>
+          </select>
+        </div>
+      </div>
+      <button class="calc-btn" onclick="calcBudget()">Calculate scheme budget →</button>
+
+      <div class="calc-result" id="bc-result">
+        <div class="lc-label" style="color:var(--gold-lt);margin-bottom:6px;">Your indicative FF&amp;E budget</div>
+        <div class="result-grid">
+          <div class="result-card"><div class="result-label">China cost per unit</div><div class="result-val" id="bc-per-unit">—</div><div class="result-sub">landed in UK, all duties inc.</div></div>
+          <div class="result-card"><div class="result-label">Whole scheme (China)</div><div class="result-val" id="bc-total">—</div><div class="result-sub">all units combined</div></div>
+          <div class="result-card"><div class="result-label">UK market equivalent</div><div class="result-val" id="bc-uk">—</div><div class="result-sub">typical UK distributor price</div></div>
+          <div class="result-card"><div class="result-label">Estimated saving</div><div class="result-val" id="bc-saving">—</div><div class="result-sub">vs UK market rates</div></div>
+        </div>
+        <div class="result-note" id="bc-note">These are indicative figures based on typical project profiles. Your actual cost depends on exact specification, quantities, and current factory pricing. Send us your brief for a firm quote within 48 hours.</div>
+        <button class="magnet-btn" style="margin-top:14px;width:100%;justify-content:center;" onclick="closeModal('budgetModal');document.getElementById('brief').scrollIntoView({behavior:'smooth'});">Get a firm quote for this scheme →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── IMPORT GUIDE MODAL ─────────────────────────────────────────── -->
+<div class="modal-overlay" id="guideModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div>
+        <div class="modal-title">UK Buyer's Guide to China Sourcing</div>
+        <div class="modal-sub">18 pages — free, instant download</div>
+      </div>
+      <button class="modal-close" onclick="closeModal('guideModal')">×</button>
+    </div>
+    <div class="modal-body">
+      <div style="display:grid;grid-template-columns:auto 1fr;gap:20px;align-items:start;margin-bottom:20px;">
+        <div style="width:90px;height:124px;background:var(--gold);border-radius:5px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px;text-align:center;box-shadow:5px 5px 0 rgba(22,20,15,.15);flex-shrink:0;">
+          <div style="font-size:20px;">📖</div>
+          <div style="font-family:var(--serif);font-size:.75rem;font-weight:600;color:var(--ink);line-height:1.3;margin-top:6px;">UK Buyer's Guide</div>
+          <div style="font-size:.6rem;color:rgba(22,20,15,.55);margin-top:3px;">IK ENG · 2025</div>
+        </div>
+        <div>
+          <p style="font-size:.83rem;color:var(--mute);line-height:1.72;margin-bottom:12px;">Plain English. No jargon. Written for UK property professionals who are considering China sourcing but don't know where to start.</p>
+          <ul style="list-style:none;">
+            <li style="font-size:.8rem;color:var(--ink-mid);padding:3px 0;display:flex;gap:7px;">→ Import duties &amp; VAT — what you actually pay</li>
+            <li style="font-size:.8rem;color:var(--ink-mid);padding:3px 0;display:flex;gap:7px;">→ How to spot fake suppliers on Alibaba</li>
+            <li style="font-size:.8rem;color:var(--ink-mid);padding:3px 0;display:flex;gap:7px;">→ UK fire safety &amp; compliance requirements</li>
+            <li style="font-size:.8rem;color:var(--ink-mid);padding:3px 0;display:flex;gap:7px;">→ Sea vs air freight — when to use each</li>
+            <li style="font-size:.8rem;color:var(--ink-mid);padding:3px 0;display:flex;gap:7px;">→ What to put in your supplier contract</li>
+            <li style="font-size:.8rem;color:var(--ink-mid);padding:3px 0;display:flex;gap:7px;">→ Real timelines from order to site</li>
+          </ul>
+        </div>
+      </div>
+      <form id="guideForm" novalidate>
+        <div class="fg" style="margin-bottom:12px;">
+          <div class="field">
+            <label class="lbl">Your name <span class="req">*</span></label>
+            <input type="text" id="g-name" placeholder="Jane Smith" required>
+          </div>
+          <div class="field">
+            <label class="lbl">Email address <span class="req">*</span></label>
+            <input type="email" id="g-email" placeholder="jane@smithdev.co.uk" required>
+          </div>
+          <div class="field full">
+            <label class="lbl">Company</label>
+            <input type="text" id="g-company" placeholder="Smith Developments Ltd">
+          </div>
+        </div>
+        <button type="submit" class="submit-btn" style="width:100%;padding:13px;">Download free guide →</button>
+        <div style="font-size:.7rem;color:var(--mute);margin-top:8px;text-align:center;">We'll email you the guide instantly. No spam, ever.</div>
+      </form>
+      <div class="guide-success" id="guide-success">
+        ✅ <strong>Check your inbox</strong> — your guide is on its way to you now. We'll also follow up in case you have questions.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── SOURCING BRIEF ─────────────────────────────────────────────── -->
+<section class="section" id="brief">
+  <div class="inner">
+    <div class="sec-label">Start your project</div>
+    <h2 class="sec-title">Send us your brief.<br>We'll respond within 48 hours.</h2>
+    <p class="sec-sub">No minimum order. No catalogue. Tell us what you need — we'll find it, check it, ship it, and get it to your site.</p>
+
+    <div class="brief-wrap fade-in">
+      <div class="brief-hdr">
+        <div>
+          <div class="brief-hdr-title">Project Sourcing Brief</div>
+          <div class="brief-hdr-sub">The more detail you share, the faster I can respond with the right options</div>
+        </div>
+        <div class="brief-promises">
+          <div class="bp">⏱ 48hr response</div>
+          <div class="bp">🔒 Confidential</div>
+          <div class="bp">£0 to enquire</div>
+        </div>
+      </div>
+
+      <div class="brief-body">
+        <form id="briefForm" novalidate>
+
+          <div class="fsec">
+            <div class="fsec-title"><span class="fsec-num">1</span> Your details</div>
+            <div class="fg">
+              <div class="field"><label class="lbl">Full name <span class="req">*</span></label><input type="text" name="name" placeholder="Jane Smith" required></div>
+              <div class="field"><label class="lbl">Company <span class="req">*</span></label><input type="text" name="company" placeholder="Smith Developments Ltd" required></div>
+              <div class="field"><label class="lbl">Email <span class="req">*</span></label><input type="email" name="email" placeholder="jane@smithdev.co.uk" required></div>
+              <div class="field"><label class="lbl">Phone / WhatsApp</label><input type="tel" name="phone" placeholder="+44 7700 000000"></div>
+              <div class="field full">
+                <label class="lbl">Your role <span class="req">*</span></label>
+                <div class="radio-row">
+                  <div class="rpill"><input type="radio" name="role" id="r1" value="Property developer"><label for="r1">Property developer</label></div>
+                  <div class="rpill"><input type="radio" name="role" id="r2" value="Architect"><label for="r2">Architect</label></div>
+                  <div class="rpill"><input type="radio" name="role" id="r3" value="Interior designer"><label for="r3">Interior designer</label></div>
+                  <div class="rpill"><input type="radio" name="role" id="r4" value="Main contractor"><label for="r4">Main contractor</label></div>
+                  <div class="rpill"><input type="radio" name="role" id="r5" value="HMO landlord"><label for="r5">HMO / BTL landlord</label></div>
+                  <div class="rpill"><input type="radio" name="role" id="r6" value="Other"><label for="r6">Other</label></div>
+                </div>
+                <span class="err-msg" id="roleErr">Please select your role</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="fsec">
+            <div class="fsec-title"><span class="fsec-num">2</span> The project</div>
+            <div class="fg">
+              <div class="field"><label class="lbl">Project name</label><input type="text" name="project_name" placeholder="e.g. Riverside Quarter Phase 1"></div>
+              <div class="field"><label class="lbl">Location <span class="req">*</span></label><input type="text" name="location" placeholder="City or postcode" required></div>
+              <div class="field"><label class="lbl">Number of units</label><input type="number" name="units" placeholder="e.g. 24 apartments" min="1"></div>
+              <div class="field"><label class="lbl">Finish level</label>
+                <select name="finish_level">
+                  <option value="" disabled selected>Select…</option>
+                  <option>Standard — rental spec</option>
+                  <option>Mid-range — owner-occupier</option>
+                  <option>Premium — high-end residential</option>
+                  <option>Luxury — bespoke specification</option>
+                </select>
+              </div>
+              <div class="field full">
+                <label class="lbl">Project type</label>
+                <div class="radio-row">
+                  <div class="rpill"><input type="radio" name="ptype" id="pt1" value="New build residential"><label for="pt1">New build</label></div>
+                  <div class="rpill"><input type="radio" name="ptype" id="pt2" value="BTR / PRS"><label for="pt2">BTR / PRS</label></div>
+                  <div class="rpill"><input type="radio" name="ptype" id="pt3" value="HMO"><label for="pt3">HMO</label></div>
+                  <div class="rpill"><input type="radio" name="ptype" id="pt4" value="Refurbishment"><label for="pt4">Refurbishment</label></div>
+                  <div class="rpill"><input type="radio" name="ptype" id="pt5" value="Show home"><label for="pt5">Show home</label></div>
+                  <div class="rpill"><input type="radio" name="ptype" id="pt6" value="Single property"><label for="pt6">Single property</label></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="fsec">
+            <div class="fsec-title"><span class="fsec-num">3</span> What do you need sourced?</div>
+            <div class="check-row">
+              <label class="chk"><input type="checkbox" name="cat" value="Beds & bedroom"><span class="chk-label">Beds &amp; bedroom</span></label>
+              <label class="chk"><input type="checkbox" name="cat" value="Sofas & living room"><span class="chk-label">Sofas &amp; living room</span></label>
+              <label class="chk"><input type="checkbox" name="cat" value="Dining furniture"><span class="chk-label">Dining furniture</span></label>
+              <label class="chk"><input type="checkbox" name="cat" value="Kitchen cabinets"><span class="chk-label">Kitchen cabinets</span></label>
+              <label class="chk"><input type="checkbox" name="cat" value="Wardrobes & storage"><span class="chk-label">Wardrobes &amp; storage</span></label>
+              <label class="chk"><input type="checkbox" name="cat" value="Bathroom furniture"><span class="chk-label">Bathroom furniture</span></label>
+              <label class="chk"><input type="checkbox" name="cat" value="LED lighting"><span class="chk-label">LED lighting</span></label>
+              <label class="chk"><input type="checkbox" name="cat" value="Acoustic panels"><span class="chk-label">Acoustic panels</span></label>
+              <label class="chk"><input type="checkbox" name="cat" value="Soft furnishings"><span class="chk-label">Soft furnishings</span></label>
+              <label class="chk"><input type="checkbox" name="cat" value="Building materials"><span class="chk-label">Building materials</span></label>
+              <label class="chk"><input type="checkbox" name="cat" value="Full FF&E package"><span class="chk-label">Full FF&amp;E package</span></label>
+              <label class="chk"><input type="checkbox" name="cat" value="Not sure"><span class="chk-label">Not sure — advise me</span></label>
+            </div>
+          </div>
+
+          <div class="fsec">
+            <div class="fsec-title"><span class="fsec-num">4</span> Specification &amp; timeline</div>
+            <div class="fg">
+              <div class="field full"><label class="lbl">What do you need? Be as loose or precise as you like.</label><textarea name="description" rows="4" placeholder="e.g. 20 double beds with upholstered headboard in grey fabric, king size. Similar to John Lewis Eliot but at a lower price point. Rental spec durability. Including mattress."></textarea><span class="hint">We'll ask follow-up questions — no full spec needed at this stage.</span></div>
+              <div class="field"><label class="lbl">Materials / finishes</label><input type="text" name="materials" placeholder="e.g. oak veneer, brushed brass, grey linen"></div>
+              <div class="field"><label class="lbl">Specific dimensions</label><input type="text" name="dimensions" placeholder="e.g. sofa max 220cm, 76cm doorway"></div>
+              <div class="field"><label class="lbl">Required on-site date</label><input type="date" name="delivery_date"></div>
+              <div class="field"><label class="lbl">Approximate budget</label>
+                <select name="budget">
+                  <option value="" disabled selected>Select a range…</option>
+                  <option>Under £5,000</option>
+                  <option>£5,000 – £15,000</option>
+                  <option>£15,000 – £50,000</option>
+                  <option>£50,000 – £150,000</option>
+                  <option>£150,000 – £500,000</option>
+                  <option>Over £500,000</option>
+                  <option>Not yet defined</option>
+                </select>
+              </div>
+              <div class="field"><label class="lbl">Reference images / links</label><input type="text" name="references" placeholder="Pinterest board, Houzz link, product URL"></div>
+              <div class="field full"><label class="lbl">Anything else</label><textarea name="notes" rows="2" placeholder="Previous supplier problems, compliance requirements, site access, phased delivery needs, how you found us…"></textarea></div>
+            </div>
+          </div>
+
+          <div class="submit-bar">
+            <button type="submit" class="submit-btn">Submit sourcing brief →</button>
+            <div class="submit-note">We'll review your brief and respond within 48 hours with factory options, pricing, and a confirmed delivery date. Free to enquire, no obligation.</div>
+          </div>
+        </form>
+        <div class="success-bar" id="briefSuccess">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#1d6b5e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg>
+          <div><strong>Brief received — thank you.</strong> We'll be in touch within 48 hours with options and pricing.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── ABOUT ───────────────────────────────────────────────────────── -->
+<section class="section section-white" id="about">
+  <div class="inner">
+    <div class="sec-label">About IK ENG</div>
+    <h2 class="sec-title">20 years in China.<br>We handle everything so you don't have to.</h2>
+    <div class="about-grid fade-in">
+      <div>
+        <div class="about-text">
+          <p>IK ENG was built on one simple observation: UK builders, developers and architects are paying far too much for products that are manufactured in China anyway — because they're buying through UK distributors who add a margin without adding any real value.</p>
+          <p>With over 20 years working directly with manufacturers across Guangzhou, Shenzhen, Foshan and beyond, I have the factory relationships, the market knowledge, and the contacts to source almost anything a building needs — furniture, LED lighting, acoustic panels, kitchen cabinets, tiles, flooring, and building materials — at the price UK buyers should actually be paying.</p>
+          <p>What makes IK ENG different is that we don't just connect you to a factory and disappear. We manage everything end-to-end so you never have to think about China. You send us a brief. We source the options, negotiate the price, approve the samples, monitor production, conduct the pre-shipment inspection, manage export documentation, arrange UK customs clearance, and coordinate white-glove delivery to your site. One team. One invoice. Zero complexity for you.</p>
+        </div>
+        <div class="about-text" style="margin-top:20px;">
+          <div class="pillar"><div class="pillar-icon">🏭</div><div><div class="pillar-title">20+ years of factory relationships across China</div><div class="pillar-desc">Guangzhou, Shenzhen, Foshan — the manufacturing heartlands of China. I know which factories produce quality, which to avoid, and how to get the best price without compromising on what arrives.</div></div></div>
+          <div class="pillar"><div class="pillar-icon">👁</div><div><div class="pillar-title">Every order is inspected before it ships</div><div class="pillar-desc">Not a third-party agency. Our team. Every order gets a pre-shipment inspection and a full photo report shared with you before the container seals. You see exactly what you're getting before it leaves China.</div></div></div>
+          <div class="pillar"><div class="pillar-icon">🇬🇧</div><div><div class="pillar-title">Manchester based. One point of contact for everything.</div><div class="pillar-desc">UK phone, UK contracts, UK-standard service. You deal with us directly — not a call centre, not a ticketing system. When something needs solving, you call us and it gets solved.</div></div></div>
+        </div>
+      </div>
+      <div>
+        <div class="about-stats">
+          <div class="astat"><div class="astat-num">20+</div><div class="astat-label">Years in China</div></div>
+          <div class="astat"><div class="astat-num">48h</div><div class="astat-label">Brief to first options</div></div>
+          <div class="astat"><div class="astat-num">£0</div><div class="astat-label">Hidden charges ever</div></div>
+          <div class="astat"><div class="astat-num">1</div><div class="astat-label">Person handles everything</div></div>
+        </div>
+        <div class="contact-box" style="margin-top:14px;">
+          <div class="contact-box-title">Talk to us directly</div>
+          <div class="contact-box-sub">Most enquiries are better handled over a quick call than a form. If you have a live project, WhatsApp us now and we'll respond same day.</div>
+          <a href="https://wa.me/447767990007?text=Hi%2C%20I%20want%20to%20discuss%20a%20sourcing%20project%20with%20IK%20ENG" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:9px;background:#25d366;color:white;padding:12px 16px;border-radius:5px;text-decoration:none;font-weight:600;font-size:.84rem;margin-bottom:10px;">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            WhatsApp +44 7767 990 007
+          </a>
+          <div style="font-size:.72rem;color:rgba(255,255,255,.35);line-height:1.7;">125 Great Clowes Street, Manchester M7 1AL<br>sai@ikeng.co.uk</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TESTIMONIALS ───────────────────────────────────────────────── -->
+<section class="section section-cream">
+  <div class="inner">
+    <div class="sec-label">What clients say</div>
+    <h2 class="sec-title">Trusted by UK developers,<br>architects &amp; landlords</h2>
+    <div class="testimonials fade-in">
+      <div class="tcard">
+        <div class="tcard-text">We needed 40 kitchen units and a full bedroom package for an HMO in under 12 weeks. IK ENG came back with factory options within two days, and everything arrived on site exactly when they said it would. First time I've had zero surprises from a China supplier.</div>
+        <div class="tcard-name">Property Developer</div>
+        <div class="tcard-role">Manchester — 24-unit HMO scheme</div>
+      </div>
+      <div class="tcard">
+        <div class="tcard-text">As an architect I'm always nervous about specifying Chinese products because of the compliance risk. IK ENG provided fire certificates and full documentation for every item before we'd even signed off the order. That's what made the difference.</div>
+        <div class="tcard-name">Principal Architect</div>
+        <div class="tcard-role">Residential scheme, London</div>
+      </div>
+      <div class="tcard">
+        <div class="tcard-text">Saved roughly 40% on our FF&amp;E costs compared to what we'd been paying UK distributors. The quality is the same — or better. The whole process was managed by their UK contact so it felt no different from dealing with a British supplier.</div>
+        <div class="tcard-name">BTR Scheme Manager</div>
+        <div class="tcard-role">72-unit development, Leeds</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── LANDED COST CALCULATOR ─────────────────────────────────────── -->
+<section class="section section-white" id="calculator">
+  <div class="inner">
+    <div class="sec-label">Free tool</div>
+    <h2 class="sec-title">China landed cost calculator</h2>
+    <p class="sec-sub">Know your exact cost before you commit. Real UK tariff rates, 2025 freight benchmarks, and a downloadable proforma invoice.</p>
+
+    <div class="landed-calc fade-in">
+      <div class="lc-panel">
+        <div class="lc-label"><span class="lc-num">1</span> Describe your product &amp; order</div>
+        <div class="prod-wrap">
+          <input type="text" id="productInput" placeholder="e.g. LED panel 60x60cm, acoustic foam tiles, 3-seat sofa…">
+          <button class="search-btn" onclick="runCalc()">Calculate ↓</button>
+        </div>
+        <div class="inp-grid">
+          <div>
+            <label style="font-size:.68rem;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--mute);display:block;margin-bottom:5px;">Price, currency &amp; terms</label>
+            <div class="price-row">
+              <select class="cur-sel" id="currencySelect" onchange="onCurrencyChange()">
+                <option value="GBP">£ GBP</option>
+                <option value="USD">$ USD</option>
+                <option value="CNY" selected>¥ RMB</option>
+              </select>
+              <input type="number" id="unitPrice" placeholder="e.g. 38" min="0" step="0.01" style="min-width:0;">
+              <select class="inc-sel ic" id="incoterms" onchange="tryRecalc()" style="width:100%;">
+                <option value="EXW">EXW</option>
+                <option value="FOB" selected>FOB</option>
+                <option value="CIF">CIF</option>
+              </select>
+            </div>
+            <div class="rate-badge" id="rateBadge">Loading live rates…</div>
+          </div>
+          <div>
+            <label style="font-size:.68rem;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--mute);display:block;margin-bottom:5px;">Order quantity</label>
+            <input type="number" id="orderQty" placeholder="e.g. 100" min="1" value="100">
+          </div>
+          <div>
+            <label style="font-size:.68rem;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--mute);display:block;margin-bottom:5px;">Company name (invoice)</label>
+            <input type="text" id="companyName" placeholder="Your company">
+          </div>
+        </div>
+        <div style="margin-top:14px;">
+          <label style="font-size:.68rem;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--mute);display:block;margin-bottom:7px;">Shipping method</label>
+          <div class="ftoggle">
+            <button class="ftog" id="togAir" onclick="setFreight('air')">✈ Air freight<span class="ftog-sub">5–10 days · First orders</span></button>
+            <button class="ftog active" id="togSea" onclick="setFreight('sea')">🚢 Sea freight<span class="ftog-sub">4–8 weeks · Best margin</span></button>
+          </div>
+        </div>
+        <button class="run-btn" onclick="runCalc()">Get Full Landed Cost Breakdown →</button>
+      </div>
+
+      <div id="results-section">
+        <div class="res-grid">
+          <div class="ai-panel">
+            <div class="lc-label"><span class="lc-num">2</span> UK Customs Intelligence</div>
+            <div id="aiOut"><div class="ai-loading"><div class="spinner"></div> Analysing UK tariff schedule…</div></div>
+          </div>
+          <div class="cost-sidebar">
+            <div class="sidebar-title">Landed Cost Breakdown</div>
+            <div class="per-unit-badge" id="perUnitBadge">— per unit</div>
+            <div class="cost-sec-head">Product</div>
+            <div class="cost-row"><span class="cost-label">Unit price (ex-factory)</span><span class="cost-val" id="rUnit">—</span></div>
+            <div class="cost-row"><span class="cost-label">Subtotal (<span id="rQtyLbl">100</span> units)</span><span class="cost-val" id="rSub">—</span></div>
+            <div class="cost-sec-head">Logistics</div>
+            <div class="cost-row"><span class="cost-label" id="rFreightLbl">Sea freight</span><span class="cost-val" id="rFreight">—</span></div>
+            <div class="cost-row"><span class="cost-label" id="rPortLbl">Port &amp; documentation</span><span class="cost-val" id="rPort">—</span></div>
+            <div class="cost-sec-head">Sourcing &amp; QC</div>
+            <div class="cost-row"><span class="cost-label">QC inspection &amp; factory liaison</span><span class="cost-val" id="rSvc">—</span></div>
+            <div class="cost-sec-head">UK Import Duty</div>
+            <div class="cost-row"><span class="cost-label">Duty (<span id="rDutyPct">5</span>%)</span><span class="cost-val" id="rDuty">—</span></div>
+            <div class="cost-total-row"><span class="cost-total-label">Net total (ex-VAT)</span><span class="cost-total-val" id="rTotal">—</span></div>
+            <div class="vat-box">
+              <div style="display:flex;justify-content:space-between;margin-bottom:4px;"><span>+ VAT (20%)</span><strong id="rVat">—</strong></div>
+              <div style="display:flex;justify-content:space-between;"><span>Grand total (inc. VAT)</span><strong id="rGrand" style="color:var(--gold-lt);">—</strong></div>
+              <div style="margin-top:7px;font-size:.68rem;opacity:.8;">VAT fully reclaimable for VAT-registered businesses</div>
+            </div>
+            <button class="pi-btn" id="piBtn" onclick="generatePI()" disabled style="opacity:.45;cursor:not-allowed;">⏳ Awaiting customs verification…</button>
+            <button class="share-btn" id="shareBtn" onclick="copyShareLink()" disabled style="opacity:.35;cursor:not-allowed;">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+              Share this quote
+            </button>
+            <a class="wa-strip-calc" id="waStrip" href="https://wa.me/447767990007?text=Hi%20IK%20ENG" target="_blank" rel="noopener">
+              <div class="wa-icon-c"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></div>
+              <div><div class="wa-strip-title">Ready to proceed?</div><div class="wa-strip-sub">+44 7767 990 007</div></div>
+            </a>
+          </div>
+        </div>
+        <div class="rpt-section" id="reportSection" style="display:none;">
+          <div class="lc-label"><span class="lc-num">3</span> IK Strategic Import Report</div>
+          <div class="rpt-grid" id="reportGrid"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FAQ ────────────────────────────────────────────────────────── -->
+<section class="section section-white">
+  <div class="inner">
+    <div class="sec-label">Common questions</div>
+    <h2 class="sec-title">Everything UK buyers ask<br>before their first order</h2>
+    <div class="faq fade-in">
+      <div class="faq-item" onclick="this.classList.toggle('open')"><div class="faq-q"><span class="faq-qt">Do I need to know exactly what I want before contacting you?</span><span class="faq-ch">+</span></div><div class="faq-a">No — and most of our clients don't. A mood board, a photo of something you've seen, or even just a description is enough to start. We ask the right questions and come back with options within 48–72 hours.</div></div>
+      <div class="faq-item" onclick="this.classList.toggle('open')"><div class="faq-q"><span class="faq-qt">What's the minimum order?</span><span class="faq-ch">+</span></div><div class="faq-a">There's no formal minimum, but orders under around £2,000 landed value are usually uneconomical due to fixed freight costs. We'll always tell you honestly if an order doesn't make financial sense, and we can often consolidate small orders with others to share freight costs.</div></div>
+      <div class="faq-item" onclick="this.classList.toggle('open')"><div class="faq-q"><span class="faq-qt">How do you ensure quality when I can't visit the factory?</span><span class="faq-ch">+</span></div><div class="faq-a">Three ways: we source from factories we have established relationships with; we offer physical samples shipped to your UK address before bulk production; and we conduct a pre-shipment inspection of every order with a full photo report shared with you before the container seals.</div></div>
+      <div class="faq-item" onclick="this.classList.toggle('open')"><div class="faq-q"><span class="faq-qt">Do your products meet UK fire safety and compliance standards?</span><span class="faq-ch">+</span></div><div class="faq-a">Yes. For upholstered furniture we ensure BS 7177 fire resistance compliance. For electrical items we provide UKCA documentation. Every order includes a full compliance pack — test certificates, material specs, country of origin. Ready to drop straight into your project file.</div></div>
+      <div class="faq-item" onclick="this.classList.toggle('open')"><div class="faq-q"><span class="faq-qt">What do you actually charge?</span><span class="faq-ch">+</span></div><div class="faq-a">A sourcing and QC fee of 5% of product value (minimum £199), included in every landed cost quote. The price you see is the all-in price: product, freight, UK customs clearance, import duty, our fee, and last-mile delivery. No hidden charges. Use our cost calculator to see a full breakdown for your product.</div></div>
+      <div class="faq-item" onclick="this.classList.toggle('open')"><div class="faq-q"><span class="faq-qt">How long from order to site?</span><span class="faq-ch">+</span></div><div class="faq-a">Typically 10–12 weeks door-to-site: 3–5 weeks production + 5 weeks sea transit + 1 week UK customs and delivery. For urgent orders we can use air freight (5–10 days transit, higher cost). We quote a specific confirmed delivery date and stand behind it.</div></div>
+      <div class="faq-item" onclick="this.classList.toggle('open')"><div class="faq-q"><span class="faq-qt">Can you handle phased delivery for a multi-block development?</span><span class="faq-ch">+</span></div><div class="faq-a">Yes — this is a speciality. One consolidated order, staggered shipping timed to your handover programme. Block A in April, Block B in July, for example. We manage the warehousing split in China so you coordinate nothing.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA STRIP ──────────────────────────────────────────────────── -->
+<div class="cta-strip">
+  <h2>Ready to source your first order?</h2>
+  <p>Send us a brief. We'll come back within 48 hours with factory options, pricing, and a confirmed delivery date. You do nothing else until the goods are at your door.</p>
+  <div class="cta-actions">
+    <a href="#brief" class="btn-dark">Send your sourcing brief →</a>
+    <a href="https://wa.me/447767990007?text=Hi%20IK%20ENG%2C%20I%20want%20to%20discuss%20a%20sourcing%20project" target="_blank" rel="noopener" class="btn-ol-dark">WhatsApp us now</a>
+  </div>
+</div>
+
+<!-- ── FOOTER ─────────────────────────────────────────────────────── -->
 <footer>
-    <p>© 2025 IK Eng Ltd · 125 Great Clowes Street, Manchester M7 1AL · <a href="mailto:sai@ikeng.co.uk">sai@ikeng.co.uk</a></p>
-    <p><a href="privacy.html">Privacy Policy</a> &nbsp;·&nbsp; <a href="https://wa.me/447767990007" target="_blank">WhatsApp +44 7767 990 007</a></p>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">IK <em>ENG</em></div>
+        <div class="footer-desc">20+ years sourcing from China. Furniture, LED, acoustic panels, kitchen cabinets, tiles, building materials — everything a building needs. One contact. Manchester based.</div>
+      </div>
+      <div>
+        <div class="footer-col-title">Services</div>
+        <ul class="footer-links">
+          <li><a href="#brief">Send a sourcing brief</a></li>
+          <li><a href="#how-it-works">How it works</a></li>
+          <li><a href="#what-we-source">What we source</a></li>
+          <li><a href="#calculator">Cost calculator</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Free tools</div>
+        <ul class="footer-links">
+          <li><a href="#brief">Free FF&amp;E schedule</a></li>
+          <li><a href="#magnets" onclick="setTimeout(()=>openModal('budgetModal'),400)">Scheme budget calculator</a></li>
+          <li><a href="#magnets" onclick="setTimeout(()=>openModal('guideModal'),400)">Import guide PDF</a></li>
+          <li><a href="#calculator">Landed cost calculator</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Contact</div>
+        <ul class="footer-links">
+          <li><a href="mailto:sai@ikeng.co.uk">sai@ikeng.co.uk</a></li>
+          <li><a href="https://wa.me/447767990007" target="_blank">WhatsApp +44 7767 990 007</a></li>
+          <li><a href="#">125 Great Clowes Street</a></li>
+          <li><a href="#">Manchester M7 1AL</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2025 IK Eng Ltd · Registered in England &amp; Wales</div>
+      <div class="footer-copy"><a href="/privacy" style="color:rgba(255,255,255,.22);text-decoration:none;">Privacy Policy</a></div>
+    </div>
+  </div>
 </footer>
 
 <div id="toast"></div>
 
 <script>
-// ── EXCHANGE RATES ────────────────────────────────────────────────────────────
-let FX = { GBP: 1, USD: 1.27, CNY: 9.18 }; // fallback defaults
-let fxLoaded = false;
+// ── SCROLL ANIMATIONS ─────────────────────────────────────────────
+const obs = new IntersectionObserver(es => es.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); }), {threshold:0.08});
+document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
 
+// ── MODALS ────────────────────────────────────────────────────────
+function openModal(id) { document.getElementById(id).classList.add('open'); document.body.style.overflow='hidden'; }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); document.body.style.overflow=''; }
+document.querySelectorAll('.modal-overlay').forEach(m => m.addEventListener('click', e => { if(e.target===m) closeModal(m.id); }));
+document.addEventListener('keydown', e => { if(e.key==='Escape') document.querySelectorAll('.modal-overlay.open').forEach(m => closeModal(m.id)); });
+
+// ── CHECKBOXES ────────────────────────────────────────────────────
+document.querySelectorAll('.chk input[type=checkbox]').forEach(cb => cb.addEventListener('change', () => cb.closest('.chk').classList.toggle('selected', cb.checked)));
+
+// ── BRIEF FORM ────────────────────────────────────────────────────
+document.getElementById('briefForm').addEventListener('submit', async function(e) {
+  e.preventDefault(); let ok = true;
+  this.querySelectorAll('input[required]').forEach(f => {
+    if (!f.value.trim()) { f.style.borderColor='var(--red)'; ok=false; } else { f.style.borderColor=''; }
+  });
+  const em = this.querySelector('input[type=email]');
+  if (em && em.value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em.value)) { em.style.borderColor='var(--red)'; ok=false; }
+  if (!this.querySelector('input[name=role]:checked')) { document.getElementById('roleErr').classList.add('show'); ok=false; }
+  else { document.getElementById('roleErr').classList.remove('show'); }
+  if (!ok) return;
+  const data = {};
+  new FormData(this).forEach((v,k) => { data[k] = data[k] ? [].concat(data[k],v) : v; });
+  if (window.logBrief) await window.logBrief(data);
+  document.getElementById('briefSuccess').classList.add('show');
+  this.querySelector('.submit-bar').style.opacity='.4';
+  this.querySelector('.submit-bar').style.pointerEvents='none';
+  document.getElementById('briefSuccess').scrollIntoView({behavior:'smooth',block:'center'});
+});
+document.querySelectorAll('#briefForm input, #briefForm select, #briefForm textarea').forEach(f => f.addEventListener('input', () => f.style.borderColor=''));
+
+// ── GUIDE FORM ────────────────────────────────────────────────────
+document.getElementById('guideForm').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const name = document.getElementById('g-name').value.trim();
+  const email = document.getElementById('g-email').value.trim();
+  if (!name || !email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    showToast('Please enter your name and a valid email.'); return;
+  }
+  if (window.logGuide) await window.logGuide({ name, email, company: document.getElementById('g-company').value.trim() });
+  document.getElementById('guide-success').classList.add('show');
+  this.style.display='none';
+});
+
+// ── BUDGET CALCULATOR ─────────────────────────────────────────────
+const budgetData = {
+  studio:  { standard:1400, mid:2200, premium:3800, luxury:6500 },
+  '1bed':  { standard:2200, mid:3600, premium:6000, luxury:11000 },
+  '2bed':  { standard:3400, mid:5400, premium:9000, luxury:16000 },
+  '3bed':  { standard:4400, mid:7200, premium:12000, luxury:22000 },
+  hmo:     { standard:800,  mid:1300, premium:2200,  luxury:4000 },
+};
+const scopeMult = { full:1, furniture:.75, kitchen:.55, bedroom:.4 };
+const ukMult = 2.4;
+
+function calcBudget() {
+  const units  = parseInt(document.getElementById('bc-units').value) || 1;
+  const mix    = document.getElementById('bc-mix').value;
+  const finish = document.getElementById('bc-finish').value;
+  const scope  = document.getElementById('bc-scope').value;
+  const base   = budgetData[mix][finish];
+  const perUnit = Math.round(base * scopeMult[scope]);
+  const total   = perUnit * units;
+  const ukEq    = Math.round(perUnit * ukMult);
+  const saving  = Math.round((ukEq - perUnit) * units);
+
+  const fmt = n => '£' + n.toLocaleString('en-GB');
+  document.getElementById('bc-per-unit').textContent = fmt(perUnit);
+  document.getElementById('bc-total').textContent    = fmt(total);
+  document.getElementById('bc-uk').textContent       = fmt(ukEq) + '/unit';
+  document.getElementById('bc-saving').textContent   = fmt(saving);
+  document.getElementById('bc-result').classList.add('show');
+}
+
+// ── EXCHANGE RATES ────────────────────────────────────────────────
+let FX = {GBP:1, USD:1.27, CNY:9.18}, fxLoaded=false;
 async function loadRates() {
-    try {
-        const r = await fetch('https://api.exchangerate-api.com/v4/latest/GBP');
-        if (!r.ok) throw new Error();
-        const d = await r.json();
-        FX.USD = d.rates.USD; FX.CNY = d.rates.CNY;
-        fxLoaded = true;
-    } catch(e) {
-        // silently use fallback rates
-        fxLoaded = true;
-    }
-    onCurrencyChange();
+  try { const r=await fetch('https://api.exchangerate-api.com/v4/latest/GBP'); if(!r.ok)throw 0; const d=await r.json(); FX.USD=d.rates.USD; FX.CNY=d.rates.CNY; fxLoaded=true; }
+  catch(e){ fxLoaded=true; }
+  onCurrencyChange();
 }
-
 function onCurrencyChange() {
-    const cur = document.getElementById('currencySelect').value;
-    const badge = document.getElementById('rateBadge');
-    if (cur === 'GBP') {
-        badge.textContent = '1 GBP = 1.00 GBP';
-    } else if (cur === 'USD') {
-        badge.textContent = `1 USD = £${(1 / FX.USD).toFixed(4)} GBP  (live rate)`;
-    } else {
-        badge.textContent = `1 RMB = £${(1 / FX.CNY).toFixed(4)} GBP  (live rate)`;
-    }
-    if (aiReady && aiData) recalc();
+  const cur=document.getElementById('currencySelect').value;
+  const b=document.getElementById('rateBadge');
+  if(cur==='GBP') b.textContent='1 GBP = 1.00 GBP';
+  else if(cur==='USD') b.textContent=`1 USD = £${(1/FX.USD).toFixed(4)} (live)`;
+  else b.textContent=`1 RMB = £${(1/FX.CNY).toFixed(4)} (live)`;
+  if(aiReady&&aiData) recalc();
 }
-
 function getPriceGBP() {
-    const raw = parseFloat(document.getElementById('unitPrice').value) || 0;
-    const cur = document.getElementById('currencySelect').value;
-    return Math.max(raw / FX[cur], 0);  // pure currency conversion only — incoterms costs handled separately in recalc()
+  const raw=parseFloat(document.getElementById('unitPrice').value)||0;
+  const cur=document.getElementById('currencySelect').value;
+  let p=raw/FX[cur];
+  const inco=document.getElementById('incoterms').value;
+  if(inco==='EXW'&&aiData) p+=0.40;
+  if(inco==='CIF'&&aiData) p-=aiData.freight_sea_per_unit_gbp*0.85;
+  return Math.max(p,0);
 }
 
-// Returns itemised incoterms surcharges per unit in GBP
-// EXW: buyer responsible for everything from factory gate — inland haulage, export customs, origin THC
-// FOB: supplier delivers to port cleared for export — baseline, no surcharge
-// CIF: supplier pays main freight + insurance to UK port — deduct main freight leg
-function getIncoSurcharges(qty, frPU, isAir) {
-    const inco = document.getElementById('incoterms').value;
-    if (inco === 'FOB') return { lines: [], totalPerUnit: 0, freightDeduct: 0 };
+let aiData=null, freight='sea', aiReady=false, aiConfidence=null;
+const MIN_SVC=199, SVC_RATE=.05, PORT_AIR=45, PORT_SEA=145, VAT_RATE=.2;
+const gbp=v=>'£'+Number(v).toFixed(2);
+function showToast(msg,col){const t=document.getElementById('toast');t.textContent=msg;t.style.background=col||'#b84040';t.style.display='block';setTimeout(()=>t.style.display='none',5000);}
+function setFreight(m){freight=m;document.getElementById('togAir').classList.toggle('active',m==='air');document.getElementById('togSea').classList.toggle('active',m==='sea');if(aiReady&&aiData)recalc();}
+function tryRecalc(){if(aiReady&&aiData)recalc();}
 
-    if (inco === 'EXW') {
-        // Scale inland haulage: larger orders spread the truck cost further
-        const inlandPU  = qty <= 100 ? 1.80 : qty <= 500 ? 1.20 : 0.80;  // factory→port truck per unit
-        const exportCus = qty <= 100 ? 0.60 : qty <= 500 ? 0.35 : 0.20;  // China export customs declaration per unit
-        const originTHC = qty <= 100 ? 0.50 : qty <= 500 ? 0.30 : 0.18;  // origin terminal handling charge per unit
-        return {
-            lines: [
-                { label: 'EXW: China inland haulage (factory→port)', perUnit: inlandPU },
-                { label: 'EXW: China export customs & declaration',   perUnit: exportCus },
-                { label: 'EXW: Origin terminal handling (THC)',       perUnit: originTHC },
-            ],
-            totalPerUnit: inlandPU + exportCus + originTHC,
-            freightDeduct: 0
-        };
-    }
-
-    if (inco === 'CIF') {
-        // CIF: supplier has paid the main freight leg — remove it entirely
-        // We keep port charges (UK side) and origin THC is supplier's problem
-        return {
-            lines: [{ label: 'CIF: Main freight included in supplier price', perUnit: -frPU }],
-            totalPerUnit: -frPU,
-            freightDeduct: frPU   // used to zero out the freight row display
-        };
-    }
-
-    return { lines: [], totalPerUnit: 0, freightDeduct: 0 };
+function recalc(){
+  if(!aiData)return;
+  const price=getPriceGBP(), qty=parseInt(document.getElementById('orderQty').value)||0;
+  if(!price||!qty)return;
+  const isAir=freight==='air', inco=document.getElementById('incoterms').value;
+  const frPU=isAir?aiData.freight_air_per_unit_gbp:aiData.freight_sea_per_unit_gbp;
+  const freightCharge=inco==='CIF'?0:frPU, port=isAir?PORT_AIR:PORT_SEA;
+  const prodTot=price*qty, frTot=freightCharge*qty, svc=Math.max(prodTot*SVC_RATE,MIN_SVC);
+  const dutyBase=prodTot+frTot+port+svc, dutyTot=dutyBase*(aiData.duty_rate/100);
+  const net=dutyBase+dutyTot, vat=net*VAT_RATE, grand=net+vat;
+  document.getElementById('perUnitBadge').textContent=gbp(net/qty)+' per unit · '+qty+' units';
+  document.getElementById('rQtyLbl').textContent=qty;
+  document.getElementById('rUnit').textContent=gbp(price)+' (GBP)';
+  document.getElementById('rSub').textContent=gbp(prodTot);
+  document.getElementById('rFreight').textContent=inco==='CIF'?'Included in CIF':gbp(frTot);
+  document.getElementById('rPort').textContent=gbp(port);
+  document.getElementById('rSvc').textContent=gbp(svc);
+  document.getElementById('rDuty').textContent=gbp(dutyTot);
+  document.getElementById('rDutyPct').textContent=aiData.duty_rate.toFixed(1);
+  document.getElementById('rTotal').textContent=gbp(net);
+  document.getElementById('rVat').textContent=gbp(vat);
+  document.getElementById('rGrand').textContent=gbp(grand);
+  document.getElementById('rFreightLbl').textContent=isAir?'✈ Air freight':'🚢 Sea freight LCL';
+  document.getElementById('rPortLbl').textContent=isAir?'Air port & docs':'UK port levies (2025)';
+  const piBtn=document.getElementById('piBtn');
+  piBtn.disabled=false;piBtn.style.opacity='1';piBtn.style.cursor='pointer';
+  piBtn.textContent=aiConfidence==='estimated'?'⬇ Download PI (est. duty)':'⬇ Download Proforma Invoice (PDF)';
+  unlockShareBtn(); updateWaLink(net,qty);
+  if(window.logLead&&!window._logged){window._logged=true;window.logLead({product:document.getElementById('productInput').value.trim(),qty,currency:document.getElementById('currencySelect').value,price_gbp:price,incoterms:document.getElementById('incoterms').value,freight_mode:freight,hs_code:aiData.hs_code,duty_rate:aiData.duty_rate,net_landed:parseFloat(net.toFixed(2)),company:document.getElementById('companyName').value.trim()||null});}
 }
 
-// ── STATE ────────────────────────────────────────────────────────────────────
-let aiData = null;
-let freight = 'sea';
-let aiReady = false;
-let aiConfidence = null;
-
-const MIN_SVC = 199, SVC_RATE = .05, PORT_AIR = 45, PORT_SEA = 145, VAT_RATE = .2;
-const gbp = v => '£' + Number(v).toFixed(2);
-
-// ── HELPERS ───────────────────────────────────────────────────────────────────
-function showToast(msg, col) {
-    const t = document.getElementById('toast');
-    t.textContent = msg; t.style.background = col || '#c0392b';
-    t.style.display = 'block'; setTimeout(() => t.style.display = 'none', 5000);
+function renderAI(d){
+  const cm={confirmed:{label:'Duty rate confirmed',col:'#1d6b5e',bg:'#d0e8e4'},likely:{label:'Duty rate likely',col:'#7a5c00',bg:'#fff8ed'},estimated:{label:'Duty rate estimated',col:'#8b1a1a',bg:'#fde8e8'}};
+  const conf=cm[d.duty_confidence]||cm.estimated; aiConfidence=d.duty_confidence;
+  let rh='';
+  if(d.risk_flags&&d.risk_flags.length)rh=`<div style="margin-top:10px;padding:11px 13px;background:#fde8e8;border:1px solid #f5b7b7;border-radius:7px;"><div style="font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#8b1a1a;margin-bottom:5px;">Risk Flags</div>${d.risk_flags.map(r=>`<div style="font-size:.78rem;color:#8b1a1a;padding:3px 0;">• ${r}</div>`).join('')}</div>`;
+  document.getElementById('aiOut').innerHTML=`
+    <div style="display:inline-flex;align-items:center;gap:6px;padding:4px 11px;border-radius:20px;background:${conf.bg};margin-bottom:12px;">
+      <span style="width:6px;height:6px;border-radius:50%;background:${conf.col};flex-shrink:0;"></span>
+      <span style="font-size:.7rem;font-weight:600;color:${conf.col};">${conf.label}</span>
+    </div>
+    <div class="ai-stat-grid">
+      <div class="ai-stat hi"><div class="ai-stat-label">UK HS Code</div><div class="ai-stat-val">${d.hs_code||'—'}</div></div>
+      <div class="ai-stat hi"><div class="ai-stat-label">Import Duty</div><div class="ai-stat-val">${d.duty_rate!==null?d.duty_rate.toFixed(1)+'%':'—'}</div></div>
+      <div class="ai-stat"><div class="ai-stat-label">UKCA / CE</div><div class="ai-stat-val" style="font-size:.8rem;">${d.ukca_required?'⚠️ Required':'Not required'}</div></div>
+      <div class="ai-stat"><div class="ai-stat-label">Import VAT</div><div class="ai-stat-val">20%${d.vat_reclaimable?' ✓':''}</div></div>
+      <div class="ai-stat"><div class="ai-stat-label">Air time</div><div class="ai-stat-val">${d.lead_time_air_days||'—'} days</div></div>
+      <div class="ai-stat"><div class="ai-stat-label">Sea time</div><div class="ai-stat-val">${d.lead_time_sea_weeks||'—'} wks</div></div>
+    </div>
+    ${d.compliance_notes?`<div style="margin-top:10px;padding:10px 13px;background:#fff8ed;border:1px solid #f0d090;border-radius:7px;font-size:.78rem;color:#7a5c00;line-height:1.6;"><strong>Compliance:</strong> ${d.compliance_notes}</div>`:''}
+    ${d.duty_note?`<div style="margin-top:7px;padding:9px 12px;background:var(--paper);border-radius:6px;font-size:.74rem;color:var(--mute);line-height:1.5;">${d.duty_note}</div>`:''}
+    ${rh}`;
 }
 
-function setFreight(m) {
-    freight = m;
-    document.getElementById('togAir').classList.toggle('active', m === 'air');
-    document.getElementById('togSea').classList.toggle('active', m === 'sea');
-    if (aiReady && aiData) recalc();
+function renderReport(d){
+  const rc={LOW:'risk-low',MEDIUM:'risk-med',HIGH:'risk-high'}[d.risk_rating]||'risk-med';
+  const rcc={Proceed:'rec-proceed',Optimise:'rec-optimise',Avoid:'rec-avoid'}[d.recommendation]||'rec-proceed';
+  const ri={Proceed:'✅',Optimise:'⚠️',Avoid:'🚫'}[d.recommendation]||'✅';
+  const mc=Math.max(d.carbon_air_kg_co2e_per_unit||1,0.01);
+  const sp=Math.round(((d.carbon_sea_kg_co2e_per_unit||0)/mc)*100);
+  document.getElementById('reportGrid').innerHTML=`
+    <div class="rpt-card ${rc}"><div class="rpt-card-label">Risk Rating</div><div class="risk-badge">${d.risk_rating||'MEDIUM'}</div><div class="rpt-card-val">${d.veteran_advisory||'—'}</div></div>
+    <div class="rpt-card ${rcc}"><div class="rpt-card-label">IK Recommendation</div><div class="rec-badge">${ri} ${d.recommendation||'Proceed'}</div><div class="rpt-card-val">${d.recommendation_reason||'—'}</div></div>
+    <div class="rpt-card"><div class="rpt-card-label">UK Market Intelligence</div><div class="rpt-card-val"><strong>Retail:</strong> ${d.uk_retail_price_low?gbp(d.uk_retail_price_low):'—'} – ${d.uk_retail_price_high?gbp(d.uk_retail_price_high):'—'}<br><strong>Margin potential:</strong> ${d.margin_pct_low||'—'}% – ${d.margin_pct_high||'—'}%</div></div>
+    <div class="rpt-card"><div class="rpt-card-label">Logistics Strategy</div><div class="rpt-card-val">${d.consolidation_tip||'—'}</div></div>
+    <div class="rpt-card rpt-full"><div class="rpt-card-label">🌱 Carbon per unit</div><div class="rpt-card-val" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:4px;"><div><div style="display:flex;justify-content:space-between;margin-bottom:3px;"><span>🚢 Sea</span><strong style="color:#1d9e75;">${(d.carbon_sea_kg_co2e_per_unit||0).toFixed(3)} kg</strong></div><div class="cb-wrap"><div class="cb cb-sea" style="width:${sp}%"></div></div></div><div><div style="display:flex;justify-content:space-between;margin-bottom:3px;"><span>✈ Air</span><strong style="color:var(--gold);">${(d.carbon_air_kg_co2e_per_unit||0).toFixed(3)} kg</strong></div><div class="cb-wrap"><div class="cb cb-air" style="width:100%"></div></div></div></div></div>`;
+  document.getElementById('reportSection').style.display='block';
 }
 
-function tryRecalc() { if (aiReady && aiData) recalc(); }
-
-// ── CALCULATE ─────────────────────────────────────────────────────────────────
-function recalc() {
-    if (!aiData) return;
-    const price = getPriceGBP();
-    const qty   = parseInt(document.getElementById('orderQty').value) || 0;
-    if (!price || !qty) return;
-
-    const isAir    = freight === 'air';
-    const frPU     = isAir ? aiData.freight_air_per_unit_gbp : aiData.freight_sea_per_unit_gbp;
-    const inco     = document.getElementById('incoterms').value;
-    const port     = isAir ? PORT_AIR : PORT_SEA;
-
-    // Itemised incoterms surcharges
-    const incoS    = getIncoSurcharges(qty, frPU, isAir);
-    const effectiveFrPU = Math.max(frPU + incoS.freightDeduct, 0); // CIF zeroes out main freight
-    const frTot    = effectiveFrPU * qty;
-    const incoExtra= incoS.totalPerUnit > 0 ? incoS.totalPerUnit * qty : 0; // EXW surcharges total
-
-    const prodTot  = price * qty;
-    const svc      = Math.max(prodTot * SVC_RATE, MIN_SVC);
-    const dutyBase = prodTot + frTot + incoExtra + port + svc;
-    const dutyTot  = dutyBase * (aiData.duty_rate / 100);
-    const net      = dutyBase + dutyTot;
-    const vat      = net * VAT_RATE;
-    const grand    = net + vat;
-
-    document.getElementById('perUnitBadge').textContent = gbp(net / qty) + ' per unit · ' + qty + ' units';
-    document.getElementById('rQtyLbl').textContent  = qty;
-    document.getElementById('rUnit').textContent    = gbp(price) + ' (GBP equiv.)';
-    document.getElementById('rSub').textContent     = gbp(prodTot);
-    document.getElementById('rFreightLbl').textContent = inco === 'CIF'
-        ? 'Main freight (included in CIF price)'
-        : isAir ? '✈ Air freight (China→UK)' : '🚢 Sea freight LCL (China→UK)';
-    document.getElementById('rFreight').textContent = inco === 'CIF' ? '£0.00' : gbp(frTot);
-    document.getElementById('rPort').textContent    = gbp(port);
-    document.getElementById('rSvc').textContent     = gbp(svc);
-    document.getElementById('rDuty').textContent    = gbp(dutyTot);
-    document.getElementById('rDutyPct').textContent = aiData.duty_rate.toFixed(1);
-    document.getElementById('rTotal').textContent   = gbp(net);
-    document.getElementById('rVat').textContent     = gbp(vat);
-    document.getElementById('rGrand').textContent   = gbp(grand);
-    document.getElementById('rPortLbl').textContent = isAir ? 'Air port & documentation' : 'UK port levies (LCL 2025)';
-
-    // Render EXW surcharge lines dynamically
-    const incoLinesEl = document.getElementById('incoExtraLines');
-    if (inco === 'EXW' && incoS.lines.length > 0) {
-        incoLinesEl.innerHTML = incoS.lines.map(l =>
-            `<div class="cost-row">
-                <span class="cost-label" style="font-size:.75rem;">${l.label}</span>
-                <span class="cost-val">${gbp(l.perUnit * qty)}</span>
-            </div>`
-        ).join('');
-        incoLinesEl.style.display = 'block';
-    } else {
-        incoLinesEl.innerHTML = '';
-        incoLinesEl.style.display = 'none';
-    }
-
-    // Unlock PI & share
-    const piBtn = document.getElementById('piBtn');
-    piBtn.disabled = false; piBtn.style.opacity = '1'; piBtn.style.cursor = 'pointer';
-    piBtn.textContent = '⬇ Download Proforma Invoice (PDF)';
-    if (aiConfidence === 'estimated') { piBtn.style.opacity = '.85'; piBtn.textContent = '⬇ Download PI (estimated duty rate)'; }
-    unlockShareBtn();
-    updateWaLink(net, qty);
-
-    // Silent Firebase lead log (only once per calculation)
-    if (window.logLead && !window._logged) {
-        window._logged = true;
-        const cur = document.getElementById('currencySelect').value;
-        const rawPrice = parseFloat(document.getElementById('unitPrice').value) || 0;
-        window.logLead({
-            product: document.getElementById('productInput').value.trim(),
-            qty, currency: cur, raw_price: rawPrice, price_gbp: price,
-            incoterms: document.getElementById('incoterms').value,
-            freight_mode: freight,
-            hs_code: aiData.hs_code, duty_rate: aiData.duty_rate,
-            net_landed: parseFloat(net.toFixed(2)),
-            company: document.getElementById('companyName').value.trim() || null
-        });
-    }
+async function runCalc(){
+  const prod=document.getElementById('productInput').value.trim();
+  if(!prod){showToast('Please describe your product first.');return;}
+  window._logged=false;
+  const rs=document.getElementById('results-section'); rs.style.display='block'; rs.scrollIntoView({behavior:'smooth',block:'nearest'});
+  aiReady=false;aiData=null;aiConfidence=null;
+  document.getElementById('reportSection').style.display='none';
+  document.getElementById('aiOut').innerHTML=`<div class="ai-loading"><div class="spinner"></div> Classifying "${prod}" under UK Global Tariff 2025…</div>`;
+  ['rUnit','rSub','rFreight','rPort','rSvc','rDuty','rTotal','rVat','rGrand'].forEach(id=>document.getElementById(id).textContent='—');
+  document.getElementById('perUnitBadge').textContent='calculating…';
+  const piBtn=document.getElementById('piBtn');piBtn.disabled=true;piBtn.style.opacity='.45';piBtn.textContent='⏳ Awaiting customs verification…';
+  const shareBtn=document.getElementById('shareBtn');shareBtn.disabled=true;shareBtn.style.opacity='.35';shareBtn.style.cursor='not-allowed';
+  const qty=parseInt(document.getElementById('orderQty').value)||100;
+  const rawPrice=parseFloat(document.getElementById('unitPrice').value)||0;
+  const priceGbp=rawPrice?getPriceGBP():null;
+  try{
+    const r=await fetch('/.netlify/functions/customs-ai',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({product:prod,qty,unit_price_gbp:priceGbp})});
+    if(!r.ok)throw new Error('Server error '+r.status);
+    const d=await r.json();if(d.error)throw new Error(d.error);
+    if(d.duty_rate===null||d.duty_rate===undefined){document.getElementById('aiOut').innerHTML=`<div style="color:#8b1a1a;padding:13px;background:#fde8e8;border-radius:7px;font-size:.86rem;line-height:1.6;">Could not confirm duty rate. <a href="https://wa.me/447767990007" target="_blank" style="color:#8b1a1a;font-weight:600;">WhatsApp us</a> and we'll classify it manually.</div>`;return;}
+    aiData=d;aiReady=true;renderAI(d);renderReport(d);
+    const price=getPriceGBP();
+    if(price&&qty)recalc();
+    else if(!rawPrice){document.getElementById('unitPrice').focus();showToast('Customs confirmed — enter your supplier price to complete.','#1d6b5e');}
+  }catch(e){
+    console.error(e);
+    document.getElementById('aiOut').innerHTML=`<div style="padding:13px;background:#fde8e8;border-radius:7px;font-size:.83rem;color:#8b1a1a;line-height:1.6;">Lookup failed. ${e.message||''}<br><a href="https://wa.me/447767990007" target="_blank" style="color:#8b1a1a;">WhatsApp us</a> to classify manually.</div>`;
+    piBtn.textContent='Lookup failed — contact us';
+  }
 }
 
-// ── RENDER AI RESULTS ─────────────────────────────────────────────────────────
-function renderAI(d) {
-    const confMap = {
-        confirmed: { label: 'Duty rate confirmed', col: '#1d6b5e', bg: '#d0e8e4' },
-        likely:    { label: 'Duty rate likely',     col: '#7a5c00', bg: '#fff8ed' },
-        estimated: { label: 'Duty rate estimated',  col: '#8b1a1a', bg: '#fde8e8' }
-    };
-    const conf = confMap[d.duty_confidence] || confMap.estimated;
-    aiConfidence = d.duty_confidence;
-
-    let riskHtml = '';
-    if (d.risk_flags && d.risk_flags.length > 0) {
-        riskHtml = `<div style="margin-top:12px;padding:12px 14px;background:#fde8e8;border:1px solid #f5b7b7;border-radius:10px;">
-            <div style="font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#8b1a1a;margin-bottom:6px;">Import Risk Flags</div>
-            ${d.risk_flags.map(r => `<div style="font-size:.8rem;color:#8b1a1a;padding:3px 0;border-bottom:1px solid rgba(245,183,183,.4);">• ${r}</div>`).join('')}
-        </div>`;
-    }
-
-    document.getElementById('aiOut').innerHTML = `
-        <div style="display:inline-flex;align-items:center;gap:7px;padding:5px 12px;border-radius:20px;background:${conf.bg};margin-bottom:14px;">
-            <span style="width:7px;height:7px;border-radius:50%;background:${conf.col};flex-shrink:0;"></span>
-            <span style="font-size:.72rem;font-weight:600;color:${conf.col};">${conf.label}</span>
-        </div>
-        <div class="ai-result-grid">
-            <div class="ai-stat hi"><div class="ai-stat-label">UK HS Code</div><div class="ai-stat-val">${d.hs_code || '—'}</div></div>
-            <div class="ai-stat hi"><div class="ai-stat-label">UK Import Duty</div><div class="ai-stat-val">${d.duty_rate !== null ? d.duty_rate.toFixed(1) + '%' : '—'}</div></div>
-            <div class="ai-stat"><div class="ai-stat-label">UKCA / CE</div><div class="ai-stat-val" style="font-size:.82rem;">${d.ukca_required ? '⚠️ UKCA Required' : 'Not required'}</div></div>
-            <div class="ai-stat"><div class="ai-stat-label">Import VAT</div><div class="ai-stat-val">20%${d.vat_reclaimable ? ' (reclaimable)' : ''}</div></div>
-            <div class="ai-stat"><div class="ai-stat-label">Air Lead Time</div><div class="ai-stat-val">${d.lead_time_air_days || '—'} days</div></div>
-            <div class="ai-stat"><div class="ai-stat-label">Sea Lead Time</div><div class="ai-stat-val">${d.lead_time_sea_weeks || '—'} weeks</div></div>
-        </div>
-        ${d.compliance_notes ? `<div style="margin-top:12px;padding:12px 14px;background:#fff8ed;border:1px solid #f0d090;border-radius:10px;font-size:.8rem;color:#7a5c00;line-height:1.6;"><strong>Compliance:</strong> ${d.compliance_notes}</div>` : ''}
-        ${d.duty_note ? `<div style="margin-top:8px;padding:10px 14px;background:var(--paper);border-radius:10px;font-size:.77rem;color:var(--muted);line-height:1.5;"><strong style="color:var(--ink);">Duty note:</strong> ${d.duty_note}</div>` : ''}
-        ${riskHtml}
-        ${d.freight_basis ? `<div style="margin-top:10px;font-size:.75rem;color:var(--muted);background:var(--paper);padding:8px 12px;border-radius:8px;">📦 Freight basis: ${d.freight_basis}</div>` : ''}
-    `;
+function generatePI(){
+  if(!aiData){showToast('Complete the calculation first.');return;}
+  const rawPrice=parseFloat(document.getElementById('unitPrice').value)||0;
+  if(!rawPrice){showToast('Enter a supplier price first.');return;}
+  const price=getPriceGBP(),qty=parseInt(document.getElementById('orderQty').value)||0;
+  if(!qty){showToast('Enter order quantity.');return;}
+  if(!window.jspdf){showToast('PDF loading — try again.');return;}
+  const{jsPDF}=window.jspdf;const doc=new jsPDF({unit:'mm',format:'a4'});
+  const W=210,H=297,M=14,CW=W-M*2;
+  const today=new Date(),expiry=new Date();expiry.setDate(today.getDate()+7);
+  const fmt=d=>d.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});
+  const ref='IK-'+Math.floor(10000+Math.random()*90000);
+  const isAir=freight==='air',inco=document.getElementById('incoterms').value;
+  const frPU=inco==='CIF'?0:(isAir?aiData.freight_air_per_unit_gbp:aiData.freight_sea_per_unit_gbp);
+  const port=isAir?PORT_AIR:PORT_SEA,prodTot=price*qty,frTot=frPU*qty,svc=Math.max(prodTot*SVC_RATE,MIN_SVC);
+  const dutyBase=prodTot+frTot+port+svc,dutyTot=dutyBase*(aiData.duty_rate/100),net=dutyBase+dutyTot,vatAmt=net*VAT_RATE,grand=net+vatAmt;
+  const company=document.getElementById('companyName').value.trim()||'Valued Client';
+  const product=document.getElementById('productInput').value.trim()||'Imported Goods';
+  const cur=document.getElementById('currencySelect').value,curS={GBP:'£',USD:'$',CNY:'¥'}[cur];
+  const INK=[22,20,15],GOLD=[200,146,42],TEAL=[29,107,94],PAPER=[248,245,239],GREY=[100,116,139],WHITE=[255,255,255],GB=[240,250,244],AB=[255,248,237],DARK=[14,13,8],TEAL_BG=[234,244,241],RA=[249,249,249],RH=[228,234,238],DIV=[230,228,224];
+  const fill=(x,y,w,h,c)=>{doc.setFillColor(...c);doc.rect(x,y,w,h,'F');};
+  const hline=(x1,y1,x2,c,lw=.2)=>{doc.setDrawColor(...c);doc.setLineWidth(lw);doc.line(x1,y1,x2,y1);};
+  const sf=(s,sz,c)=>{doc.setFont('helvetica',s);doc.setFontSize(sz);if(c)doc.setTextColor(...c);};
+  const tx=(t,x,y,o={})=>doc.text(String(t),x,y,o);
+  let y=0;
+  fill(0,0,W,40,INK);fill(M,9,5,22,GOLD);
+  sf('bold',20,WHITE);tx('IK ENG LTD',M+9,21);sf('normal',7,[150,148,142]);
+  tx('125 Great Clowes Street, Manchester M7 1AL',M+9,27.5);tx('sai@ikeng.co.uk  |  +44 7767 990 007',M+9,33.5);
+  sf('bold',12,GOLD);tx('PROFORMA INVOICE',W-M,18,{align:'right'});sf('normal',7.5,[150,148,142]);
+  tx('Date:   '+fmt(today),W-M,25,{align:'right'});tx('Ref:    '+ref,W-M,30.5,{align:'right'});tx('Valid:  '+fmt(expiry),W-M,36,{align:'right'});y=48;
+  fill(M,y,CW,18,PAPER);sf('bold',6.5,GREY);tx('BILL TO',M+5,y+6.5);sf('bold',11,INK);tx(company,M+5,y+14);y+=23;
+  fill(M,y,CW,7,INK);sf('bold',6.5,GOLD);tx('PRODUCT',M+4,y+5);y+=7;
+  fill(M,y,CW,20,[250,250,248]);sf('bold',9,INK);doc.text(product,M+5,y+7,{maxWidth:CW-10});
+  sf('normal',7,GREY);tx(`${inco} | ${isAir?'Air Freight':'Sea Freight LCL'} | Original: ${curS}${rawPrice.toFixed(2)} ${cur}`,M+5,y+13.5);y+=24;
+  const C={desc:M+4,qty:M+98,unit:M+116,tot:W-M-4};
+  fill(M,y,CW,8,RH);sf('bold',6.5,GREY);tx('Description',C.desc,y+5.5);tx('Qty',C.qty,y+5.5);tx('Unit',C.unit,y+5.5);tx('Total (GBP)',C.tot,y+5.5,{align:'right'});y+=8;
+  const sH=label=>{fill(M,y,CW,7,TEAL_BG);sf('bold',6.5,TEAL);tx(label,M+4,y+5);y+=7;};
+  let alt=false;
+  const dR=(desc,q,u,tot)=>{fill(M,y,CW,9,alt?RA:WHITE);alt=!alt;hline(M,y+9,W-M,DIV,.15);sf('normal',7.5,INK);doc.text(desc,C.desc,y+6.5,{maxWidth:90});sf('normal',7.5,GREY);if(q)tx(q,C.qty,y+6.5);if(u)tx(u,C.unit,y+6.5);sf('normal',7.5,INK);tx(tot,C.tot,y+6.5,{align:'right'});y+=9;};
+  sH('PRODUCT ('+inco+')');dR(product,String(qty),gbp(price),gbp(prodTot));
+  sH('LOGISTICS');if(inco==='CIF')dR('Freight included in CIF','','',gbp(0));else dR(isAir?'Air Freight (China→UK)':'Sea Freight LCL',String(qty),gbp(frPU),gbp(frTot));
+  dR(isAir?'Air port & docs':'UK port levies (2025)','1','Fixed',gbp(port));
+  sH('SOURCING & QC');dR('QC Inspection & Factory Liaison (5%, min £199)','','',gbp(svc));
+  sH('UK IMPORT DUTY');dR('Duty | HS: '+(aiData.hs_code||'—')+' | Rate: '+aiData.duty_rate.toFixed(1)+'%','','',gbp(dutyTot));
+  y+=2;hline(M,y,W-M,INK,.5);y+=1;
+  fill(M,y,CW,10,PAPER);sf('bold',9,INK);tx('NET TOTAL (ex-VAT)',W-M-64,y+7);tx(gbp(net),C.tot,y+7,{align:'right'});y+=10;
+  fill(M,y,CW,8,WHITE);sf('normal',8,GREY);tx('UK Import VAT @ 20%',W-M-64,y+5.5);tx(gbp(vatAmt),C.tot,y+5.5,{align:'right'});y+=8;
+  fill(M,y,CW,7,GB);sf('normal',6.5,[27,107,54]);tx('VAT reclaimable for VAT-registered UK businesses',M+4,y+4.8);y+=9;
+  fill(M,y,CW,14,INK);sf('bold',11,GOLD);tx('GRAND TOTAL (inc. VAT)',M+5,y+9.5);sf('bold',13,GOLD);tx(gbp(grand),C.tot,y+9.5,{align:'right'});y+=18;
+  const hw=(CW-6)/2;
+  fill(M,y,hw,15,TEAL_BG);sf('bold',6.5,TEAL);tx('Net per unit (ex-VAT)',M+5,y+6.5);sf('bold',10,TEAL);tx(gbp(net/qty),M+5,y+12.5);
+  fill(M+hw+6,y,hw,15,AB);sf('bold',6.5,[122,92,0]);tx('Units',M+hw+11,y+6.5);sf('bold',10,[122,92,0]);tx(String(qty)+' units',M+hw+11,y+12.5);y+=21;
+  fill(M,y,CW,6,INK);sf('bold',6.5,GOLD);tx('PAYMENT DETAILS',M+4,y+4.5);y+=6;
+  const bR=[['Bank','Tide Bank','IBAN','GB19 CLRB 0406 0530 4934 03'],['Beneficiary','IK Eng LTD','SWIFT','CLRBGB22'],['Sort Code','04-06-05','Account No','30493403'],['Ref',ref,'','']];
+  const bH=bR.length*5.5+5;fill(M,y,CW,bH,PAPER);let by=y+5;
+  const b1=M+5,b2=M+37,b3=M+CW/2+5,b4=M+CW/2+40;
+  for(const[l1,v1,l2,v2]of bR){sf('bold',6,GREY);if(l1)tx(l1+':',b1,by);sf('normal',7.5,INK);if(v1)tx(v1,b2,by);sf('bold',6,GREY);if(l2)tx(l2+':',b3,by);sf('normal',7.5,INK);if(v2)tx(v2,b4,by);by+=5.5;}
+  const fY=H-13;fill(0,fY,W,13,DARK);sf('normal',6,[80,80,80]);tx('IK ENG LTD · Manchester M7 1AL · sai@ikeng.co.uk · +44 7767 990 007',M,fY+5);
+  tx('Payment confirms order. GBP pricing. Original: '+curS+rawPrice.toFixed(2)+' '+cur+' '+inco+'. Valid 7 days.',M,fY+10);
+  sf('bold',6.5,[100,100,100]);tx('Ref: '+ref,W-M,fY+10,{align:'right'});
+  doc.save('IK_Proforma_'+company.replace(/[^a-zA-Z0-9]/g,'_').slice(0,28)+'_'+ref+'.pdf');
 }
 
-// ── RENDER STRATEGIC REPORT ───────────────────────────────────────────────────
-function renderReport(d) {
-    const riskClass = { LOW: 'risk-low', MEDIUM: 'risk-med', HIGH: 'risk-high' }[d.risk_rating] || 'risk-med';
-    const recClass  = { Proceed: 'rec-proceed', Optimise: 'rec-optimise', Avoid: 'rec-avoid' }[d.recommendation] || 'rec-proceed';
-    const recIcon   = { Proceed: '✅', Optimise: '⚠️', Avoid: '🚫' }[d.recommendation] || '✅';
+function buildShareHash(){return '#q='+btoa(unescape(encodeURIComponent(JSON.stringify({p:document.getElementById('productInput').value.trim(),px:parseFloat(document.getElementById('unitPrice').value)||0,cur:document.getElementById('currencySelect').value,q:parseInt(document.getElementById('orderQty').value)||0,c:document.getElementById('companyName').value.trim(),f:freight,inc:document.getElementById('incoterms').value}))));}
+function copyShareLink(){const url=window.location.href.split('#')[0]+buildShareHash();const btn=document.getElementById('shareBtn');const rl='<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg> Share this quote';navigator.clipboard.writeText(url).then(()=>{btn.classList.add('copied');btn.innerHTML='✓ Copied!';setTimeout(()=>{btn.classList.remove('copied');btn.innerHTML=rl;},3000);}).catch(()=>showToast('Link copied','#1d6b5e'));}
+function unlockShareBtn(){const b=document.getElementById('shareBtn');b.disabled=false;b.style.opacity='1';b.style.cursor='pointer';}
+function updateWaLink(net,qty){const prod=document.getElementById('productInput').value.trim(),price=getPriceGBP(),cur=document.getElementById('currencySelect').value,raw=parseFloat(document.getElementById('unitPrice').value)||0,inco=document.getElementById('incoterms').value,mode=freight==='air'?'air freight':'sea freight',cs={GBP:'£',USD:'$',CNY:'¥'}[cur];const msg=`Hi IK ENG — calculator result:\n\nProduct: ${prod}\nQty: ${qty} @ ${cs}${raw.toFixed(2)} ${cur} ${inco}\nDuty: ${aiData.duty_rate.toFixed(1)}% (HS ${aiData.hs_code})\nShipping: ${mode}\nNet landed: £${net.toFixed(2)}\n\nPlease confirm and let's proceed.`;document.getElementById('waStrip').href='https://wa.me/447767990007?text='+encodeURIComponent(msg);}
 
-    const retailLow  = d.uk_retail_price_low  ? gbp(d.uk_retail_price_low)  : '—';
-    const retailHigh = d.uk_retail_price_high ? gbp(d.uk_retail_price_high) : '—';
-    const whlLow     = d.uk_wholesale_price_low  ? gbp(d.uk_wholesale_price_low)  : '—';
-    const whlHigh    = d.uk_wholesale_price_high ? gbp(d.uk_wholesale_price_high) : '—';
-    const marginLow  = d.margin_pct_low  || '—';
-    const marginHigh = d.margin_pct_high || '—';
+(function(){try{const m=window.location.hash.match(/^#q=(.+)/);if(!m)return;const s=JSON.parse(decodeURIComponent(escape(atob(m[1]))));if(s.p)document.getElementById('productInput').value=s.p;if(s.px)document.getElementById('unitPrice').value=s.px;if(s.cur)document.getElementById('currencySelect').value=s.cur;if(s.q)document.getElementById('orderQty').value=s.q;if(s.c)document.getElementById('companyName').value=s.c;if(s.inc)document.getElementById('incoterms').value=s.inc;if(s.f){freight=s.f;setFreight(s.f);}if(s.p)setTimeout(runCalc,400);}catch(e){}})();
 
-    // Carbon comparison — scale bars relative to air (always higher)
-    const maxCarbon   = Math.max(d.carbon_air_kg_co2e_per_unit || 1, 0.01);
-    const seaPct      = Math.round(((d.carbon_sea_kg_co2e_per_unit || 0) / maxCarbon) * 100);
-    const airPct      = 100;
-
-    document.getElementById('reportGrid').innerHTML = `
-        <div class="report-card ${riskClass}">
-            <div class="report-card-label">Strategic Risk Rating</div>
-            <div class="risk-badge">${d.risk_rating || 'MEDIUM'}</div>
-            <div class="report-card-val">${d.veteran_advisory || '—'}</div>
-        </div>
-
-        <div class="report-card ${recClass}">
-            <div class="report-card-label">IK Recommendation</div>
-            <div class="rec-badge">${recIcon} ${d.recommendation || 'Proceed'}</div>
-            <div class="report-card-val">${d.recommendation_reason || '—'}</div>
-        </div>
-
-        <div class="report-card">
-            <div class="report-card-label">UK Market Intelligence</div>
-            <div class="report-card-val">
-                <strong>Retail:</strong> ${retailLow} – ${retailHigh}<br>
-                <strong>Wholesale:</strong> ${whlLow} – ${whlHigh}<br>
-                <strong>Margin potential:</strong> ${marginLow}% – ${marginHigh}%
-            </div>
-        </div>
-
-        <div class="report-card">
-            <div class="report-card-label">Logistics Strategy</div>
-            <div class="report-card-val">
-                <strong>Consolidation:</strong> ${d.consolidation_tip || '—'}<br>
-                <strong>Sea:</strong> ${d.lead_time_sea_weeks || '—'} weeks &nbsp;|&nbsp;
-                <strong>Air:</strong> ${d.lead_time_air_days || '—'} days
-            </div>
-        </div>
-
-        <div class="report-card report-full-width">
-            <div class="report-card-label">🌱 Carbon Footprint Estimate (per unit)</div>
-            <div class="report-card-val" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:4px;">
-                <div>
-                    <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
-                        <span>🚢 Sea freight</span>
-                        <strong style="color:#1d6b5e;">${(d.carbon_sea_kg_co2e_per_unit || 0).toFixed(3)} kg CO₂e</strong>
-                    </div>
-                    <div class="carbon-bar-wrap"><div class="carbon-bar carbon-sea-bar" style="width:${seaPct}%"></div></div>
-                </div>
-                <div>
-                    <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
-                        <span>✈ Air freight</span>
-                        <strong style="color:#c8922a;">${(d.carbon_air_kg_co2e_per_unit || 0).toFixed(3)} kg CO₂e</strong>
-                    </div>
-                    <div class="carbon-bar-wrap"><div class="carbon-bar carbon-air-bar" style="width:${airPct}%"></div></div>
-                </div>
-            </div>
-            <div style="font-size:.7rem;color:var(--muted);margin-top:8px;">Sea freight emits ~${Math.round((1 - (d.carbon_sea_kg_co2e_per_unit / d.carbon_air_kg_co2e_per_unit)) * 100) || 95}% less CO₂ per unit than air. Relevant for BREEAM-rated projects and sustainability reporting.</div>
-        </div>
-    `;
-
-    document.getElementById('reportSection').style.display = 'block';
-}
-
-// ── RUN CALCULATION ───────────────────────────────────────────────────────────
-async function runCalc() {
-    const prod  = document.getElementById('productInput').value.trim();
-    if (!prod) { showToast('Please describe your product first.'); return; }
-
-    window._logged = false; // reset log flag for new calculation
-
-    const rs = document.getElementById('results-section');
-    rs.style.display = 'block';
-    rs.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-
-    aiReady = false; aiData = null; aiConfidence = null;
-    document.getElementById('reportSection').style.display = 'none';
-    document.getElementById('aiOut').innerHTML = '<div class="ai-loading"><div class="spinner"></div> Classifying "' + prod + '" under UK Global Tariff 2025…</div>';
-    ['rUnit','rSub','rFreight','rPort','rSvc','rDuty','rTotal','rVat','rGrand'].forEach(id => document.getElementById(id).textContent = '—');
-    document.getElementById('perUnitBadge').textContent = 'calculating…';
-    const piBtn = document.getElementById('piBtn');
-    piBtn.disabled = true; piBtn.style.opacity = '.45'; piBtn.textContent = '⏳ Awaiting customs verification…';
-    const shareBtn = document.getElementById('shareBtn');
-    shareBtn.disabled = true; shareBtn.style.opacity = '.35'; shareBtn.style.cursor = 'not-allowed';
-
-    const qty      = parseInt(document.getElementById('orderQty').value) || 100;
-    const rawPrice = parseFloat(document.getElementById('unitPrice').value) || 0;
-    const priceGbp = rawPrice ? getPriceGBP() : null;
-
-    try {
-        const r = await fetch('/.netlify/functions/customs-ai', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ product: prod, qty, unit_price_gbp: priceGbp })
-        });
-        if (!r.ok) throw new Error('Server error ' + r.status);
-        const d = await r.json();
-        if (d.error) throw new Error(d.error);
-        if (d.duty_rate === null || d.duty_rate === undefined) {
-            document.getElementById('aiOut').innerHTML = `<div style="color:#8b1a1a;padding:14px;background:#fde8e8;border-radius:10px;font-size:.88rem;line-height:1.6;">Could not confirm duty rate for this product. Contact us on WhatsApp and we'll classify it manually.</div>`;
-            return;
-        }
-        aiData = d; aiReady = true;
-        renderAI(d);
-        renderReport(d);
-        const price = getPriceGBP();
-        if (price && qty) recalc();
-        else if (!rawPrice) { document.getElementById('unitPrice').focus(); showToast('Customs data confirmed — enter your supplier price to complete the calculation.', '#1d6b5e'); }
-    } catch(e) {
-        console.error(e);
-        document.getElementById('aiOut').innerHTML = `<div style="padding:14px;background:#fde8e8;border-radius:10px;font-size:.85rem;color:#8b1a1a;line-height:1.6;">Customs lookup failed. ${e.message || ''}<br><span style="font-size:.78rem;margin-top:4px;display:block;">WhatsApp us and we'll classify this manually.</span></div>`;
-        piBtn.textContent = 'Customs lookup failed — contact us';
-    }
-}
-
-// ── PDF GENERATION ────────────────────────────────────────────────────────────
-function generatePI() {
-    if (!aiData) { showToast('Customs verification must complete first.'); return; }
-    const rawPrice = parseFloat(document.getElementById('unitPrice').value) || 0;
-    if (!rawPrice) { showToast('Enter a supplier price first.'); return; }
-    const price  = getPriceGBP();
-    const qty    = parseInt(document.getElementById('orderQty').value) || 0;
-    if (!qty) { showToast('Enter order quantity first.'); return; }
-    if (!window.jspdf)  { showToast('PDF library still loading — please try again.'); return; }
-
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF({ unit: 'mm', format: 'a4' });
-    const W = 210, H = 297, M = 14, CW = W - M * 2;
-
-    const today  = new Date();
-    const expiry = new Date(); expiry.setDate(today.getDate() + 7);
-    const fmt    = d => d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
-    const ref    = 'IK-' + Math.floor(10000 + Math.random() * 90000);
-
-    const isAir    = freight === 'air';
-    const inco     = document.getElementById('incoterms').value;
-    const frPU     = isAir ? aiData.freight_air_per_unit_gbp : aiData.freight_sea_per_unit_gbp;
-    const port     = isAir ? PORT_AIR : PORT_SEA;
-    const incoS    = getIncoSurcharges(qty, frPU, isAir);
-    const effectiveFrPU = Math.max(frPU + incoS.freightDeduct, 0);
-    const frTot    = effectiveFrPU * qty;
-    const incoExtra= incoS.totalPerUnit > 0 ? incoS.totalPerUnit * qty : 0;
-    const prodTot  = price * qty;
-    const svc      = Math.max(prodTot * SVC_RATE, MIN_SVC);
-    const dutyBase = prodTot + frTot + incoExtra + port + svc;
-    const dutyTot  = dutyBase * (aiData.duty_rate / 100);
-    const net      = dutyBase + dutyTot;
-    const vatAmt   = net * VAT_RATE;
-    const grand    = net + vatAmt;
-
-    const company  = document.getElementById('companyName').value.trim() || 'Valued Client';
-    const product  = document.getElementById('productInput').value.trim() || 'Imported Goods';
-    const cur      = document.getElementById('currencySelect').value;
-    const curSymbol= { GBP: '£', USD: '$', CNY: '¥' }[cur];
-    const frLabel  = inco === 'CIF' ? 'Freight (Included in CIF — supplier paid)' : (isAir ? 'Air Freight (China to UK)' : 'Sea Freight LCL (China to UK)');
-    const portLbl  = isAir ? 'Port Handling & Documentation' : 'UK Port Levies (2025 rates)';
-    const incoNote = `Incoterms: ${inco}  |  ${isAir ? 'Air Freight' : 'Sea Freight LCL'}  |  Original quote: ${curSymbol}${rawPrice.toFixed(2)} ${cur}`;
-
-    const INK=[26,26,24],GOLD=[200,146,42],TEAL=[29,107,94],PAPER=[245,243,238],GREY=[100,116,139],WHITE=[255,255,255],GREEN=[27,107,54],GREEN_BG=[240,250,244],AMBER_BG=[255,248,237],DARK=[17,17,17],TEAL_BG=[234,244,241],ROW_ALT=[249,249,249],ROW_HEAD=[228,234,238],DIVIDER=[230,230,230];
-    const fill=(x,y,w,h,c)=>{doc.setFillColor(...c);doc.rect(x,y,w,h,'F');};
-    const hline=(x1,y1,x2,c,lw=.2)=>{doc.setDrawColor(...c);doc.setLineWidth(lw);doc.line(x1,y1,x2,y1);};
-    const sf=(sty,sz,c)=>{doc.setFont('helvetica',sty);doc.setFontSize(sz);if(c)doc.setTextColor(...c);};
-    const tx=(t,x,y,opt={})=>doc.text(String(t),x,y,opt);
-    let y=0;
-
-    fill(0,0,W,40,INK);fill(M,9,5,22,GOLD);
-    sf('bold',20,WHITE);tx('IK ENG LTD',M+9,21);
-    sf('normal',7,[150,148,142]);
-    tx('125 Great Clowes Street, Manchester M7 1AL',M+9,27.5);
-    tx('sai@i-z.me  |  +44 (0) 7767 990 007  |  www.ikeng.co.uk',M+9,33.5);
-    sf('bold',12,GOLD);tx('PROFORMA INVOICE',W-M,18,{align:'right'});
-    sf('normal',7.5,[150,148,142]);
-    tx('Date:   '+fmt(today),W-M,25,{align:'right'});
-    tx('Ref:    '+ref,W-M,30.5,{align:'right'});
-    tx('Valid:  '+fmt(expiry),W-M,36,{align:'right'});
-    y=48;
-
-    fill(M,y,CW,18,PAPER);
-    sf('bold',6.5,GREY);tx('BILL TO',M+5,y+6.5);
-    sf('bold',11,INK);tx(company,M+5,y+14);
-    y+=23;
-
-    fill(M,y,CW,7,INK);sf('bold',6.5,GOLD);tx('PRODUCT',M+4,y+5);y+=7;
-    fill(M,y,CW,20,[250,250,250]);
-    sf('bold',9,INK);doc.text(product,M+5,y+7,{maxWidth:CW-10});
-    sf('normal',7,GREY);tx(incoNote,M+5,y+13.5);
-    sf('italic',6.5,[180,50,50]);tx('QC Pending — Pre-shipment inspection conducted post-payment',M+5,y+18);
-    y+=24;
-
-    const C={desc:M+4,qty:M+98,unit:M+116,total:W-M-4};
-    fill(M,y,CW,8,ROW_HEAD);
-    hline(M,y,W-M,[180,190,200],.3);hline(M,y+8,W-M,[180,190,200],.3);
-    sf('bold',6.5,GREY);
-    tx('Description',C.desc,y+5.5);tx('Qty',C.qty,y+5.5);tx('Unit Price',C.unit,y+5.5);tx('Total (GBP)',C.total,y+5.5,{align:'right'});
-    y+=8;
-
-    const secHead=(label)=>{fill(M,y,CW,7,TEAL_BG);sf('bold',6.5,TEAL);tx(label,M+4,y+5);y+=7;};
-    let rs=false;
-    const dataRow=(desc,q,unit,total)=>{const rh=9;fill(M,y,CW,rh,rs?ROW_ALT:WHITE);rs=!rs;hline(M,y+rh,W-M,DIVIDER,.15);sf('normal',7.5,INK);doc.text(desc,C.desc,y+6.5,{maxWidth:90});sf('normal',7.5,GREY);if(q)tx(q,C.qty,y+6.5);if(unit)tx(unit,C.unit,y+6.5);sf('normal',7.5,INK);tx(total,C.total,y+6.5,{align:'right'});y+=rh;};
-
-    secHead('PRODUCT ('+inco+' — converted to GBP)');
-    dataRow(product,String(qty),gbp(price),gbp(prodTot));
-    secHead('LOGISTICS');
-    if(inco==='CIF'){
-        dataRow('Main Freight — included in CIF supplier price','','',gbp(0));
-    } else {
-        dataRow(frLabel,String(qty),gbp(effectiveFrPU),gbp(frTot));
-    }
-    // EXW surcharge lines
-    if(inco==='EXW'){
-        for(const l of incoS.lines){
-            dataRow(l.label,String(qty),gbp(l.perUnit),gbp(l.perUnit*qty));
-        }
-    }
-    dataRow(portLbl,'1','Fixed',gbp(port));
-    secHead('SOURCING & QC');
-    dataRow('QC Inspection & Factory Liaison  (5% of product value, min £199)','','',gbp(svc));
-    secHead('UK IMPORT DUTY');
-    dataRow('UK Import Duty  |  HS: '+(aiData.hs_code||'—')+'  |  Rate: '+aiData.duty_rate.toFixed(1)+'%','','',gbp(dutyTot));
-
-    y+=2;hline(M,y,W-M,INK,.5);y+=1;
-    fill(M,y,CW,10,PAPER);sf('bold',9,INK);tx('NET TOTAL  (excluding VAT)',W-M-64,y+7);tx(gbp(net),C.total,y+7,{align:'right'});y+=10;
-    fill(M,y,CW,8,WHITE);sf('normal',8,GREY);tx('UK Import VAT @ 20%',W-M-64,y+5.5);tx(gbp(vatAmt),C.total,y+5.5,{align:'right'});y+=8;
-    fill(M,y,CW,7,GREEN_BG);sf('normal',6.5,GREEN);tx('VAT is 100% reclaimable for UK VAT-registered businesses',M+4,y+4.8);y+=9;
-    fill(M,y,CW,14,INK);sf('bold',11,GOLD);tx('GRAND TOTAL  (including VAT)',M+5,y+9.5);sf('bold',13,GOLD);tx(gbp(grand),C.total,y+9.5,{align:'right'});y+=18;
-
-    const hw=(CW-6)/2;
-    fill(M,y,hw,15,TEAL_BG);sf('bold',6.5,TEAL);tx('Net landed cost per unit (ex-VAT)',M+5,y+6.5);sf('bold',10,TEAL);tx(gbp(net/qty),M+5,y+12.5);
-    fill(M+hw+6,y,hw,15,AMBER_BG);sf('bold',6.5,[122,92,0]);tx('Total units ordered',M+hw+11,y+6.5);sf('bold',10,[122,92,0]);tx(String(qty)+' units',M+hw+11,y+12.5);
-    y+=21;
-
-    fill(M,y,CW,6,INK);sf('bold',6.5,GOLD);tx('PAYMENT DETAILS',M+4,y+4.5);y+=6;
-    const bankRows=[['Bank','Tide Bank','IBAN','GB19 CLRB 0406 0530 4934 03'],['Beneficiary','IK Eng LTD','SWIFT / BIC','CLRBGB22'],['Sort Code','04-06-05','Payment Ref',ref],['Account No.','30493403','','']];
-    const ROW_H=5.5; const bankH=bankRows.length*ROW_H+5;
-    fill(M,y,CW,bankH,PAPER);
-    let by=y+5;
-    const bc1=M+5,bc2=M+37,bc3=M+CW/2+5,bc4=M+CW/2+40;
-    for(const[l1,v1,l2,v2]of bankRows){sf('bold',6,GREY);if(l1)tx(l1+':',bc1,by);sf('normal',7.5,INK);if(v1)tx(v1,bc2,by);sf('bold',6,GREY);if(l2)tx(l2+':',bc3,by);sf('normal',7.5,INK);if(v2)tx(v2,bc4,by);by+=ROW_H;}
-
-    const fH=13;
-    const footerY=H-fH; fill(0,footerY,W,fH,DARK);
-    sf('normal',6,[85,85,85]);
-    tx('IK ENG LTD  |  Registered in England & Wales  |  sai@i-z.me  |  +44 7767 990 007',M,footerY+5);
-    tx('Payment confirms order. All prices in GBP. Original quote: '+curSymbol+rawPrice.toFixed(2)+' '+cur+' '+inco+'. Valid 7 days.',M,footerY+10);
-    sf('bold',6.5,[110,110,110]);tx('Ref: '+ref,W-M,footerY+10,{align:'right'});
-
-    const safe=company.replace(/[^a-zA-Z0-9]/g,'_').slice(0,28);
-    doc.save('IK_Proforma_'+safe+'_'+ref+'.pdf');
-}
-
-// ── SHARE LINK ────────────────────────────────────────────────────────────────
-function buildShareHash() {
-    return '#q=' + btoa(unescape(encodeURIComponent(JSON.stringify({
-        p:  document.getElementById('productInput').value.trim(),
-        px: parseFloat(document.getElementById('unitPrice').value) || 0,
-        cur:document.getElementById('currencySelect').value,
-        q:  parseInt(document.getElementById('orderQty').value)    || 0,
-        c:  document.getElementById('companyName').value.trim(),
-        f:  freight,
-        inc:document.getElementById('incoterms').value
-    }))));
-}
-
-function copyShareLink() {
-    const url = window.location.href.split('#')[0] + buildShareHash();
-    const btn = document.getElementById('shareBtn');
-    const restoreLabel = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg> Share this quote';
-    navigator.clipboard.writeText(url).then(() => {
-        btn.classList.add('copied');
-        btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Link copied!';
-        setTimeout(() => { btn.classList.remove('copied'); btn.innerHTML = restoreLabel; }, 3000);
-    }).catch(() => {
-        const el = document.createElement('textarea');
-        el.value = url; document.body.appendChild(el); el.select();
-        document.execCommand('copy'); document.body.removeChild(el);
-        showToast('Link copied to clipboard', '#1d6b5e');
-    });
-}
-
-function unlockShareBtn() {
-    const btn = document.getElementById('shareBtn');
-    btn.disabled = false; btn.style.opacity = '1'; btn.style.cursor = 'pointer';
-}
-
-// ── DYNAMIC WHATSAPP ──────────────────────────────────────────────────────────
-function updateWaLink(net, qty) {
-    const prod  = document.getElementById('productInput').value.trim();
-    const price = getPriceGBP();
-    const cur   = document.getElementById('currencySelect').value;
-    const raw   = parseFloat(document.getElementById('unitPrice').value) || 0;
-    const inco  = document.getElementById('incoterms').value;
-    const mode  = freight === 'air' ? 'air freight' : 'sea freight';
-    const curSym= { GBP: '£', USD: '$', CNY: '¥' }[cur];
-    const msg = `Hi IK ENG — I've used your landed cost calculator and want to proceed.\n\nProduct: ${prod}\nQty: ${qty} units @ ${curSym}${raw.toFixed(2)} ${cur} ${inco} (£${price.toFixed(2)} GBP equiv.)\nDuty: ${aiData.duty_rate.toFixed(1)}% (HS ${aiData.hs_code})\nShipping: ${mode}\nEst. net landed total: £${net.toFixed(2)}\n\nPlease confirm and let's proceed.`;
-    document.getElementById('waStrip').href = 'https://wa.me/447767990007?text=' + encodeURIComponent(msg);
-}
-
-// ── RESTORE FROM HASH ─────────────────────────────────────────────────────────
-(function restoreFromHash() {
-    try {
-        const m = window.location.hash.match(/^#q=(.+)/);
-        if (!m) return;
-        const s = JSON.parse(decodeURIComponent(escape(atob(m[1]))));
-        if (s.p)   document.getElementById('productInput').value  = s.p;
-        if (s.px)  document.getElementById('unitPrice').value     = s.px;
-        if (s.cur) document.getElementById('currencySelect').value= s.cur;
-        if (s.q)   document.getElementById('orderQty').value      = s.q;
-        if (s.c)   document.getElementById('companyName').value   = s.c;
-        if (s.inc) document.getElementById('incoterms').value     = s.inc;
-        if (s.f)   { freight = s.f; setFreight(s.f); }
-        if (s.p)   setTimeout(runCalc, 400);
-    } catch(e) { /* malformed hash */ }
-})();
-
-// ── EVENT LISTENERS ───────────────────────────────────────────────────────────
-document.getElementById('productInput').addEventListener('keypress', e => { if(e.key==='Enter') runCalc(); });
-document.getElementById('unitPrice').addEventListener('input', tryRecalc);
-document.getElementById('orderQty').addEventListener('input', tryRecalc);
-
-// Load exchange rates on startup
+document.getElementById('productInput').addEventListener('keypress',e=>{if(e.key==='Enter')runCalc();});
+document.getElementById('unitPrice').addEventListener('input',tryRecalc);
+document.getElementById('orderQty').addEventListener('input',tryRecalc);
 loadRates();
 </script>
 </body>
