@@ -84,7 +84,7 @@ body{font-family:var(--sans);background:var(--paper);color:var(--ink);line-heigh
 .nav-links{display:flex;align-items:center;gap:24px;}
 .nav-links a{font-size:.8rem;color:rgba(255,255,255,.5);text-decoration:none;letter-spacing:.04em;transition:color .2s;}
 .nav-links a:hover{color:var(--gold);}
-.nav-wa{display:flex;align-items:center;gap:7px;background:#25d366;color:white;padding:8px 16px;border-radius:30px;text-decoration:none;font-size:.78rem;font-weight:600;transition:opacity .2s;white-space:nowrap;}
+.nav-wa{display:flex;align-items:center;gap:7px;background:#075e54;color:white;padding:8px 16px;border-radius:30px;text-decoration:none;font-size:.78rem;font-weight:600;transition:opacity .2s;white-space:nowrap;}
 .nav-wa:hover{opacity:.88;}
 @media(max-width:700px){.nav-links{display:none;}}
 
@@ -95,7 +95,7 @@ body{font-family:var(--sans);background:var(--paper);color:var(--ink);line-heigh
 .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:.7rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);background:rgba(200,146,42,.1);border:1px solid rgba(200,146,42,.22);padding:6px 16px;border-radius:30px;margin-bottom:28px;}
 .hero h1{font-family:var(--serif);font-size:clamp(2.8rem,6.5vw,5.2rem);font-weight:500;line-height:1.08;color:var(--white);margin-bottom:24px;}
 .hero h1 em{color:var(--gold);font-style:italic;}
-.hero h1 .dim{color:rgba(255,255,255,.3);}
+.hero h1 .dim{color:rgba(255,255,255,.55);}
 .hero-sub{font-size:clamp(.95rem,2vw,1.12rem);font-weight:300;color:rgba(255,255,255,.52);max-width:600px;line-height:1.82;margin-bottom:44px;}
 .hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:64px;}
 .btn-gold{display:inline-flex;align-items:center;gap:8px;background:var(--gold);color:var(--ink);padding:14px 28px;border-radius:4px;font-size:.9rem;font-weight:600;text-decoration:none;border:none;cursor:pointer;transition:all .2s;}
@@ -108,7 +108,7 @@ body{font-family:var(--sans);background:var(--paper);color:var(--ink);line-heigh
 
 /* ─ TRUST BAR ────────────────────────────────────────────────────── */
 .trust-bar{background:var(--ink);border-top:1px solid rgba(255,255,255,.05);border-bottom:1px solid rgba(255,255,255,.05);padding:18px 5%;display:flex;gap:28px;justify-content:center;flex-wrap:wrap;}
-.trust-item{display:flex;align-items:center;gap:7px;font-size:.75rem;color:rgba(255,255,255,.42);}
+.trust-item{display:flex;align-items:center;gap:7px;font-size:.75rem;color:rgba(255,255,255,.55);}
 .trust-dot{width:5px;height:5px;background:var(--gold);border-radius:50%;flex-shrink:0;}
 
 /* ─ SECTIONS ─────────────────────────────────────────────────────── */
@@ -122,8 +122,8 @@ body{font-family:var(--sans);background:var(--paper);color:var(--ink);line-heigh
 .sec-title{font-family:var(--serif);font-size:clamp(2rem,4.5vw,3.2rem);font-weight:500;line-height:1.12;margin-bottom:16px;}
 .section-dark .sec-title{color:var(--white);}
 .section-dark .sec-label{color:var(--gold);}
-.sec-sub{font-size:.98rem;font-weight:300;color:var(--mute);max-width:580px;line-height:1.82;}
-.section-dark .sec-sub{color:rgba(255,255,255,.42);}
+.sec-sub{font-size:.98rem;font-weight:300;color:#6b6354;max-width:580px;line-height:1.82;}
+.section-dark .sec-sub{color:rgba(255,255,255,.55);}
 
 /* ─ WHO WE SERVE ─────────────────────────────────────────────────── */
 .audience-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:8px;overflow:hidden;margin-top:52px;}
@@ -444,6 +444,7 @@ footer{background:#0e0d08;padding:48px 5% 28px;}
   </a>
 </nav>
 
+<main>
 <!-- ── HERO ───────────────────────────────────────────────────────── -->
 <section class="hero">
   <div class="hero-glow"></div>
@@ -827,8 +828,8 @@ footer{background:#0e0d08;padding:48px 5% 28px;}
               <div class="field"><label class="lbl">Project name</label><input type="text" name="project_name" placeholder="e.g. Riverside Quarter Phase 1"></div>
               <div class="field"><label class="lbl">Location <span class="req">*</span></label><input type="text" name="location" placeholder="City or postcode" required></div>
               <div class="field"><label class="lbl">Number of units</label><input type="number" name="units" placeholder="e.g. 24 apartments" min="1"></div>
-              <div class="field"><label class="lbl">Finish level</label>
-                <select name="finish_level">
+              <div class="field"><label class="lbl" for="finish_level">Finish level</label>
+                <select name="finish_level" id="finish_level">
                   <option value="" disabled selected>Select…</option>
                   <option>Standard — rental spec</option>
                   <option>Mid-range — owner-occupier</option>
@@ -874,9 +875,9 @@ footer{background:#0e0d08;padding:48px 5% 28px;}
               <div class="field full"><label class="lbl">What do you need? Be as loose or precise as you like.</label><textarea name="description" rows="4" placeholder="e.g. 20 double beds with upholstered headboard in grey fabric, king size. Similar to John Lewis Eliot but at a lower price point. Rental spec durability. Including mattress."></textarea><span class="hint">We'll ask follow-up questions — no full spec needed at this stage.</span></div>
               <div class="field"><label class="lbl">Materials / finishes</label><input type="text" name="materials" placeholder="e.g. oak veneer, brushed brass, grey linen"></div>
               <div class="field"><label class="lbl">Specific dimensions</label><input type="text" name="dimensions" placeholder="e.g. sofa max 220cm, 76cm doorway"></div>
-              <div class="field"><label class="lbl">Required on-site date</label><input type="date" name="delivery_date"></div>
-              <div class="field"><label class="lbl">Approximate budget</label>
-                <select name="budget">
+              <div class="field"><label class="lbl" for="delivery_date">Required on-site date</label><input type="date" name="delivery_date" id="delivery_date"></div>
+              <div class="field"><label class="lbl" for="budget">Approximate budget</label>
+                <select name="budget" id="budget">
                   <option value="" disabled selected>Select a range…</option>
                   <option>Under £5,000</option>
                   <option>£5,000 – £15,000</option>
@@ -988,13 +989,13 @@ footer{background:#0e0d08;padding:48px 5% 28px;}
           <div>
             <label style="font-size:.68rem;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--mute);display:block;margin-bottom:5px;">Price, currency &amp; terms</label>
             <div class="price-row">
-              <select class="cur-sel" id="currencySelect" onchange="onCurrencyChange()">
+              <select class="cur-sel" id="currencySelect" aria-label="Currency" onchange="onCurrencyChange()">
                 <option value="GBP">£ GBP</option>
                 <option value="USD">$ USD</option>
                 <option value="CNY" selected>¥ RMB</option>
               </select>
               <input type="number" id="unitPrice" placeholder="e.g. 38" min="0" step="0.01" style="min-width:0;">
-              <select class="inc-sel ic" id="incoterms" onchange="tryRecalc()" style="width:100%;">
+              <select class="inc-sel ic" id="incoterms" aria-label="Incoterms" onchange="tryRecalc()" style="width:100%;">
                 <option value="EXW">EXW</option>
                 <option value="FOB" selected>FOB</option>
                 <option value="CIF">CIF</option>
@@ -1092,6 +1093,7 @@ footer{background:#0e0d08;padding:48px 5% 28px;}
     <a href="https://wa.me/447767990007?text=Hi%20IK%20ENG%2C%20I%20want%20to%20discuss%20a%20sourcing%20project" target="_blank" rel="noopener" class="btn-ol-dark">WhatsApp us now</a>
   </div>
 </div>
+</main>
 
 <!-- ── FOOTER ─────────────────────────────────────────────────────── -->
 <footer>
