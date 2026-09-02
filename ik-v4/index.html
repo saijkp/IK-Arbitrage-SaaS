@@ -723,19 +723,20 @@ footer{background:#0e0d08;padding:48px 5% 28px;}
           </ul>
         </div>
       </div>
-      <form id="guideForm" novalidate>
+      <form id="guideForm" name="guide-download" data-netlify="true" novalidate>
+        <input type="hidden" name="form-name" value="guide-download">
         <div class="fg" style="margin-bottom:12px;">
           <div class="field">
             <label class="lbl">Your name <span class="req">*</span></label>
-            <input type="text" id="g-name" placeholder="Jane Smith" required>
+            <input type="text" id="g-name" name="name" placeholder="Jane Smith" required>
           </div>
           <div class="field">
             <label class="lbl">Email address <span class="req">*</span></label>
-            <input type="email" id="g-email" placeholder="jane@smithdev.co.uk" required>
+            <input type="email" id="g-email" name="email" placeholder="jane@smithdev.co.uk" required>
           </div>
           <div class="field full">
             <label class="lbl">Company</label>
-            <input type="text" id="g-company" placeholder="Smith Developments Ltd">
+            <input type="text" id="g-company" name="company" placeholder="Smith Developments Ltd">
           </div>
         </div>
         <button type="submit" class="submit-btn" style="width:100%;padding:13px;">Download free guide →</button>
@@ -769,7 +770,8 @@ footer{background:#0e0d08;padding:48px 5% 28px;}
       </div>
 
       <div class="brief-body">
-        <form id="briefForm" novalidate>
+        <form id="briefForm" name="sourcing-brief" data-netlify="true" novalidate>
+          <input type="hidden" name="form-name" value="sourcing-brief">
 
           <div class="fsec">
             <div class="fsec-title"><span class="fsec-num">1</span> Your details</div>
@@ -1135,9 +1137,17 @@ document.getElementById('briefForm').addEventListener('submit', async function(e
   if (!this.querySelector('input[name=role]:checked')) { document.getElementById('roleErr').classList.add('show'); ok=false; }
   else { document.getElementById('roleErr').classList.remove('show'); }
   if (!ok) return;
+  const formData = new FormData(this);
   const data = {};
-  new FormData(this).forEach((v,k) => { data[k] = data[k] ? [].concat(data[k],v) : v; });
+  formData.forEach((v,k) => { data[k] = data[k] ? [].concat(data[k],v) : v; });
   if (window.logBrief) await window.logBrief(data);
+  try {
+    await fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams(formData).toString()
+    });
+  } catch (err) { console.error('Netlify form submission failed', err); }
   document.getElementById('briefSuccess').classList.add('show');
   this.querySelector('.submit-bar').style.opacity='.4';
   this.querySelector('.submit-bar').style.pointerEvents='none';
@@ -1154,6 +1164,13 @@ document.getElementById('guideForm').addEventListener('submit', async function(e
     showToast('Please enter your name and a valid email.'); return;
   }
   if (window.logGuide) await window.logGuide({ name, email, company: document.getElementById('g-company').value.trim() });
+  try {
+    await fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams(new FormData(this)).toString()
+    });
+  } catch (err) { console.error('Netlify form submission failed', err); }
   document.getElementById('guide-success').classList.add('show');
   this.style.display='none';
 });
