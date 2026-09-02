@@ -57,6 +57,7 @@ exports.handler = async (event) => {
         }
 
         const fromAddress = process.env.RESEND_FROM_EMAIL || "IK ENG <onboarding@resend.dev>";
+        console.log("send-guide: sending via", fromAddress);
 
         const resp = await fetch("https://api.resend.com/emails", {
             method: "POST",
