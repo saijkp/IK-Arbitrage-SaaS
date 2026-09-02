@@ -4,6 +4,7 @@
   "description": "IK Arbitrage Sourcing & Logistics Terminal",
   "main": "index.html",
   "dependencies": {
+    "@netlify/blobs": "^11.0.3",
     "axios": "^1.6.0",
     "openai": "^4.28.0"
   },

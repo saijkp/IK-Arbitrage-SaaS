@@ -62,7 +62,7 @@
     <table>
       <tr><th>Source</th><th>What's collected</th><th>Why</th></tr>
       <tr><td>Site analytics (Google Analytics 4)</td><td>Pages viewed, general location (country/city level), device/browser type, how you arrived at the site, and which links you click (e.g. WhatsApp, "send a brief")</td><td>To understand which pages and content are actually helping visitors, and improve the site</td></tr>
-      <tr><td>"UK Buyer's Guide" download form</td><td>Name, email address, company (optional)</td><td>To send you the guide by email</td></tr>
+      <tr><td>"UK Buyer's Guide" download form</td><td>Name, email address, company (optional)</td><td>To send you the guide by email, plus two follow-up emails over the following week (see "Follow-up emails" below)</td></tr>
       <tr><td>"Project Sourcing Brief" form</td><td>Name, company, email, phone, your role, and the project details you choose to share (location, unit count, product categories, specification, budget range, timeline)</td><td>To respond to your enquiry with sourcing options, pricing and a delivery estimate</td></tr>
     </table>
     <p>We only collect what's listed above. We don't use tracking pixels from third-party advertisers, and we don't buy or sell contact lists.</p>
@@ -70,9 +70,12 @@
     <h2>Where it's stored</h2>
     <ul>
       <li><strong>Form submissions</strong> are stored via Netlify Forms (our hosting provider) and in our own database (Firebase/Firestore), so we can respond to you and keep a record of the enquiry.</li>
-      <li><strong>Guide-download emails</strong> are sent via Resend, our email delivery provider, using only the name and email you provide.</li>
+      <li><strong>Guide-download and follow-up emails</strong> are sent via Resend, our email delivery provider, using only the name and email you provide. A short record (email, name, and whether you've unsubscribed) is kept via Netlify Blobs, our hosting provider's storage, purely to schedule and cancel these emails correctly.</li>
       <li><strong>Analytics data</strong> is processed by Google Analytics 4 under Google's own privacy terms.</li>
     </ul>
+
+    <h2>Follow-up emails</h2>
+    <p>If you download the UK Buyer's Guide, you'll get the guide immediately, then two further emails over the following week with practical sourcing information and a reminder to send us a brief if you have a live project. Every one of these emails includes an unsubscribe link — clicking it stops all future follow-ups (including any already scheduled) immediately, and we keep a record of that choice so it's respected even if you download the guide again later. We don't sell or share your email address for anyone else's marketing.</p>
 
     <h2>Cookies</h2>
     <p>This site uses cookies set by Google Analytics to recognise repeat visits and measure site usage. You'll see a cookie banner on your first visit — analytics cookies are only set if you accept them, in line with UK PECR (Privacy and Electronic Communications Regulations). You can change your choice at any time by clearing your browser's cookies for this site and reloading the page.</p>
