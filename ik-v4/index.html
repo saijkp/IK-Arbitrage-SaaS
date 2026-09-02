@@ -1171,6 +1171,13 @@ document.getElementById('guideForm').addEventListener('submit', async function(e
       body: new URLSearchParams(new FormData(this)).toString()
     });
   } catch (err) { console.error('Netlify form submission failed', err); }
+  try {
+    await fetch('/.netlify/functions/send-guide', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, email })
+    });
+  } catch (err) { console.error('Guide email send failed', err); }
   document.getElementById('guide-success').classList.add('show');
   this.style.display='none';
 });
