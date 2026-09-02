@@ -127,5 +127,14 @@
   </div>
 </footer>
 
+<script>
+document.addEventListener('click', e => {
+  const a = e.target.closest('a');
+  if (!a || !a.href || !window.gtag) return;
+  if (a.href.indexOf('wa.me') > -1) gtag('event', 'whatsapp_click', { page_location: location.href });
+  else if (a.href.indexOf('#brief') > -1) gtag('event', 'brief_cta_click', { page_location: location.href });
+});
+</script>
+
 </body>
 </html>
