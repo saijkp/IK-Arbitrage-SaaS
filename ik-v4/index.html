@@ -169,6 +169,7 @@ body{font-family:var(--sans);background:var(--paper);color:var(--ink);line-heigh
 .cats{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin-top:48px;}
 .cat-card{background:var(--ink);border:1px solid rgba(255,255,255,.07);border-radius:6px;padding:18px 14px;text-align:center;transition:border-color .2s,transform .2s;cursor:default;}
 .cat-card:hover{border-color:rgba(200,146,42,.35);transform:translateY(-2px);}
+a.cat-card{text-decoration:none;color:inherit;display:block;cursor:pointer;}
 .cat-icon{font-size:22px;margin-bottom:8px;}
 .cat-name{font-size:.76rem;font-weight:500;color:rgba(255,255,255,.7);}
 
@@ -404,7 +405,7 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
 /* ─ FOOTER ───────────────────────────────────────────────────────── */
 footer{background:#0e0d08;padding:48px 5% 28px;}
 .footer-inner{max-width:1100px;margin:0 auto;}
-.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:36px;margin-bottom:36px;}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr;gap:36px;margin-bottom:36px;}
 @media(max-width:700px){.footer-grid{grid-template-columns:1fr 1fr;}}
 @media(max-width:420px){.footer-grid{grid-template-columns:1fr;}}
 .footer-brand{font-family:var(--serif);font-size:1.5rem;font-weight:600;color:white;margin-bottom:10px;}
@@ -603,18 +604,18 @@ footer{background:#0e0d08;padding:48px 5% 28px;}
     <h2 class="sec-title">Furniture to foundations —<br><em style="color:var(--gold)">if it's in a building, we source it</em></h2>
     <p class="sec-sub">20+ years of factory relationships across Guangzhou, Shenzhen and Foshan. From a single sofa to a full building spec — LED lighting, acoustic panels, kitchen joinery, tiles, flooring, and everything in between.</p>
     <div class="cats fade-in">
-      <div class="cat-card"><div class="cat-icon">🛋</div><div class="cat-name">Sofas &amp; seating</div></div>
-      <div class="cat-card"><div class="cat-icon">🛏</div><div class="cat-name">Beds &amp; bedroom</div></div>
-      <div class="cat-card"><div class="cat-icon">🚪</div><div class="cat-name">Wardrobes &amp; storage</div></div>
-      <div class="cat-card"><div class="cat-icon">🍳</div><div class="cat-name">Kitchen cabinets &amp; joinery</div></div>
-      <div class="cat-card"><div class="cat-icon">🪑</div><div class="cat-name">Dining furniture</div></div>
-      <div class="cat-card"><div class="cat-icon">💡</div><div class="cat-name">LED lighting &amp; electrical</div></div>
-      <div class="cat-card"><div class="cat-icon">🔇</div><div class="cat-name">Acoustic panels</div></div>
-      <div class="cat-card"><div class="cat-icon">🚿</div><div class="cat-name">Bathroom furniture</div></div>
-      <div class="cat-card"><div class="cat-icon">🪟</div><div class="cat-name">Soft furnishings</div></div>
-      <div class="cat-card"><div class="cat-icon">🏗</div><div class="cat-name">Tiles &amp; flooring</div></div>
-      <div class="cat-card"><div class="cat-icon">🧱</div><div class="cat-name">Building materials</div></div>
-      <div class="cat-card"><div class="cat-icon">✦</div><div class="cat-name">Anything else →</div></div>
+      <a class="cat-card" href="/furniture-sourcing-china.html"><div class="cat-icon">🛋</div><div class="cat-name">Sofas &amp; seating</div></a>
+      <a class="cat-card" href="/furniture-sourcing-china.html"><div class="cat-icon">🛏</div><div class="cat-name">Beds &amp; bedroom</div></a>
+      <a class="cat-card" href="/furniture-sourcing-china.html"><div class="cat-icon">🚪</div><div class="cat-name">Wardrobes &amp; storage</div></a>
+      <a class="cat-card" href="/kitchen-cabinets-sourcing-china.html"><div class="cat-icon">🍳</div><div class="cat-name">Kitchen cabinets &amp; joinery</div></a>
+      <a class="cat-card" href="/furniture-sourcing-china.html"><div class="cat-icon">🪑</div><div class="cat-name">Dining furniture</div></a>
+      <a class="cat-card" href="/led-lighting-sourcing-china.html"><div class="cat-icon">💡</div><div class="cat-name">LED lighting &amp; electrical</div></a>
+      <a class="cat-card" href="/acoustic-panels-sourcing-china.html"><div class="cat-icon">🔇</div><div class="cat-name">Acoustic panels</div></a>
+      <a class="cat-card" href="/furniture-sourcing-china.html"><div class="cat-icon">🚿</div><div class="cat-name">Bathroom furniture</div></a>
+      <a class="cat-card" href="/furniture-sourcing-china.html"><div class="cat-icon">🪟</div><div class="cat-name">Soft furnishings</div></a>
+      <a class="cat-card" href="/building-materials-sourcing-china.html"><div class="cat-icon">🏗</div><div class="cat-name">Tiles &amp; flooring</div></a>
+      <a class="cat-card" href="/building-materials-sourcing-china.html"><div class="cat-icon">🧱</div><div class="cat-name">Building materials</div></a>
+      <a class="cat-card" href="#brief"><div class="cat-icon">✦</div><div class="cat-name">Anything else →</div></a>
     </div>
   </div>
 </section>
@@ -1109,6 +1110,16 @@ footer{background:#0e0d08;padding:48px 5% 28px;}
           <li><a href="#how-it-works">How it works</a></li>
           <li><a href="#what-we-source">What we source</a></li>
           <li><a href="#calculator">Cost calculator</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">What we source</div>
+        <ul class="footer-links">
+          <li><a href="/furniture-sourcing-china.html">Furniture sourcing</a></li>
+          <li><a href="/led-lighting-sourcing-china.html">LED lighting sourcing</a></li>
+          <li><a href="/acoustic-panels-sourcing-china.html">Acoustic panel sourcing</a></li>
+          <li><a href="/kitchen-cabinets-sourcing-china.html">Kitchen cabinet sourcing</a></li>
+          <li><a href="/building-materials-sourcing-china.html">Building materials sourcing</a></li>
         </ul>
       </div>
       <div>
