@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- Google Analytics: gated behind cookie consent, see /cookie-consent.js -->
+<!-- Google Tag Manager: gated behind cookie consent, see /cookie-consent.js -->
 <script src="/cookie-consent.js" defer></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -71,6 +71,10 @@
 </style>
 </head>
 <body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WCBF9CN4"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
 
 <header class="site">
   <div class="wrap">
@@ -126,9 +130,9 @@
 <script>
 document.addEventListener('click', e => {
   const a = e.target.closest('a');
-  if (!a || !a.href || !window.gtag) return;
-  if (a.href.indexOf('wa.me') > -1) gtag('event', 'whatsapp_click', { page_location: location.href });
-  else if (a.href.indexOf('#brief') > -1) gtag('event', 'brief_cta_click', { page_location: location.href });
+  if (!a || !a.href || !window._ikGtmLoaded) return;
+  if (a.href.indexOf('wa.me') > -1) dataLayer.push({ event: 'whatsapp_click', page_location: location.href });
+  else if (a.href.indexOf('#brief') > -1) dataLayer.push({ event: 'brief_cta_click', page_location: location.href });
 });
 </script>
 
