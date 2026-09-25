@@ -3,6 +3,15 @@
   publish = "."
   functions = "netlify/functions"
 
+# Canonicalize www -> apex. GSC showed www.ikeng.co.uk/ being crawled and
+# ranked as a separate URL from the apex homepage, splitting ranking
+# signal between the two instead of consolidating it onto one.
+[[redirects]]
+  from = "https://www.ikeng.co.uk/*"
+  to = "https://ikeng.co.uk/:splat"
+  status = 301
+  force = true
+
 [[redirects]]
   from = "/api/*"
   to = "/.netlify/functions/:splat"
@@ -13,3 +22,38 @@
   from = "/deal"
   to = "/deal.html"
   status = 200
+
+# Canonicalize the extensionless path onto the .html file for pages where
+# GSC showed both URL forms being independently crawled/ranked (each one
+# already has a <link rel="canonical"> pointing at the .html version, but
+# a canonical tag is only a hint -- a real 301 is what actually stops
+# Google indexing/ranking both forms separately).
+[[redirects]]
+  from = "/property-developers"
+  to = "/property-developers.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/furniture-sourcing-china"
+  to = "/furniture-sourcing-china.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/hotels-guest-houses"
+  to = "/hotels-guest-houses.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/led-lighting-sourcing-china"
+  to = "/led-lighting-sourcing-china.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/case-study-manchester-hmo"
+  to = "/case-study-manchester-hmo.html"
+  status = 301
+  force = true
