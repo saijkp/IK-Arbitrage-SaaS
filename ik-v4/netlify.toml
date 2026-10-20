@@ -3,6 +3,14 @@
   publish = "."
   functions = "netlify/functions"
 
+# Netlify's pretty-URL post-processing rewrote every internal link from
+# /page.html to /page, so crawlers kept discovering the extensionless form
+# while every canonical tag and the sitemap point at /page.html. GSC listed
+# these under "Alternative page with proper canonical tag" / "Page with
+# redirect". Serve links exactly as written in the source.
+[build.processing.html]
+  pretty_urls = false
+
 # Canonicalize www -> apex. GSC showed www.ikeng.co.uk/ being crawled and
 # ranked as a separate URL from the apex homepage, splitting ranking
 # signal between the two instead of consolidating it onto one.
@@ -57,3 +65,60 @@
   to = "/case-study-manchester-hmo.html"
   status = 301
   force = true
+
+# Same extensionless -> .html canonicalization for the pages added after
+# the redirects above were written.
+[[redirects]]
+  from = "/acoustic-panels-sourcing-china"
+  to = "/acoustic-panels-sourcing-china.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/kitchen-cabinets-sourcing-china"
+  to = "/kitchen-cabinets-sourcing-china.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/building-materials-sourcing-china"
+  to = "/building-materials-sourcing-china.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/hmo-landlords"
+  to = "/hmo-landlords.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/serviced-apartments"
+  to = "/serviced-apartments.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/holiday-lets"
+  to = "/holiday-lets.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/student-accommodation"
+  to = "/student-accommodation.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/whole-house-furniture-package"
+  to = "/whole-house-furniture-package.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/furniture-for-multiple-properties"
+  to = "/furniture-for-multiple-properties.html"
+  status = 301
+  force = true
+
