@@ -122,3 +122,27 @@
   status = 301
   force = true
 
+[[redirects]]
+  from = "/how-it-works"
+  to = "/how-it-works.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/bathroom-sourcing-china"
+  to = "/bathroom-sourcing-china.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/wardrobes-and-bespoke-joinery"
+  to = "/wardrobes-and-bespoke-joinery.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/china-sourcing-inspection-and-visits"
+  to = "/china-sourcing-inspection-and-visits.html"
+  status = 301
+  force = true
+
