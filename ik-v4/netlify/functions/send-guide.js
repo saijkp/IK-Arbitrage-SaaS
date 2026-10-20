@@ -31,7 +31,7 @@ const GUIDE_HTML = (email) => `
     <p style="font-family:Arial,sans-serif;font-size:14px;color:#333;margin:0 0 4px;">Realistically: 1–2 weeks for sampling and approval, 3–5 weeks production, 5–7 weeks sea freight plus UK customs clearance and final delivery. Budget 10–14 weeks door-to-door for a standard order, and start earlier than feels necessary — the freight leg is the one part you can't compress.</p>
 
     <div style="margin-top:32px;padding:20px 24px;background:#eaf1fb;border-radius:6px;font-family:Arial,sans-serif;">
-      <p style="font-size:14px;margin:0 0 12px;color:#1b1f27;">Have a live project? Send us your brief and we'll come back within 48 hours with factory options, pricing, and a confirmed delivery date.</p>
+      <p style="font-size:14px;margin:0 0 12px;color:#1b1f27;">Have a live project? Send your brief, postcode, budget and required timing. We will review the scope and confirm the next steps.</p>
       <a href="https://ikeng.co.uk/#brief" style="display:inline-block;background:#1f4e8c;color:#fff;padding:10px 18px;border-radius:5px;text-decoration:none;font-weight:600;font-size:14px;">Send your project brief →</a>
     </div>
 
@@ -50,7 +50,7 @@ const DAY3_HTML = (name, email) => `
     <p style="font-family:Arial,sans-serif;font-size:14px;color:#333;margin:0 0 16px;">Hi ${name || 'there'},</p>
     <p style="font-family:Arial,sans-serif;font-size:14px;color:#333;margin:0 0 16px;">Quick one. If you're planning a project with any kind of handover date, here's the number that matters: sourcing from China typically runs 10–12 weeks door-to-site — 3–5 weeks production, 5 weeks sea freight, 1 week customs and delivery.</p>
     <p style="font-family:Arial,sans-serif;font-size:14px;color:#333;margin:0 0 16px;">That means today's date already tells you your last sensible start date. Every week you sit on a brief is a week that comes off the other end — either a later handover, or a scramble into air freight at a much higher cost.</p>
-    <p style="font-family:Arial,sans-serif;font-size:14px;color:#333;margin:0 0 24px;">Here's what it looks like when the timeline holds: <a href="https://ikeng.co.uk/case-study-manchester-hmo.html" style="color:#1f4e8c;">24-Unit HMO Scheme, Manchester</a> — factory options in 48 hours, delivered inside 12 weeks, no surprises.</p>
+    <p style="font-family:Arial,sans-serif;font-size:14px;color:#333;margin:0 0 24px;">A defined product schedule helps us assess suppliers, costs and delivery arrangements before commitment.</p>
     <a href="https://ikeng.co.uk/#brief" style="display:inline-block;background:#1f4e8c;color:#fff;padding:12px 22px;border-radius:5px;text-decoration:none;font-weight:600;font-size:14px;">Send your brief now →</a>
     <p style="font-family:Arial,sans-serif;font-size:13px;color:#5b6472;margin-top:20px;">Free to enquire, no obligation — and it's the only step that starts the clock.</p>
     <p style="font-family:Arial,sans-serif;font-size:12px;color:#5b6472;margin-top:32px;">IK Eng Ltd · 125 Great Clowes Street, Manchester M7 1AL · <a href="mailto:sai@ikeng.co.uk" style="color:#1f4e8c;">sai@ikeng.co.uk</a></p>
