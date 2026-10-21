@@ -270,6 +270,7 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
 .guide-submit:hover{background:var(--gold-lt);}
 .guide-success{display:none;background:rgba(29,107,94,.2);border:1px solid rgba(29,107,94,.4);border-radius:6px;padding:14px 18px;font-size:.84rem;color:#9fd4b2;margin-top:12px;}
 .guide-success.show{display:block;}
+.hp-field{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;}
 .guide-card{margin-top:40px;background:var(--paper);border:1px solid var(--rule);border-top:3px solid var(--gold);border-radius:8px;padding:26px 28px;display:flex;gap:24px;align-items:center;justify-content:space-between;flex-wrap:wrap;}
 .guide-card>div{flex:1 1 320px;}
 .guide-card-tag{font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:8px;}
@@ -588,8 +589,9 @@ footer{background:#0e0d08;padding:48px 5% 28px;}
 <div class="brief-promises"><div class="bp">Free initial enquiry</div><div class="bp">48hr response</div></div>
 </div>
 <div class="brief-body">
-<form data-netlify="true" id="briefForm" name="sourcing-brief" novalidate="">
+<form data-netlify="true" data-netlify-honeypot="bot-field" id="briefForm" name="sourcing-brief" novalidate="">
 <input name="form-name" type="hidden" value="sourcing-brief"/>
+<p class="hp-field" aria-hidden="true"><label>Leave this empty <input name="bot-field" tabindex="-1" autocomplete="off"/></label></p>
 <div class="fsec">
 <div class="fsec-title"><span class="fsec-num">1</span> Your details</div>
 <div class="fg">
@@ -836,8 +838,9 @@ footer{background:#0e0d08;padding:48px 5% 28px;}
           </ul>
         </div>
       </div>
-      <form id="guideForm" name="guide-download" data-netlify="true" novalidate>
+      <form id="guideForm" name="guide-download" data-netlify="true" data-netlify-honeypot="bot-field" novalidate>
         <input type="hidden" name="form-name" value="guide-download">
+        <p class="hp-field" aria-hidden="true"><label>Leave this empty <input name="bot-field" tabindex="-1" autocomplete="off"/></label></p>
         <div class="fg" style="margin-bottom:12px;">
           <div class="field">
             <label class="lbl">Your name <span class="req">*</span></label>
