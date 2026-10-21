@@ -270,6 +270,11 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
 .guide-submit:hover{background:var(--gold-lt);}
 .guide-success{display:none;background:rgba(29,107,94,.2);border:1px solid rgba(29,107,94,.4);border-radius:6px;padding:14px 18px;font-size:.84rem;color:#9fd4b2;margin-top:12px;}
 .guide-success.show{display:block;}
+.guide-card{margin-top:40px;background:var(--paper);border:1px solid var(--rule);border-top:3px solid var(--gold);border-radius:8px;padding:26px 28px;display:flex;gap:24px;align-items:center;justify-content:space-between;flex-wrap:wrap;}
+.guide-card>div{flex:1 1 320px;}
+.guide-card-tag{font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:8px;}
+.guide-card-title{font-family:var(--serif);font-size:1.35rem;font-weight:500;color:var(--ink);margin-bottom:6px;}
+.guide-card-desc{font-size:.82rem;color:var(--mute);line-height:1.7;}
 
 /* ─ ABOUT ────────────────────────────────────────────────────────── */
 .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start;margin-top:52px;}
@@ -564,7 +569,7 @@ footer{background:#0e0d08;padding:48px 5% 28px;}
 </section>
 <!-- ── LEAD MAGNETS ───────────────────────────────────────────────── -->
 <section class="section section-white" id="magnets">
-<div class="inner"><div class="sec-label">Start with your brief</div><h2 class="sec-title">A practical scope review</h2><p class="sec-sub">Send a room list, drawings or reference images, delivery postcode, approximate delivered budget and required timing. We identify missing details and explain whether overseas sourcing could suit the package.</p><a class="btn-gold" href="#brief">Discuss your project →</a></div>
+<div class="inner"><div class="sec-label">Start with your brief</div><h2 class="sec-title">A practical scope review</h2><p class="sec-sub">Send a room list, drawings or reference images, delivery postcode, approximate delivered budget and required timing. We identify missing details and explain whether overseas sourcing could suit the package.</p><a class="btn-gold" href="#brief">Discuss your project →</a><div class="guide-card"><div><div class="guide-card-tag">Free download</div><div class="guide-card-title">UK Buyer's Guide to China Sourcing</div><p class="guide-card-desc">Import duties and VAT, shipping timelines, spotting fake suppliers, UK fire-safety and UKCA requirements, and what to put in your supplier contract. Plain English, emailed to you straight away.</p></div><button class="btn-gold" onclick="openModal('guideModal')" type="button">Get the free guide →</button></div></div>
 </section>
 <!-- ── BUDGET CALCULATOR MODAL ────────────────────────────────────── -->
 <!-- ── IMPORT GUIDE MODAL ─────────────────────────────────────────── -->
@@ -785,7 +790,7 @@ footer{background:#0e0d08;padding:48px 5% 28px;}
 </div>
 <div>
 <div class="footer-col-title">Start a project</div>
-<ul class="footer-links"><li><a href="/#brief">Send a brief</a></li><li><a href="/interior-design-studios.html">Studio package</a></li><li><a href="/how-it-works.html">How sourcing works</a></li></ul>
+<ul class="footer-links"><li><a href="/#brief">Send a brief</a></li><li><a href="/interior-design-studios.html">Studio package</a></li><li><a href="/how-it-works.html">How sourcing works</a></li><li><a href="#magnets" onclick="setTimeout(()=>openModal('guideModal'),400)">Free import guide</a></li></ul>
 </div>
 <div>
 <div class="footer-col-title">Contact</div>
@@ -803,6 +808,60 @@ footer{background:#0e0d08;padding:48px 5% 28px;}
 </div>
 </div>
 </footer>
+<div class="modal-overlay" id="guideModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div>
+        <div class="modal-title">UK Buyer's Guide to China Sourcing</div>
+        <div class="modal-sub">Free — emailed to you straight away</div>
+      </div>
+      <button class="modal-close" onclick="closeModal('guideModal')">×</button>
+    </div>
+    <div class="modal-body">
+      <div style="display:grid;grid-template-columns:auto 1fr;gap:20px;align-items:start;margin-bottom:20px;">
+        <div style="width:90px;height:124px;background:var(--gold);border-radius:5px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px;text-align:center;box-shadow:5px 5px 0 rgba(22,20,15,.15);flex-shrink:0;">
+          <div style="font-size:20px;">📖</div>
+          <div style="font-family:var(--serif);font-size:.75rem;font-weight:600;color:var(--ink);line-height:1.3;margin-top:6px;">UK Buyer's Guide</div>
+          <div style="font-size:.6rem;color:rgba(22,20,15,.55);margin-top:3px;">IK ENG</div>
+        </div>
+        <div>
+          <p style="font-size:.83rem;color:var(--mute);line-height:1.72;margin-bottom:12px;">Plain English. No jargon. Written for UK property professionals who are considering China sourcing but don't know where to start.</p>
+          <ul style="list-style:none;">
+            <li style="font-size:.8rem;color:var(--ink-mid);padding:3px 0;display:flex;gap:7px;">→ Import duties &amp; VAT — what you actually pay</li>
+            <li style="font-size:.8rem;color:var(--ink-mid);padding:3px 0;display:flex;gap:7px;">→ How to spot fake suppliers on Alibaba</li>
+            <li style="font-size:.8rem;color:var(--ink-mid);padding:3px 0;display:flex;gap:7px;">→ UK fire safety &amp; compliance requirements</li>
+            <li style="font-size:.8rem;color:var(--ink-mid);padding:3px 0;display:flex;gap:7px;">→ Sea vs air freight — when to use each</li>
+            <li style="font-size:.8rem;color:var(--ink-mid);padding:3px 0;display:flex;gap:7px;">→ What to put in your supplier contract</li>
+            <li style="font-size:.8rem;color:var(--ink-mid);padding:3px 0;display:flex;gap:7px;">→ Real timelines from order to site</li>
+          </ul>
+        </div>
+      </div>
+      <form id="guideForm" name="guide-download" data-netlify="true" novalidate>
+        <input type="hidden" name="form-name" value="guide-download">
+        <div class="fg" style="margin-bottom:12px;">
+          <div class="field">
+            <label class="lbl">Your name <span class="req">*</span></label>
+            <input type="text" id="g-name" name="name" placeholder="Jane Smith" required>
+          </div>
+          <div class="field">
+            <label class="lbl">Email address <span class="req">*</span></label>
+            <input type="email" id="g-email" name="email" placeholder="jane@smithdev.co.uk" required>
+          </div>
+          <div class="field full">
+            <label class="lbl">Company</label>
+            <input type="text" id="g-company" name="company" placeholder="Smith Developments Ltd">
+          </div>
+        </div>
+        <button type="submit" class="submit-btn" style="width:100%;padding:13px;">Download free guide →</button>
+        <div style="font-size:.7rem;color:var(--mute);margin-top:8px;text-align:center;">We'll email you the guide instantly. No spam, ever.</div>
+      </form>
+      <div class="guide-success" id="guide-success">
+        ✅ <strong>Check your inbox</strong> — your guide is on its way to you now. We'll also follow up in case you have questions.
+      </div>
+    </div>
+  </div>
+</div>
 <div id="toast"></div>
-<script defer="True" src="/brief-form.js"></script></body>
+<script defer="True" src="/brief-form.js"></script>
+<script defer src="/guide-form.js"></script></body>
 </html>
