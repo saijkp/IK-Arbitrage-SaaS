@@ -31,7 +31,7 @@ const GUIDE_HTML = (email) => `
     <p style="font-family:Arial,sans-serif;font-size:14px;color:#333;margin:0 0 4px;">Realistically: 1–2 weeks for sampling and approval, 3–5 weeks production, 5–7 weeks sea freight plus UK customs clearance and final delivery. Budget 10–14 weeks door-to-door for a standard order, and start earlier than feels necessary — the freight leg is the one part you can't compress.</p>
 
     <div style="margin-top:32px;padding:20px 24px;background:#eaf1fb;border-radius:6px;font-family:Arial,sans-serif;">
-      <p style="font-size:14px;margin:0 0 12px;color:#1b1f27;">Have a live project? Send your brief, postcode, budget and required timing. We will review the scope and confirm the next steps.</p>
+      <p style="font-size:14px;margin:0 0 12px;color:#1b1f27;">Have a live project? Send your brief, postcode, budget and required timing, and we'll come back within 48 hours with factory options and pricing.</p>
       <a href="https://ikeng.co.uk/#brief" style="display:inline-block;background:#1f4e8c;color:#fff;padding:10px 18px;border-radius:5px;text-decoration:none;font-weight:600;font-size:14px;">Send your project brief →</a>
     </div>
 

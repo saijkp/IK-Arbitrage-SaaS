@@ -146,3 +146,8 @@
   status = 301
   force = true
 
+[[redirects]]
+  from = "/interior-design-studios"
+  to = "/interior-design-studios.html"
+  status = 301
+  force = true
