@@ -151,3 +151,51 @@
   to = "/interior-design-studios.html"
   status = 301
   force = true
+
+[[redirects]]
+  from = "/cost-to-furnish-hmo"
+  to = "/cost-to-furnish-hmo.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/hmo-furniture-fire-safety-rules"
+  to = "/hmo-furniture-fire-safety-rules.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/import-duty-furniture-from-china"
+  to = "/import-duty-furniture-from-china.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/shipping-times-china-to-uk"
+  to = "/shipping-times-china-to-uk.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides"
+  to = "/guides.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/privacy"
+  to = "/privacy.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/unsubscribe"
+  to = "/unsubscribe.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/404"
+  to = "/404.html"
+  status = 301
+  force = true
