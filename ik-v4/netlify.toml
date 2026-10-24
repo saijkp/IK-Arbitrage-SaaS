@@ -129,6 +129,12 @@
   force = true
 
 [[redirects]]
+  from = "/design-and-specification"
+  to = "/design-and-specification.html"
+  status = 301
+  force = true
+
+[[redirects]]
   from = "/bathroom-sourcing-china"
   to = "/bathroom-sourcing-china.html"
   status = 301

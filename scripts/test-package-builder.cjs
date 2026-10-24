@@ -7,7 +7,7 @@ const html = fs.readFileSync(path.join(__dirname, '../ik-v4/package-builder.html
 const nodes = new Map();
 const element = () => ({innerHTML:'',value:'',textContent:'',hidden:false,disabled:false,addEventListener(){},setAttribute(){},focus(){},scrollIntoView(){}});
 function node(selector) { if (!nodes.has(selector)) nodes.set(selector, element()); return nodes.get(selector); }
-const fields = Object.fromEntries(['form-name','bot-field','property_type','number_of_properties','role','rooms','products','selected_items','finish_level','specifications','storage_notes','delivery_postcode','required_delivery','budget','brief_summary','name','email','phone','company'].map(key => [key, {value:''}]));
+const fields = Object.fromEntries(['form-name','bot-field','property_type','number_of_properties','role','rooms','products','selected_items','finish_level','specifications','storage_notes','delivery_postcode','required_delivery','budget','brief_summary','design_support','name','email','phone','company'].map(key => [key, {value:''}]));
 fields['form-name'].value = 'package-brief'; fields.name.value = 'Test'; fields.email.value = 'test@example.com';
 const form = node('#package-form'); form.elements = {namedItem:key=>fields[key]}; form.reportValidity = () => true;
 for (const key of ['name','email','phone','company']) nodes.set('#package-form [name="'+key+'"]', fields[key]);
@@ -22,17 +22,17 @@ const run = code => vm.runInContext(code, context);
   assert.equal(run('state.step'),5); assert.equal(form.hidden,false);
   for(let step=0;step<6;step++){run('state.step='+step+';render()');assert.match(node('#panel').innerHTML,new RegExp('Step '+(step+1)+' of 6'));}
   run('state.step=5;render()');
-  const brief=run('briefFields()');assert.match(brief.rooms,/Bedrooms: 2 per property/);assert.match(brief.brief_summary,/6 total/);assert.match(brief.specifications,/Island/);assert.equal(brief.selected_items,'');
+  const brief=run('briefFields()');assert.match(brief.rooms,/Bedrooms: 2 per property/);assert.match(brief.brief_summary,/6 total/);assert.match(brief.specifications,/Island/);assert.equal(brief.selected_items,'');assert.equal(brief.design_support,'No');assert.match(brief.brief_summary,/DESIGN & SPECIFICATION\nNot requested/);
   assert.equal(run("cleanImage('https://other.test/images/collection/item.webp')"),'');
   assert.equal(run("cleanImage('/images/collection/item.webp')"),'/images/collection/item.webp');
   await run('sendBrief({preventDefault(){}})');
   assert.equal(node('#send-brief').disabled,false);assert.match(node('#send-status').textContent,/could not confirm/);assert.match(run('textBrief()'),/Test/);
-  mode='success'; await run('sendBrief({preventDefault(){}})');
+  run('state.design=true');mode='success'; await run('sendBrief({preventDefault(){}})');
   assert.equal(requests.length,2);assert.equal(requests[1].url,'/');assert.equal(requests[1].options.method,'POST');
-  const body=new URLSearchParams(requests[1].options.body);assert.equal(body.get('form-name'),'package-brief');assert.equal(body.get('email'),'test@example.com');assert.equal(body.get('property_type'),'HMO / shared home');assert.match(body.get('brief_summary'),/Island/);
+  const body=new URLSearchParams(requests[1].options.body);assert.equal(body.get('form-name'),'package-brief');assert.equal(body.get('email'),'test@example.com');assert.equal(body.get('property_type'),'HMO / shared home');assert.match(body.get('brief_summary'),/Island/);assert.equal(body.get('design_support'),'Yes');
   assert.match(node('#send-status').textContent,/within 48 hours/);assert.equal(node('#sent-whatsapp').hidden,false);
   await run('sendBrief({preventDefault(){}})');assert.equal(requests.length,2,'Duplicate submission must be blocked');
-  assert.match(html, /name="package-brief"[^>]+data-netlify="true"/);assert.match(html,/name="bot-field"/);
+  assert.match(html, /name="package-brief"[^>]+data-netlify="true"/);assert.match(html,/name="bot-field"/);assert.match(html,/name="design_support"/);
   assert.equal(Buffer.byteLength(source)+Buffer.byteLength(html)<150000,true);
-  console.log('PASS: six steps, optional-field skip, per-property totals, exact Netlify payload, failed submission fallback, success and duplicate guard, safe image URLs, static form and weight budget.');
+  console.log('PASS: six steps, optional-field skip, per-property totals, exact Netlify payload, failed submission fallback, success and duplicate guard, design support field, safe image URLs, static form and weight budget.');
 })().catch(error=>{console.error(error);process.exitCode=1;});

@@ -77,3 +77,11 @@
   });
   brief.scrollIntoView({ behavior: 'auto', block: 'start' });
 })();
+// ?design=1 pre-ticks the optional design & specification checkbox on the brief form.
+(() => {
+  if (new URLSearchParams(window.location.search).get('design') !== '1') return;
+  const box = document.getElementById('brief-design_support');
+  if (!box) return;
+  box.checked = true;
+  box.dispatchEvent(new Event('change', { bubbles: true }));
+})();
