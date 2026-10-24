@@ -60,10 +60,6 @@
   "IKE-F09": {
     "name": "Round bedside cabinet",
     "category": "Beds & bedroom"
-  },
-  "IKE-F13": {
-    "name": "Blue buttoned bench",
-    "category": "Beds & bedroom"
   }
 };
   const code = new URLSearchParams(window.location.search).get('item');
