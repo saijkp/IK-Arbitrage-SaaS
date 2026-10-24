@@ -39,7 +39,8 @@
   // Capture phase runs before each form's own submission handler builds its payload.
   document.addEventListener('submit', event => {
     const form = event.target;
-    if (!['sourcing-brief', 'package-brief', 'trade-catalogue', 'guide-download'].includes(form.name)) return;
+    // form.name would return the form's "name" input, so read the attribute.
+    if (!['sourcing-brief', 'package-brief', 'trade-catalogue', 'guide-download'].includes(form.getAttribute('name'))) return;
     const field = form.elements.namedItem('lead_source');
     if (field) field.value = summary(source());
   }, true);

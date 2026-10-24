@@ -15,7 +15,8 @@ function page(search, consent, saved, blocked = false) {
     sessionStorage: { getItem(key) { reads++; if (blocked) throw Error(); return storage.get(key) || null; }, setItem(key, value) { writes++; if (blocked) throw Error(); storage.set(key, value); } } };
   vm.runInNewContext(source, context);
   return { context, storage, counts: () => [reads, writes], click: () => listeners.click(), submit(name = 'sourcing-brief') {
-    listeners.submit({ target: { name, elements: { namedItem: () => field } } }); return field.value;
+    // Real forms here contain an input called "name", which shadows form.name.
+    listeners.submit({ target: { name: { tagName: 'INPUT' }, getAttribute: attr => attr === 'name' ? name : null, elements: { namedItem: () => field } } }); return field.value;
   } };
 }
 for (const consent of [true, false]) {
