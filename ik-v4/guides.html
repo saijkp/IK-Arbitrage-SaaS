@@ -4,6 +4,7 @@
 <head>
 <!-- Google Tag Manager: gated behind cookie consent, see /cookie-consent.js -->
 <script defer="" src="/cookie-consent.js"></script>
+<script defer src="/lead-source.js"></script>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>China Sourcing &amp; Property Furnishing Guides | IK ENG</title>
@@ -122,9 +123,10 @@
 <script>
 document.addEventListener('click', e => {
   const a = e.target.closest('a');
-  if (!a || !a.href || !window._ikGtmLoaded) return;
+  if (!a || !a.href || !window._ikGtmLoaded || !Array.isArray(window.dataLayer)) return;
   if (a.href.indexOf('wa.me') > -1) dataLayer.push({ event: 'whatsapp_click', page_location: location.href });
   else if (a.href.indexOf('#brief') > -1) dataLayer.push({ event: 'brief_cta_click', page_location: location.href });
+  else if (a.href.indexOf('tel:') === 0) dataLayer.push({ event: 'phone_click' });
 });
 </script>
 </body>

@@ -26,14 +26,19 @@
       data.set('name', name);
       data.set('email', email);
       const encoded = new URLSearchParams(data).toString();
+      // Attribution may change if consent is accepted during an email retry.
+      const identity = new URLSearchParams(data);
+      identity.delete('lead_source');
+      const request = identity.toString();
       try {
-        if (captured !== encoded) {
+        if (captured !== request) {
           const capture = await fetch('/', {
             method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
             body: encoded, signal: AbortSignal.timeout(20000)
           });
           if (!capture.ok) throw new Error('capture');
-          captured = encoded;
+          captured = request;
+          if (window._ikGtmLoaded && Array.isArray(window.dataLayer)) window.dataLayer.push({ event: 'generate_lead', form_name: 'trade_catalogue' });
           requestId = crypto.randomUUID();
         }
         const delivery = await fetch('/.netlify/functions/send-catalogue', {
@@ -47,7 +52,7 @@
         status.hidden = false;
         button.textContent = 'Catalogue requested';
       } catch {
-        status.textContent = captured === encoded
+        status.textContent = captured === request
           ? 'Your request was saved, but we could not confirm the email was sent. Please try again or email sai@ikeng.co.uk.'
           : 'We could not save your request. Please try again or email sai@ikeng.co.uk.';
         status.dataset.error = 'true';
