@@ -5,14 +5,6 @@
     "name": "Grey island kitchen",
     "category": "Kitchen cabinets"
   },
-  "IKE-K02": {
-    "name": "White framed kitchen",
-    "category": "Kitchen cabinets"
-  },
-  "IKE-K03": {
-    "name": "Charcoal and timber kitchen",
-    "category": "Kitchen cabinets"
-  },
   "IKE-K04": {
     "name": "White linear kitchen",
     "category": "Kitchen cabinets"
@@ -24,18 +16,6 @@
   "IKE-K06": {
     "name": "Taupe peninsula kitchen",
     "category": "Kitchen cabinets"
-  },
-  "IKE-K07": {
-    "name": "Grey classic kitchen",
-    "category": "Kitchen cabinets"
-  },
-  "IKE-K08": {
-    "name": "Compact grey kitchen",
-    "category": "Kitchen cabinets"
-  },
-  "IKE-W01": {
-    "name": "Glazed dressing room",
-    "category": "Wardrobes & storage"
   },
   "IKE-W02": {
     "name": "Open timber dressing wall",
@@ -49,21 +29,9 @@
     "name": "Wardrobe with drawers",
     "category": "Wardrobes & storage"
   },
-  "IKE-W05": {
-    "name": "Dark dressing room",
-    "category": "Wardrobes & storage"
-  },
   "IKE-W06": {
     "name": "Light wardrobe interior",
     "category": "Wardrobes & storage"
-  },
-  "IKE-F01": {
-    "name": "Light cushioned sofa",
-    "category": "Sofas & living room"
-  },
-  "IKE-F02": {
-    "name": "Dark oval dining table",
-    "category": "Dining furniture"
   },
   "IKE-F03": {
     "name": "Upholstered dining chair",
@@ -93,8 +61,8 @@
     "name": "Round bedside cabinet",
     "category": "Beds & bedroom"
   },
-  "IKE-F10": {
-    "name": "Upholstered bench",
+  "IKE-F13": {
+    "name": "Blue buttoned bench",
     "category": "Beds & bedroom"
   }
 };

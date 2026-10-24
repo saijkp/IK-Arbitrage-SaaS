@@ -33,7 +33,10 @@ def photo(product,x,y,w,h):
     im=Image.open(SITE/'images/collection'/product['image']).convert('RGB')
     c.setFillColor(HexColor('#ffffff'));c.rect(x,y,w,h,fill=1,stroke=0)
     encoded=BytesIO();im.save(encoded,format='JPEG',quality=86,optimize=True);encoded.seek(0)
-    c.drawImage(ImageReader(encoded),x,y,width=w,height=h,preserveAspectRatio=True,anchor='c')
+    # Keep small source cut-outs at a readable native size rather than enlarging them.
+    display_w, display_h = min(w, im.width * 0.75), min(h, im.height * 0.75)
+    c.drawImage(ImageReader(encoded),x+(w-display_w)/2,y+(h-display_h)/2,
+                width=display_w,height=display_h,preserveAspectRatio=True,anchor='c')
 
 def base(section):
     c.setFillColor(PAPER);c.rect(0,0,W,H,fill=1,stroke=0)
@@ -55,7 +58,16 @@ c.showPage()
 base('Contents')
 text(40,H-108,'Explore the collection.',32,'Times-Roman')
 text(40,H-145,'Choose your references. Then tell us what you need.',11)
-for y,name,pages in [(H-220,'Kitchens','03-06'),(H-300,'Wardrobes','07-09'),(H-380,'Furniture','10-14'),(H-460,'How ordering works','15')]:
+contents = []
+next_page = 3
+for index, section in enumerate(['kitchens', 'wardrobes', 'furniture']):
+    count = sum(p['section'] == section for p in PRODUCTS)
+    last_page = next_page + (count + 1) // 2 - 1
+    pages = f'{next_page:02d}' if last_page == next_page else f'{next_page:02d}-{last_page:02d}'
+    contents.append((H-220-index*80, section.title(), pages))
+    next_page = last_page + 1
+contents.append((H-460, 'How ordering works', f'{next_page:02d}'))
+for y,name,pages in contents:
     c.setStrokeColor(HexColor('#ddd8cc'));c.line(40,y-25,W-40,y-25)
     text(40,y,name,25,'Times-Roman');text(W-100,y,pages,12,colour=TEAL)
 for y,line in [(270,'How to use this catalogue'),(240,'Keep the IKE codes you like and include them in your project brief.'),(218,'Share room plans, quantities, budget, postcode and required timing.'),(196,'Materials, sizes and finish options are confirmed in your quotation.'),(174,'Room accessories are included only where listed in your quotation.')]:

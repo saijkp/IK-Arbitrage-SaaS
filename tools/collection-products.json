@@ -14,34 +14,6 @@
     "options": "Made to specification. Options confirmed with your quotation."
   },
   {
-    "code": "IKE-K02",
-    "name": "White framed kitchen",
-    "alt": "White framed kitchen cabinets with a central island",
-    "section": "kitchens",
-    "category": "Kitchen cabinets",
-    "image": "ike-k02-white-framed-kitchen.webp",
-    "thumbnail": "ike-k02-white-framed-kitchen-600.webp",
-    "width": 1200,
-    "height": 864,
-    "thumb_width": 600,
-    "thumb_height": 432,
-    "options": "Made to specification. Options confirmed with your quotation."
-  },
-  {
-    "code": "IKE-K03",
-    "name": "Charcoal and timber kitchen",
-    "alt": "Charcoal kitchen cabinets with timber-toned wall units",
-    "section": "kitchens",
-    "category": "Kitchen cabinets",
-    "image": "ike-k03-charcoal-and-timber-kitchen.webp",
-    "thumbnail": "ike-k03-charcoal-and-timber-kitchen-600.webp",
-    "width": 1200,
-    "height": 525,
-    "thumb_width": 600,
-    "thumb_height": 263,
-    "options": "Made to specification. Options confirmed with your quotation."
-  },
-  {
     "code": "IKE-K04",
     "name": "White linear kitchen",
     "alt": "White handleless kitchen with timber-toned splashback",
@@ -81,48 +53,6 @@
     "height": 671,
     "thumb_width": 600,
     "thumb_height": 600,
-    "options": "Made to specification. Options confirmed with your quotation."
-  },
-  {
-    "code": "IKE-K07",
-    "name": "Grey classic kitchen",
-    "alt": "Grey framed kitchen with curved island cabinetry",
-    "section": "kitchens",
-    "category": "Kitchen cabinets",
-    "image": "ike-k07-grey-classic-kitchen.webp",
-    "thumbnail": "ike-k07-grey-classic-kitchen-600.webp",
-    "width": 1200,
-    "height": 960,
-    "thumb_width": 600,
-    "thumb_height": 480,
-    "options": "Made to specification. Options confirmed with your quotation."
-  },
-  {
-    "code": "IKE-K08",
-    "name": "Compact grey kitchen",
-    "alt": "Compact grey framed kitchen with open wall shelves",
-    "section": "kitchens",
-    "category": "Kitchen cabinets",
-    "image": "ike-k08-compact-grey-kitchen.webp",
-    "thumbnail": "ike-k08-compact-grey-kitchen-600.webp",
-    "width": 725,
-    "height": 707,
-    "thumb_width": 600,
-    "thumb_height": 585,
-    "options": "Made to specification. Options confirmed with your quotation."
-  },
-  {
-    "code": "IKE-W01",
-    "name": "Glazed dressing room",
-    "alt": "Glazed wardrobe storage with a central dressing island",
-    "section": "wardrobes",
-    "category": "Wardrobes & storage",
-    "image": "ike-w01-glazed-dressing-room.webp",
-    "thumbnail": "ike-w01-glazed-dressing-room-600.webp",
-    "width": 1200,
-    "height": 512,
-    "thumb_width": 600,
-    "thumb_height": 256,
     "options": "Made to specification. Options confirmed with your quotation."
   },
   {
@@ -168,20 +98,6 @@
     "options": "Made to specification. Options confirmed with your quotation."
   },
   {
-    "code": "IKE-W05",
-    "name": "Dark dressing room",
-    "alt": "Dark timber-toned dressing room with shelving and island storage",
-    "section": "wardrobes",
-    "category": "Wardrobes & storage",
-    "image": "ike-w05-dark-dressing-room.webp",
-    "thumbnail": "ike-w05-dark-dressing-room-600.webp",
-    "width": 1200,
-    "height": 512,
-    "thumb_width": 600,
-    "thumb_height": 256,
-    "options": "Made to specification. Options confirmed with your quotation."
-  },
-  {
     "code": "IKE-W06",
     "name": "Light wardrobe interior",
     "alt": "Light neutral wardrobe interior with hanging space and side shelves",
@@ -193,34 +109,6 @@
     "height": 1022,
     "thumb_width": 600,
     "thumb_height": 511,
-    "options": "Made to specification. Options confirmed with your quotation."
-  },
-  {
-    "code": "IKE-F01",
-    "name": "Light cushioned sofa",
-    "alt": "Light upholstered sofa with loose back cushions",
-    "section": "furniture",
-    "category": "Sofas & living room",
-    "image": "ike-f01-light-cushioned-sofa.webp",
-    "thumbnail": "ike-f01-light-cushioned-sofa-600.webp",
-    "width": 1200,
-    "height": 328,
-    "thumb_width": 600,
-    "thumb_height": 164,
-    "options": "Made to specification. Options confirmed with your quotation."
-  },
-  {
-    "code": "IKE-F02",
-    "name": "Dark oval dining table",
-    "alt": "Dark oval dining table with four straight legs",
-    "section": "furniture",
-    "category": "Dining furniture",
-    "image": "ike-f02-dark-oval-dining-table.webp",
-    "thumbnail": "ike-f02-dark-oval-dining-table-600.webp",
-    "width": 1151,
-    "height": 524,
-    "thumb_width": 600,
-    "thumb_height": 273,
     "options": "Made to specification. Options confirmed with your quotation."
   },
   {
@@ -322,17 +210,17 @@
     "options": "Made to specification. Options confirmed with your quotation."
   },
   {
-    "code": "IKE-F10",
-    "name": "Upholstered bench",
-    "alt": "Brown upholstered rectangular bench with a stitched top",
+    "code": "IKE-F13",
+    "name": "Blue buttoned bench",
+    "alt": "Blue buttoned upholstered bench with four dark legs",
     "section": "furniture",
     "category": "Beds & bedroom",
-    "image": "ike-f10-upholstered-bench.webp",
-    "thumbnail": "ike-f10-upholstered-bench-600.webp",
-    "width": 800,
-    "height": 296,
-    "thumb_width": 600,
-    "thumb_height": 222,
+    "image": "ike-f13-blue-buttoned-bench.webp",
+    "thumbnail": "ike-f13-blue-buttoned-bench-600.webp",
+    "width": 302,
+    "height": 153,
+    "thumb_width": 302,
+    "thumb_height": 153,
     "options": "Made to specification. Options confirmed with your quotation."
   }
 ]
