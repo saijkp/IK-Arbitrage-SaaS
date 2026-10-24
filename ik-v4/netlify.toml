@@ -205,3 +205,27 @@
   to = "/package-builder.html"
   status = 301
   force = true
+
+[[redirects]]
+  from = "/collection"
+  to = "/collection.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/collection-kitchens"
+  to = "/collection-kitchens.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/collection-wardrobes"
+  to = "/collection-wardrobes.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/collection-furniture"
+  to = "/collection-furniture.html"
+  status = 301
+  force = true
