@@ -199,3 +199,9 @@
   to = "/404.html"
   status = 301
   force = true
+
+[[redirects]]
+  from = "/package-builder"
+  to = "/package-builder.html"
+  status = 301
+  force = true
