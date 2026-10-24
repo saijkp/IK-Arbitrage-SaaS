@@ -4,6 +4,7 @@
 <head>
 <!-- Google Tag Manager: gated behind cookie consent, see /cookie-consent.js -->
 <script defer="" src="/cookie-consent.js"></script>
+<script defer src="/lead-source.js"></script>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>China Sourcing for UK Homes, Developers &amp; Landlords | IK ENG</title>
@@ -660,6 +661,7 @@ footer{background:#0e0d08;padding:48px 5% 28px;}
 </div>
 <div class="brief-body">
 <form data-netlify="true" data-netlify-honeypot="bot-field" id="briefForm" name="sourcing-brief" novalidate="">
+<input type="hidden" name="lead_source" value="">
 <input name="form-name" type="hidden" value="sourcing-brief"/>
 <p class="hp-field" aria-hidden="true"><label>Leave this empty <input name="bot-field" tabindex="-1" autocomplete="off"/></label></p>
 <div class="fsec">
@@ -911,6 +913,7 @@ footer{background:#0e0d08;padding:48px 5% 28px;}
         </div>
       </div>
       <form id="guideForm" name="guide-download" data-netlify="true" data-netlify-honeypot="bot-field" novalidate>
+<input type="hidden" name="lead_source" value="">
         <input type="hidden" name="form-name" value="guide-download">
         <p class="hp-field" aria-hidden="true"><label>Leave this empty <input name="bot-field" tabindex="-1" autocomplete="off"/></label></p>
         <div class="fg" style="margin-bottom:12px;">
@@ -938,5 +941,14 @@ footer{background:#0e0d08;padding:48px 5% 28px;}
 </div>
 <div id="toast"></div>
 <script defer="True" src="/brief-form.js"></script>
-<script defer src="/guide-form.js"></script></body>
+<script defer src="/guide-form.js"></script><script>
+document.addEventListener('click', e => {
+  const a = e.target.closest('a');
+  if (!a || !a.href || !window._ikGtmLoaded || !Array.isArray(window.dataLayer)) return;
+  if (a.href.indexOf('wa.me') > -1) dataLayer.push({ event: 'whatsapp_click', page_location: location.href });
+  else if (a.href.indexOf('#brief') > -1) dataLayer.push({ event: 'brief_cta_click', page_location: location.href });
+  else if (a.href.indexOf('tel:') === 0) dataLayer.push({ event: 'phone_click' });
+});
+</script>
+</body>
 </html>

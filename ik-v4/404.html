@@ -3,6 +3,7 @@
 <head>
 <!-- Google Tag Manager: gated behind cookie consent, see /cookie-consent.js -->
 <script src="/cookie-consent.js" defer></script>
+<script defer src="/lead-source.js"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Page Not Found | IK ENG</title>
@@ -59,5 +60,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <footer><div class="wrap">IK Eng Ltd · 125 Great Clowes Street, Salford, Greater Manchester, M7 1AL · <a href="tel:+447767990007">+44 7767 990007</a> · <a href="mailto:sai@ikeng.co.uk">sai@ikeng.co.uk</a> · <a href="https://ikeng.co.uk">https://ikeng.co.uk</a> · <a href="/guides.html">Sourcing and furnishing guides</a> · <a href="/privacy.html">Privacy Policy</a> · <a href="/collection.html">Collection</a></div></footer>
 
+<script>
+document.addEventListener('click', e => {
+  const a = e.target.closest('a');
+  if (!a || !a.href || !window._ikGtmLoaded || !Array.isArray(window.dataLayer)) return;
+  if (a.href.indexOf('wa.me') > -1) dataLayer.push({ event: 'whatsapp_click', page_location: location.href });
+  else if (a.href.indexOf('#brief') > -1) dataLayer.push({ event: 'brief_cta_click', page_location: location.href });
+  else if (a.href.indexOf('tel:') === 0) dataLayer.push({ event: 'phone_click' });
+});
+</script>
 </body>
 </html>
