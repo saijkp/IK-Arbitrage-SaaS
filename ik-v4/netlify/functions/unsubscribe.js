@@ -1,4 +1,4 @@
-const { getStore } = require("@netlify/blobs");
+const { getStore, connectLambda } = require("@netlify/blobs");
 
 async function cancelResendEmail(id) {
     if (!id) return;
@@ -25,6 +25,9 @@ exports.handler = async (event) => {
     };
 
     if (event.httpMethod === "OPTIONS") return { statusCode: 200, headers };
+
+    // Lambda-compatible functions must connect the Blobs environment before getStore().
+    connectLambda(event);
 
     try {
         const email = ((event.queryStringParameters && event.queryStringParameters.email) || '').trim().toLowerCase().slice(0, 320);

@@ -1,4 +1,4 @@
-const { getStore } = require("@netlify/blobs");
+const { getStore, connectLambda } = require("@netlify/blobs");
 
 const UNSUB_NOTE = (email) => `You'll also get a couple of practical follow-ups from us over the next week. ` +
     `<a href="https://ikeng.co.uk/unsubscribe.html?email=${encodeURIComponent(email)}" style="color:#1f4e8c;">Unsubscribe anytime</a>.`;
@@ -111,6 +111,9 @@ exports.handler = async (event) => {
     };
 
     if (event.httpMethod === "OPTIONS") return { statusCode: 200, headers };
+
+    // Lambda-compatible functions must connect the Blobs environment before getStore().
+    connectLambda(event);
 
     try {
         const body = JSON.parse(event.body || "{}");
