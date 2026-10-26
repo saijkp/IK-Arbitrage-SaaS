@@ -96,8 +96,8 @@ steps=[('01  Share your brief',['Send your IKE references, plans, quantities, bu
        'We provide factory options and pricing within 48 hours of a brief.']),
        ('02  Agree the specification',['Review the materials, finishes, sizes and drawings before ordering.',
        'Our 5% sourcing fee is shown on every quotation.']),
-       ('03  Confirm your order',['50% deposit, then 30% after you approve a video of your finished goods',
-       'at the factory, and 20% on delivery.',
+       ('03  Confirm your order',['50% deposit, then 30% after factory video confirmation of your',
+       'finished goods, and 20% on delivery.',
        'Your approved specification forms the basis of the order.']),
        ('04  Plan your delivery',['Standard items typically take 10-12 weeks to site.',
        'Allow 12-18 weeks for bespoke items from approved drawings.'])]
