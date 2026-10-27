@@ -27,6 +27,11 @@
   }
 
   function showBanner() {
+    var css = document.createElement('style');
+    css.textContent = '@media (max-width:600px){#ik-cookie-banner{padding:10px 14px!important;gap:8px!important;font-size:.76rem!important;}' +
+      '#ik-cookie-banner>div:first-child{flex-basis:100%!important;line-height:1.4!important;}' +
+      '#ik-cookie-banner button{padding:7px 14px!important;font-size:.78rem!important;}}';
+    document.head.appendChild(css);
     var el = document.createElement('div');
     el.id = 'ik-cookie-banner';
     el.style.cssText = 'position:fixed;left:0;right:0;bottom:0;z-index:9999;background:#1a1a18;color:#fff;' +
