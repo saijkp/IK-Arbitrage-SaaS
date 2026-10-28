@@ -42,8 +42,9 @@ const htmlFiles = fs.readdirSync(root).filter(name => name.endsWith('.html'));
 const broken = [];
 for (const file of htmlFiles) {
   const html = fs.readFileSync(path.join(root, file), 'utf8');
-  const before = execFileSync('git', ['show', 'origin/main:ik-v4/' + file], { cwd: path.join(root, '..'), encoding: 'utf8' });
-  for (const pattern of [/<h1\b[^>]*>[\s\S]*?<\/h1>/gi, /<link\b[^>]*rel="canonical"[^>]*>/gi]) assert.deepEqual(html.match(pattern), before.match(pattern), file + ': heading/canonical unchanged');
+  let before = null;
+  try { before = execFileSync('git', ['show', 'origin/main:ik-v4/' + file], { cwd: path.join(root, '..'), encoding: 'utf8', stdio: 'pipe' }); } catch (e) { /* new page: no baseline yet */ }
+  if (before !== null) for (const pattern of [/<h1\b[^>]*>[\s\S]*?<\/h1>/gi, /<link\b[^>]*rel="canonical"[^>]*>/gi]) assert.deepEqual(html.match(pattern), before.match(pattern), file + ': heading/canonical unchanged');
   assert.equal((html.match(/src="\/lead-source.js"/g) || []).length, 1);
   const clickScript = [...html.matchAll(/<script>([\s\S]*?)<\/script>/g)].map(m => m[1]).find(s => s.includes('whatsapp_click'));
   assert(clickScript, file);
