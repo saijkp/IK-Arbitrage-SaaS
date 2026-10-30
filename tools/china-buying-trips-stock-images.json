@@ -1,23 +1,23 @@
 {
-  "purpose": "Stock inspiration only; not company trips, factories, clients or projects. Workshop location is Latvia, street source identifies Guangzhou.",
+  "purpose": "Stock inspiration only; not company trips, factories, clients or projects. The bathroom is a tile-showroom display in Ireland; no China location is implied. The street source identifies Guangzhou.",
   "delivery": "External image CDN, 600px and 1200px WebP variants.",
   "photos": [
     {
-      "photographer": "Mandiri Abadi",
-      "source": "https://www.pexels.com/photo/hands-on-a-polyurethane-foam-15016516/",
-      "license": "https://www.pexels.com/license/",
-      "provider": "Pexels",
-      "cdn": "https://images.pexels.com/photos/15016516/pexels-photo-15016516.jpeg",
-      "alt": "Hands holding white foam with a yellow inner layer",
+      "photographer": "David Kristianto",
+      "source": "https://unsplash.com/photos/various-chairs-displayed-in-a-showroom-setting-rItWuQHaOpM",
+      "license": "https://unsplash.com/license",
+      "provider": "Unsplash",
+      "cdn": "https://images.unsplash.com/photo-1760611656148-063d3b9a8dbc",
+      "alt": "Chairs displayed on the floor and wall of a furniture showroom",
       "kind": "Interior"
     },
     {
-      "photographer": "Kristaps Grundsteins",
-      "source": "https://unsplash.com/photos/workshop-with-woodworking-machinery-and-large-window-Dzd-Xt3QWKw",
+      "photographer": "Tile Merchant Ireland",
+      "source": "https://unsplash.com/photos/a-white-toilet-sitting-next-to-a-bathroom-sink-See1UtrPXkI",
       "license": "https://unsplash.com/license",
       "provider": "Unsplash",
-      "cdn": "https://images.unsplash.com/photo-1759756480941-7230dedf5fc9",
-      "alt": "Woodworking machines beside a large window in a wood-panelled workshop",
+      "cdn": "https://images.unsplash.com/photo-1642678573554-60511a3d2d16",
+      "alt": "Large-format wall tiles around a white toilet and dark vanity in a showroom",
       "kind": "Interior"
     },
     {
