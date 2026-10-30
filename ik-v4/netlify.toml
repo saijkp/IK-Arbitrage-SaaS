@@ -241,3 +241,21 @@
   to = "/china-buying-trips.html"
   status = 301
   force = true
+
+[[redirects]]
+  from = "/ffe-sourcing"
+  to = "/ffe-sourcing.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/furnish-serviced-apartment-from-china"
+  to = "/furnish-serviced-apartment-from-china.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/kitchen-cabinets-from-china-what-to-check"
+  to = "/kitchen-cabinets-from-china-what-to-check.html"
+  status = 301
+  force = true
