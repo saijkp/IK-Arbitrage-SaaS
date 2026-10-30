@@ -42,8 +42,14 @@ const htmlFiles = fs.readdirSync(root).filter(name => name.endsWith('.html'));
 const broken = [];
 for (const file of htmlFiles) {
   const html = fs.readFileSync(path.join(root, file), 'utf8');
-  const before = execFileSync('git', ['show', 'origin/main:ik-v4/' + file], { cwd: path.join(root, '..'), encoding: 'utf8' });
-  for (const pattern of [/<h1\b[^>]*>[\s\S]*?<\/h1>/gi, /<link\b[^>]*rel="canonical"[^>]*>/gi]) assert.deepEqual(html.match(pattern), before.match(pattern), file + ': heading/canonical unchanged');
+  const trackedOnMain = execFileSync('git', ['ls-tree', '--name-only', 'origin/main', '--', 'ik-v4/' + file], { cwd: path.join(root, '..'), encoding: 'utf8' }).trim();
+  const before = trackedOnMain ? execFileSync('git', ['show', 'origin/main:ik-v4/' + file], { cwd: path.join(root, '..'), encoding: 'utf8' }) : null;
+  if (!before) {
+    assert.equal((html.match(/<h1\b[^>]*>/gi) || []).length, 1, file + ': one H1 on new page');
+    assert.equal((html.match(/rel="canonical"/g) || []).length, 1, file + ': one canonical on new page');
+    assert(html.includes('https://ikeng.co.uk/' + file), file + ': canonical URL for new page');
+  }
+  if (before) for (const pattern of [/<h1\b[^>]*>[\s\S]*?<\/h1>/gi, /<link\b[^>]*rel="canonical"[^>]*>/gi]) assert.deepEqual(html.match(pattern), before.match(pattern), file + ': heading/canonical unchanged');
   assert.equal((html.match(/src="\/lead-source.js"/g) || []).length, 1);
   const clickScript = [...html.matchAll(/<script>([\s\S]*?)<\/script>/g)].map(m => m[1]).find(s => s.includes('whatsapp_click'));
   assert(clickScript, file);
