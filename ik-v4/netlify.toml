@@ -235,3 +235,9 @@
   to = "/collection-furniture.html"
   status = 301
   force = true
+
+[[redirects]]
+  from = "/china-buying-trips"
+  to = "/china-buying-trips.html"
+  status = 301
+  force = true
