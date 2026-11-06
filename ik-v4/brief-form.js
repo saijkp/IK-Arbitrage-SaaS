@@ -2,6 +2,12 @@
 (() => {
   document.querySelectorAll('.fade-in').forEach(el => el.classList.add('visible'));
   document.querySelectorAll('.chk input[type=checkbox]').forEach(cb => cb.addEventListener('change', () => cb.closest('.chk').classList.toggle('selected', cb.checked)));
+  try {
+    const notes = document.getElementById('brief-notes');
+    if (new URLSearchParams(location.search).get('enquiry') === 'already-bought' && notes && notes.value === '') {
+      notes.value = 'Already bought from a Chinese supplier - need help with inspection / shipping / customs.';
+    }
+  } catch (_) {}
   const form = document.getElementById('briefForm');
   if (!form) return;
   const error = document.createElement('p');
