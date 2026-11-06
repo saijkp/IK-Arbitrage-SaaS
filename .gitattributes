@@ -1,2 +1,7 @@
 *.pdf binary
 *.webp binary
+
+# Preserve existing HTML line endings and show text diffs, including the NULL-byte repair.
+ik-v4/property-developers.html -text diff
+ik-v4/hmo-landlords.html -text diff
+ik-v4/whole-house-furniture-package.html -text diff
