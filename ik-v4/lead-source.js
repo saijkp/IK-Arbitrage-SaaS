@@ -30,7 +30,7 @@
     if (ids.some(name => data[name])) {
       return ['google-ads', data.utm_campaign && 'campaign ' + data.utm_campaign,
         data.utm_content && 'adgroup ' + data.utm_content,
-        ...ids.filter(name => data[name]).map(name => name + ' yes')].filter(Boolean).join(' | ');
+        ...ids.filter(name => data[name]).map(name => name + ' ' + data[name])].filter(Boolean).join(' | ');
     }
     const values = utms.map(name => data[name]).filter(Boolean);
     return values.length ? 'utm: ' + values.join(' / ') : 'direct/organic';

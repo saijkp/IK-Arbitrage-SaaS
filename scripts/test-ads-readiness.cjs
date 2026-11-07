@@ -6,7 +6,7 @@ const { execFileSync } = require('node:child_process');
 const root = path.join(__dirname, '../ik-v4');
 const source = fs.readFileSync(path.join(root, 'lead-source.js'), 'utf8');
 const campaign = '?utm_source=google&utm_medium=cpc&utm_campaign=123&utm_content=456&gclid=TEST';
-const expected = 'google-ads | campaign 123 | adgroup 456 | gclid yes';
+const expected = 'google-ads | campaign 123 | adgroup 456 | gclid TEST';
 function page(search, consent, saved, blocked = false) {
   const listeners = {}, field = { value: '' }, storage = new Map(saved ? [['ik_lead_source', saved]] : []);
   let reads = 0, writes = 0;
@@ -22,7 +22,7 @@ function page(search, consent, saved, blocked = false) {
 for (const consent of [true, false]) {
   const p = page(campaign, consent);
   for (const name of ['sourcing-brief', 'package-brief', 'trade-catalogue', 'guide-download']) assert.equal(p.submit(name), expected);
-  assert(!p.submit().includes('TEST'));
+  assert(p.submit().includes('TEST'));
   if (!consent) assert.deepEqual(p.counts(), [0, 0]);
   assert.equal(page('', consent).submit(), 'direct/organic');
 }
@@ -34,9 +34,10 @@ assert.equal(page('', false, saved).submit(), 'direct/organic');
 assert.equal(page(campaign, true, null, true).submit(), expected);
 assert.equal(page(campaign, true, '{invalid').submit(), expected);
 assert.equal(page('?utm_source=newsletter&utm_medium=email&utm_campaign=spring', false).submit(), 'utm: newsletter / email / spring');
-assert.equal(page('?gbraid=abc&wbraid=xyz', false).submit(), 'google-ads | gbraid yes | wbraid yes');
+assert.equal(page('?gbraid=abc&wbraid=xyz', false).submit(), 'google-ads | gbraid abc | wbraid xyz');
+assert.equal(page('?gbraid=TEST', false).submit(), 'google-ads | gbraid TEST');
 for (const query of ['?gclid=<script>', '?gclid=' + 'a'.repeat(201), '?utm_source=' + 'a'.repeat(101), '?utm_source=%3Cb%3E', '?utm_campaign=a%0Ab', '?utm_source=a%0A', '?gclid=a%0D', '?unknown=anything']) assert.equal(page(query, true).submit(), 'direct/organic');
-assert.equal(page('?gclid=' + 'a'.repeat(200), false).submit(), 'google-ads | gclid yes');
+assert.equal(page('?gclid=' + 'a'.repeat(200), false).submit(), 'google-ads | gclid ' + 'a'.repeat(200));
 assert.equal(page('?utm_source=a%2Bb._-+c', false).submit(), 'utm: a+b._- c');
 const htmlFiles = fs.readdirSync(root).filter(name => name.endsWith('.html'));
 const broken = [];
