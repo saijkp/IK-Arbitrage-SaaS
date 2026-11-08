@@ -8,8 +8,9 @@
       notes.value = 'Already bought from a Chinese supplier - need help with inspection / shipping / customs.';
     }
   } catch (_) {}
-  const form = document.getElementById('briefForm');
+  const form = document.getElementById('briefForm') || document.getElementById('shippingQuoteForm');
   if (!form) return;
+  const shipping = form.getAttribute('name') === 'shipping-quote';
   const error = document.createElement('p');
   error.id = 'briefError';
   error.setAttribute('role', 'alert');
@@ -22,7 +23,7 @@
     if (submitting) return;
     error.hidden = true;
     if (!form.reportValidity()) return;
-    if (!form.querySelector('input[name=role]:checked')) {
+    if (!shipping && !form.querySelector('input[name=role]:checked')) {
       error.textContent = 'Please select your role.';
       error.hidden = false;
       return;
@@ -38,11 +39,11 @@
         signal: AbortSignal.timeout(20000)
       });
       if (!response.ok) throw new Error('Submission not accepted');
-      document.getElementById('briefSuccess').classList.add('show');
-      button.textContent = 'Brief received';
-      if (window._ikGtmLoaded && Array.isArray(window.dataLayer)) window.dataLayer.push({ event: 'generate_lead', form_name: 'sourcing_brief' });
+      document.getElementById(shipping ? 'shippingSuccess' : 'briefSuccess').classList.add('show');
+      button.textContent = shipping ? 'Enquiry received' : 'Brief received';
+      if (window._ikGtmLoaded && Array.isArray(window.dataLayer)) window.dataLayer.push({ event: 'generate_lead', form_name: shipping ? 'shipping_quote' : 'sourcing_brief' });
     } catch {
-      error.textContent = 'We could not confirm receipt of your brief. Your details remain here. Please try again or email sai@ikeng.co.uk. If you are unsure whether it arrived, ask us to check before resending.';
+      error.textContent = 'We could not confirm receipt of your ' + (shipping ? 'shipping enquiry' : 'brief') + '. Your details remain here. Please try again or email sai@ikeng.co.uk. If you are unsure whether it arrived, ask us to check before resending.';
       error.hidden = false;
       button.disabled = false;
       submitting = false;
