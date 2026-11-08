@@ -40,7 +40,7 @@
   document.addEventListener('submit', event => {
     const form = event.target;
     // form.name would return the form's "name" input, so read the attribute.
-    if (!['sourcing-brief', 'package-brief', 'trade-catalogue', 'guide-download'].includes(form.getAttribute('name'))) return;
+    if (!['sourcing-brief', 'package-brief', 'trade-catalogue', 'guide-download', 'shipping-quote'].includes(form.getAttribute('name'))) return;
     const field = form.elements.namedItem('lead_source');
     if (field) field.value = summary(source());
   }, true);

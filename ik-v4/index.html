@@ -88,7 +88,7 @@ body{font-family:var(--sans);background:var(--paper);color:var(--ink);line-heigh
 .nav-links a:hover{color:var(--gold);}
 .nav-wa{display:flex;align-items:center;gap:7px;background:#075e54;color:white;padding:8px 16px;border-radius:30px;text-decoration:none;font-size:.78rem;font-weight:600;transition:opacity .2s;white-space:nowrap;}
 .nav-wa:hover{opacity:.88;}
-@media(max-width:700px){.nav-links{display:none;}}
+@media(max-width:1100px){.nav{height:auto;min-height:60px;flex-wrap:wrap;gap:10px;padding-top:10px;padding-bottom:10px;}.nav-links{order:3;width:100%;overflow-x:auto;gap:18px;padding-bottom:4px;}.nav-links a{white-space:nowrap;}}
 
 /* ─ HERO ─────────────────────────────────────────────────────────── */
 .hero{min-height:100vh;background:var(--ink);display:flex;flex-direction:column;justify-content:center;padding:120px 5% 80px;position:relative;overflow:hidden;}
@@ -484,7 +484,7 @@ footer{background:#0e0d08;padding:48px 5% 28px;}
       "name": "How long does it take?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Standard items typically take 10–12 weeks door-to-site: 3–5 weeks production, about 5 weeks sea freight, then UK customs and delivery. Bespoke items take 12–18 weeks from approved drawings. Air freight is available for urgent items at a higher cost."
+        "text": "Standard items typically take 10–12 weeks door-to-site: 3–5 weeks production, about 5 weeks sea freight, then UK customs and delivery. Bespoke items take 12–18 weeks from approved drawings."
       }
     },
     {
@@ -509,7 +509,7 @@ footer{background:#0e0d08;padding:48px 5% 28px;}
 <!-- ── NAV ────────────────────────────────────────────────────────── -->
 <nav class="nav">
 <a class="nav-brand" href="#">IK <em>ENG</em></a>
-<div class="nav-links">
+<div class="nav-links"><a href="/shipping-from-china-to-uk.html">Shipping only</a>
 <a href="/collection.html">Collection</a>
 <a href="#who-we-serve">Who we help</a>
 <a href="#how-it-works">How it works</a>
@@ -580,6 +580,7 @@ footer{background:#0e0d08;padding:48px 5% 28px;}
 <h2 class="sec-title">A clear process.<br/><em style="color:var(--gold)">Agreed at each stage.</em></h2>
 <p class="sec-sub">We clarify the scope, compare supplier offers and coordinate the agreed sourcing work. You approve product selections, drawings, costs and order terms before commitment.</p>
 <div class="services-grid fade-in">
+<div class="service-card"><div class="svc-title">Already bought? Shipping only</div><div class="svc-desc">Independent shipping from China to the UK: LCL/FCL sea freight, customs clearance and delivery. DDP available on request. Buy from any Chinese supplier.</div><a href="/shipping-from-china-to-uk.html" style="color:var(--gold);">Get a shipping quote →</a></div>
 <div class="service-card">
 <div class="svc-icon">🔍</div>
 <div class="svc-title">Supplier comparison</div>
@@ -818,7 +819,7 @@ footer{background:#0e0d08;padding:48px 5% 28px;}
 <div class="faq-item" onclick="this.classList.toggle('open')"><div class="faq-q"><span class="faq-qt">How are quality checks arranged?</span><span class="faq-ch">+</span></div><div class="faq-a">Every order is inspected before shipping against the approved specification, with a photo report before the container is sealed. The inspection checks are agreed with you in advance, and samples can be sent to your UK address before bulk production.</div></div>
 <div class="faq-item" onclick="this.classList.toggle('open')"><div class="faq-q"><span class="faq-qt">Do your products meet UK fire safety and compliance standards?</span><span class="faq-ch">+</span></div><div class="faq-a">Yes. Furniture is supplied to UK fire-safety rules, with BS 7177 compliance on mattresses and beds and permanent fire labels on upholstered items. Electrical goods carry UKCA marking. Test certificates and specifications for each product go into a compliance pack for your project file.</div></div>
 <div class="faq-item" onclick="this.classList.toggle('open')"><div class="faq-q"><span class="faq-qt">What do you charge?</span><span class="faq-ch">+</span></div><div class="faq-a">Our sourcing fee is 5% of product value, shown on every quotation. Inspection, samples and delivery are listed as separate lines where they apply. You pay a 50% deposit to place the order, 30% after factory video confirmation of your finished goods, and 20% on delivery.</div></div>
-<div class="faq-item" onclick="this.classList.toggle('open')"><div class="faq-q"><span class="faq-qt">How long does it take?</span><span class="faq-ch">+</span></div><div class="faq-a">Standard items typically take 10–12 weeks door-to-site: 3–5 weeks production, about 5 weeks sea freight, then UK customs and delivery. Bespoke items take 12–18 weeks from approved drawings. Air freight is available for urgent items at a higher cost.</div></div>
+<div class="faq-item" onclick="this.classList.toggle('open')"><div class="faq-q"><span class="faq-qt">How long does it take?</span><span class="faq-ch">+</span></div><div class="faq-a">Standard items typically take 10–12 weeks door-to-site: 3–5 weeks production, about 5 weeks sea freight, then UK customs and delivery. Bespoke items take 12–18 weeks from approved drawings.</div></div>
 <div class="faq-item" onclick="this.classList.toggle('open')"><div class="faq-q"><span class="faq-qt">Can you help with design and layouts?</span><span class="faq-ch">+</span></div><div class="faq-a">Yes. Our in-house designer can prepare room layouts, a mood board and a product schedule for a fixed fee agreed before we start, credited against your order if you go ahead. <a href="/design-and-specification.html">See Design &amp; specification</a>.</div></div>
 </div>
 </div>
@@ -841,11 +842,11 @@ footer{background:#0e0d08;padding:48px 5% 28px;}
 <div class="footer-grid">
 <div>
 <div class="footer-brand">IK <em>ENG</em></div>
-<div class="footer-desc">Founded on 20+ years sourcing from China. Manchester-based sourcing for kitchens, wardrobes, furniture and interior products.</div>
+<div class="footer-desc">IK ENG Ltd was established in 2026. Sai brings 20+ years in China sourcing. Manchester-based sourcing and independent sea freight from China to the UK.</div>
 </div>
 <div>
 <div class="footer-col-title">Services</div>
-<ul class="footer-links"><li><a href="/collection.html">Collection</a></li><li><a href="/package-builder.html">Build your furnishing package</a></li><li><a href="/design-and-specification.html">Design &amp; specification</a></li>
+<ul class="footer-links"><li><a href="/shipping-from-china-to-uk.html">Shipping only</a></li><li><a href="/collection.html">Collection</a></li><li><a href="/package-builder.html">Build your furnishing package</a></li><li><a href="/design-and-specification.html">Design &amp; specification</a></li>
 <li><a href="#brief">Send a sourcing brief</a></li>
 <li><a href="#how-it-works">How it works</a></li>
 <li><a href="#what-we-source">What we source</a></li>
@@ -922,7 +923,7 @@ footer{background:#0e0d08;padding:48px 5% 28px;}
             <li style="font-size:.8rem;color:var(--ink-mid);padding:3px 0;display:flex;gap:7px;">→ Import duties &amp; VAT — what you actually pay</li>
             <li style="font-size:.8rem;color:var(--ink-mid);padding:3px 0;display:flex;gap:7px;">→ How to spot fake suppliers on Alibaba</li>
             <li style="font-size:.8rem;color:var(--ink-mid);padding:3px 0;display:flex;gap:7px;">→ UK fire safety &amp; compliance requirements</li>
-            <li style="font-size:.8rem;color:var(--ink-mid);padding:3px 0;display:flex;gap:7px;">→ Sea vs air freight — when to use each</li>
+            <li style="font-size:.8rem;color:var(--ink-mid);padding:3px 0;display:flex;gap:7px;">→ LCL and FCL sea freight — choosing the right option</li>
             <li style="font-size:.8rem;color:var(--ink-mid);padding:3px 0;display:flex;gap:7px;">→ What to put in your supplier contract</li>
             <li style="font-size:.8rem;color:var(--ink-mid);padding:3px 0;display:flex;gap:7px;">→ Real timelines from order to site</li>
           </ul>
