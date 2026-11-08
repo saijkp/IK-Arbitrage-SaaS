@@ -137,7 +137,7 @@ async function briefCapture(name, consent) {
   assert.equal(payload.get('form-name'), name); assert.equal(payload.get('lead_source'), expected);
 }
 const shippingHtml = fs.readFileSync(path.join(root, 'shipping-from-china-to-uk.html'), 'utf8');
-for (const field of ['name', 'email', 'phone', 'supplier_name', 'supplier_city', 'goods_description', 'cartons_weight_volume', 'ready_date', 'uk_postcode', 'ddp_quote', 'cargo_insurance', 'pre_shipment_inspection', 'notes', 'lead_source', 'bot-field']) assert(shippingHtml.includes('name="' + field + '"'), 'Shipping field: ' + field);
+for (const field of ['name', 'email', 'phone', 'supplier_name', 'supplier_city', 'goods_description', 'cartons_weight_volume', 'ready_date', 'uk_postcode', 'shipping_method', 'ddp_quote', 'cargo_insurance', 'pre_shipment_inspection', 'notes', 'lead_source', 'bot-field']) assert(shippingHtml.includes('name="' + field + '"'), 'Shipping field: ' + field);
 assert(/<form\b[^>]*name="shipping-quote"[^>]*data-netlify="true"[^>]*data-netlify-honeypot="bot-field"/.test(shippingHtml));
 const shippingFaq = [...shippingHtml.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map(m => JSON.parse(m[1])).find(s => s['@type'] === 'FAQPage');
 const visibleFaq = shippingHtml.match(/<section aria-labelledby="faq">([\s\S]*?)<\/section>/)[1];
