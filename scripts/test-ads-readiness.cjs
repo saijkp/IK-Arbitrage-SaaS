@@ -41,6 +41,11 @@ assert.equal(page('?gclid=' + 'a'.repeat(200), false).submit(), 'google-ads | gc
 assert.equal(page('?utm_source=a%2Bb._-+c', false).submit(), 'utm: a+b._- c');
 const htmlFiles = fs.readdirSync(root).filter(name => name.endsWith('.html'));
 const broken = [];
+const intentionalChanges = {
+  'design-and-specification.html': ['title', 'h1'],
+  'kitchen-cabinets-from-china-what-to-check.html': ['title'],
+  'furnish-serviced-apartment-from-china.html': ['title']
+};
 for (const file of htmlFiles) {
   const html = fs.readFileSync(path.join(root, file), 'utf8');
   assert(!html.includes('\0'), file + ': no NULL bytes');
@@ -52,7 +57,14 @@ for (const file of htmlFiles) {
     assert.equal((html.match(/rel="canonical"/g) || []).length, 1, file + ': one canonical on new page');
     assert(html.includes('https://ikeng.co.uk/' + file), file + ': canonical URL for new page');
   }
-  if (before) for (const pattern of [/<title>[\s\S]*?<\/title>/gi, /<h1\b[^>]*>[\s\S]*?<\/h1>/gi, /<link\b[^>]*rel="canonical"[^>]*>/gi]) assert.deepEqual(html.match(pattern), before.match(pattern), file + ': title/heading/canonical unchanged');
+  if (before) for (const [field, pattern] of [
+    ['title', /<title>[\s\S]*?<\/title>/gi],
+    ['h1', /<h1\b[^>]*>[\s\S]*?<\/h1>/gi],
+    ['canonical', /<link\b[^>]*rel="canonical"[^>]*>/gi]
+  ]) {
+    if (field !== 'canonical' && (intentionalChanges[file] || []).includes(field)) continue;
+    assert.deepEqual(html.match(pattern), before.match(pattern), file + ': ' + field + ' unchanged');
+  }
   assert.equal((html.match(/src="\/lead-source.js"/g) || []).length, 1);
   const clickScript = [...html.matchAll(/<script>([\s\S]*?)<\/script>/g)].map(m => m[1]).find(s => s.includes('whatsapp_click'));
   assert(clickScript, file);
