@@ -20,6 +20,20 @@
   status = 301
   force = true
 
+# ikeng.online (and www) are domain aliases of this site: send every page permanently
+# to the same path on ikeng.co.uk. Email on ikeng.online (Zoho MX) is unaffected.
+[[redirects]]
+  from = "https://ikeng.online/*"
+  to = "https://ikeng.co.uk/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.ikeng.online/*"
+  to = "https://ikeng.co.uk/:splat"
+  status = 301
+  force = true
+
 [[redirects]]
   from = "/api/*"
   to = "/.netlify/functions/:splat"
