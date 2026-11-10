@@ -42,6 +42,11 @@ assert.equal(page('?utm_source=a%2Bb._-+c', false).submit(), 'utm: a+b._- c');
 const htmlFiles = fs.readdirSync(root).filter(name => name.endsWith('.html'));
 const broken = [];
 const intentionalChanges = {
+  'serviced-apartments.html': ['title'],
+  'property-developers.html': ['title'],
+  'hmo-landlords.html': ['title'],
+  'shipping-times-china-to-uk.html': ['title'],
+
   'design-and-specification.html': ['title', 'h1'],
   'kitchen-cabinets-from-china-what-to-check.html': ['title'],
   'furnish-serviced-apartment-from-china.html': ['title']
