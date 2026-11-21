@@ -76,3 +76,9 @@ Key facts:
 
 - [Product collection](https://ikeng.co.uk/collection.html): example kitchens, wardrobes and furniture
 - [Package builder](https://ikeng.co.uk/package-builder.html): build and send a room-by-room brief
+
+## Free tools
+
+- [CBM Calculator for Shipping from China](https://ikeng.co.uk/cbm-calculator.html): client-side planning tool; no tool entries uploaded
+- [Furniture Inspection Checklist Template](https://ikeng.co.uk/furniture-inspection-checklist-template.html): client-side planning tool; no tool entries uploaded
+- [Room Furniture Schedule Template](https://ikeng.co.uk/room-schedule-template.html): client-side planning tool; no tool entries uploaded
