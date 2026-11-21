@@ -150,8 +150,8 @@ const intentionalChanges = {
 const furnitureIntents = [
   [
     "ffe-sourcing.html",
-    "FF&E Procurement for Hospitality & Projects | IK ENG",
-    "FF&E Procurement for Hospitality and Projects",
+    "FF&E Procurement from China for UK Hospitality | IK ENG",
+    "FF&E Procurement from China for Hospitality and Projects",
     "Source furniture, fixtures and equipment for hospitality and project fit-outs. Coordinate schedules, samples, inspections and UK site delivery with IK ENG."
   ],
   [
@@ -162,19 +162,19 @@ const furnitureIntents = [
   ],
   [
     "property-developers.html",
-    "Developer Furniture Packs & Show Homes | IK ENG",
+    "Furniture Packs & Show Homes for UK Developers | IK ENG",
     "Furniture Packs and Show Homes for Property Developers",
     "Plan developer furniture packs and show homes with IK ENG. Source to unit layouts, approve finishes and coordinate inspection and delivery around handover."
   ],
   [
     "furniture-for-multiple-properties.html",
-    "BTR Furniture Packs & Portfolio Rollouts | IK ENG",
+    "BTR Furniture Packs & Portfolio Rollouts UK | IK ENG",
     "BTR Furniture Packs and Portfolio Rollouts",
     "Coordinate Build to Rent furniture packs and portfolio rollouts with IK ENG. Use a master specification, property schedules and agreed delivery stages."
   ],
   [
     "whole-house-furniture-package.html",
-    "Whole House Furniture Packages for One Home | IK ENG",
+    "Whole House Furniture Packages UK | IK ENG",
     "Whole House Furniture Packages for Individual Properties",
     "Furnish one property with a whole-house furniture package from China. Agree a room schedule, finishes, inspections and delivery scope with IK ENG."
   ],
