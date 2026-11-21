@@ -425,3 +425,27 @@
   to = "/hotel-bedroom-furniture-cost-per-room.html"
   status = 301
   force = true
+
+[[redirects]]
+  from = "/cbm-calculator"
+  to = "/cbm-calculator.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/furniture-inspection-checklist-template"
+  to = "/furniture-inspection-checklist-template.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/room-schedule-template"
+  to = "/room-schedule-template.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/downloads/furniture-inspection-checklist"
+  to = "/downloads/furniture-inspection-checklist.html"
+  status = 301
+  force = true
