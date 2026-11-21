@@ -42,7 +42,8 @@ assert.equal(page('?utm_source=a%2Bb._-+c', false).submit(), 'utm: a+b._- c');
 const htmlFiles = fs.readdirSync(root).filter(name => name.endsWith('.html'));
 const broken = [];
 const shippingGuides = ['ship-from-alibaba-to-uk.html', 'lcl-vs-fcl-shipping.html', 'what-is-ddp-shipping.html', 'china-to-uk-shipping-costs-explained.html', 'freight-forwarder-vs-shipping-agent.html', 'how-to-import-furniture-from-china-to-uk.html', 'eori-number-for-importing-from-china.html', 'uk-customs-clearance-for-goods-from-china.html'];
-for (const file of shippingGuides) {
+const newGuides = ['kitchen-cabinets-from-china-vs-uk-suppliers.html', 'consolidate-shipments-from-china-to-uk.html'];
+for (const file of [...shippingGuides, ...newGuides]) {
   const html = fs.readFileSync(path.join(root, file), 'utf8');
   const title = html.match(/<title>(.*?)<\/title>/)[1];
   const description = html.match(/<meta content="([^"]+)" name="description"/)[1];
@@ -50,17 +51,87 @@ for (const file of shippingGuides) {
   assert(description.length >= 140 && description.length <= 155, file + ': description length');
   const schemas = [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map(m => JSON.parse(m[1]));
   const article = schemas.find(s => s['@type'] === 'Article');
-  assert.equal(article.datePublished, '2026-11-10');
-  assert.equal(article.dateModified, '2026-11-10');
+  const expectedDate = newGuides.includes(file) ? '2026-11-21' : '2026-11-10';
+  assert.equal(article.datePublished, expectedDate);
+  assert.equal(article.dateModified, expectedDate);
   const faq = schemas.find(s => s['@type'] === 'FAQPage');
   const visible = html.match(/<section aria-label="Frequently asked questions">([\s\S]*?)<\/section>/)[1];
   const decode = text => text.replace(/&amp;/g, '&').replace(/&#x27;/g, "'").replace(/&quot;/g, '"').replace(/&lt;/g, '<').replace(/&gt;/g, '>');
   assert(faq.mainEntity.length >= 3 && faq.mainEntity.length <= 5);
   assert.deepEqual([...visible.matchAll(/<h3>(.*?)<\/h3><p>(.*?)<\/p>/g)].map(m => [decode(m[1]), decode(m[2])]), faq.mainEntity.map(q => [q.name, q.acceptedAnswer.text]), file + ': visible FAQ matches schema');
   assert(html.includes('Checked November 2026. Rules change; confirm with your customs broker before shipping.'));
-  assert(html.includes('href="/shipping-from-china-to-uk.html#shipping-quote">Get a shipping quote</a>'));
+  const mainCta = file === 'kitchen-cabinets-from-china-vs-uk-suppliers.html'
+    ? 'href="/kitchen-cabinets-sourcing-china.html">Explore kitchen sourcing</a>'
+    : 'href="/shipping-from-china-to-uk.html#shipping-quote">Get a shipping quote</a>';
+  assert(html.includes(mainCta));
+}
+// New practical guides have their own publication date and service CTA.
+const practicalGuides = [
+  ['furniture-pre-shipment-inspection-checklist.html', 'china-sourcing-inspection-and-visits.html'],
+  ['how-to-calculate-cbm-furniture-shipping.html', 'shipping-from-china-to-uk.html']
+];
+for (const [file, cta] of practicalGuides) {
+  const html = fs.readFileSync(path.join(root, file), 'utf8');
+  assert(html.match(/<title>(.*?)<\/title>/)[1].length <= 60, file + ': title length');
+  const description = html.match(/<meta content="([^"]+)" name="description"/)[1];
+  assert(description.length >= 120 && description.length <= 160, file + ': description length');
+  const schemas = [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map(m => JSON.parse(m[1]));
+  const article = schemas.find(s => s['@type'] === 'Article');
+  assert.equal(article.datePublished, '2026-11-21');
+  assert.equal(article.dateModified, '2026-11-21');
+  assert(schemas.some(s => s['@type'] === 'BreadcrumbList'));
+  const faq = schemas.find(s => s['@type'] === 'FAQPage');
+  const visible = html.match(/<section aria-label="Frequently asked questions">([\s\S]*?)<\/section>/)[1];
+  assert.deepEqual([...visible.matchAll(/<h3>(.*?)<\/h3><p>(.*?)<\/p>/g)].map(m => [m[1], m[2]]), faq.mainEntity.map(q => [q.name, q.acceptedAnswer.text]), file + ': visible FAQ matches schema');
+  assert(html.includes('class="btn btn-primary" href="/' + cta + '"'));
+}
+const insuranceApplianceGuides = ['furniture-shipping-insurance-china-to-uk.html', 'chinese-kitchen-cabinets-uk-appliance-sizes.html'];
+for (const file of insuranceApplianceGuides) {
+  const html = fs.readFileSync(path.join(root, file), 'utf8');
+  const title = html.match(/<title>(.*?)<\/title>/)[1];
+  const description = html.match(/<meta content="([^"]+)" name="description"/)[1];
+  assert(title.length > 0 && title.length <= 60, file + ': title length');
+  assert(description.length >= 120 && description.length <= 160, file + ': description length');
+  const schemas = [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map(m => JSON.parse(m[1]));
+  const article = schemas.find(s => s['@type'] === 'Article');
+  assert.equal(article.datePublished, '2026-11-21');
+  assert.equal(article.dateModified, '2026-11-21');
+  assert.equal(article.mainEntityOfPage, 'https://ikeng.co.uk/' + file);
+  assert(schemas.some(s => s['@type'] === 'BreadcrumbList'));
+  const faq = schemas.find(s => s['@type'] === 'FAQPage');
+  const visible = html.match(/<section aria-label="Frequently asked questions">([\s\S]*?)<\/section>/)[1];
+  const decode = text => text.replace(/&amp;/g, '&').replace(/&#x27;/g, "'").replace(/&quot;/g, '"');
+  assert(faq.mainEntity.length >= 3 && faq.mainEntity.length <= 5);
+  assert.deepEqual([...visible.matchAll(/<h3>(.*?)<\/h3><p>(.*?)<\/p>/g)].map(m => [decode(m[1]), decode(m[2])]), faq.mainEntity.map(q => [q.name, q.acceptedAnswer.text]), file + ': visible FAQ matches schema');
+}
+// Specification guides use their own publication dates and service CTAs.
+const specificationGuides = ['import-bathroom-fittings-from-china-uk-checklist.html', 'student-accommodation-furniture-specification-checklist.html'];
+for (const file of specificationGuides) {
+  const html = fs.readFileSync(path.join(root, file), 'utf8');
+  assert(html.match(/<title>(.*?)<\/title>/)[1].length <= 60, file + ': title length');
+  const description = html.match(/<meta content="([^"]+)" name="description"/)[1];
+  assert(description.length >= 120 && description.length <= 160, file + ': description length');
+  const schemas = [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map(m => JSON.parse(m[1]));
+  for (const type of ['Article', 'FAQPage', 'BreadcrumbList']) assert(schemas.some(s => s['@type'] === type), file + ': ' + type);
+  const faq = schemas.find(s => s['@type'] === 'FAQPage');
+  const visible = html.match(/<section aria-label="Frequently asked questions">([\s\S]*?)<\/section>/)[1];
+  assert.deepEqual([...visible.matchAll(/<h3>(.*?)<\/h3><p>(.*?)<\/p>/g)].map(m => [m[1], m[2]]), faq.mainEntity.map(q => [q.name, q.acceptedAnswer.text]), file + ': visible FAQ matches schema');
+}
+// holidayGuides checks.
+const holidayGuides = ['chinese-new-year-furniture-production-delays.html'];
+for (const file of holidayGuides) {
+  const html = fs.readFileSync(path.join(root, file), 'utf8');
+  assert(html.match(/<title>(.*?)<\/title>/)[1].length <= 60, file + ': title length');
+  const description = html.match(/<meta content="([^"]+)" name="description"/)[1];
+  assert(description.length >= 120 && description.length <= 160, file + ': description length');
+  const schemas = [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map(m => JSON.parse(m[1]));
+  for (const type of ['Article', 'FAQPage', 'BreadcrumbList']) assert(schemas.some(s => s['@type'] === type), file + ': ' + type);
+  const faq = schemas.find(s => s['@type'] === 'FAQPage');
+  const visible = html.match(/<section aria-label="Frequently asked questions">([\s\S]*?)<\/section>/)[1];
+  assert.deepEqual([...visible.matchAll(/<h3>(.*?)<\/h3><p>(.*?)<\/p>/g)].map(m => [m[1], m[2]]), faq.mainEntity.map(q => [q.name, q.acceptedAnswer.text]), file + ': visible FAQ matches schema');
 }
 const intentionalChanges = {
+  'china-sourcing-inspection-and-visits.html': ['title', 'h1'],
   'serviced-apartments.html': ['title'],
   'property-developers.html': ['title'],
   'hmo-landlords.html': ['title'],
@@ -70,6 +141,7 @@ const intentionalChanges = {
   'kitchen-cabinets-from-china-what-to-check.html': ['title'],
   'furnish-serviced-apartment-from-china.html': ['title']
 };
+assert.equal(fs.readFileSync(path.join(root, 'china-sourcing-inspection-and-visits.html'), 'utf8').match(/<h1>(.*?)<\/h1>/)[1], 'Factory and Pre-shipment Inspections in China for UK Buyers');
 for (const file of htmlFiles) {
   const html = fs.readFileSync(path.join(root, file), 'utf8');
   assert(!html.includes('\0'), file + ': no NULL bytes');
