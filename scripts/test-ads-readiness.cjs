@@ -133,7 +133,12 @@ for (const file of holidayGuides) {
 const intentionalChanges = {
   'china-sourcing-inspection-and-visits.html': ['title', 'h1'],
   'serviced-apartments.html': ['title'],
-  'property-developers.html': ['title'],
+  'property-developers.html': ['title', 'h1'],
+  'ffe-sourcing.html': ['title', 'h1'],
+  'furniture-sourcing-china.html': ['title', 'h1'],
+  'furniture-for-multiple-properties.html': ['title', 'h1'],
+  'whole-house-furniture-package.html': ['title', 'h1'],
+  'interior-design-studios.html': ['title', 'h1'],
   'hmo-landlords.html': ['title'],
   'shipping-times-china-to-uk.html': ['title'],
 
@@ -141,6 +146,55 @@ const intentionalChanges = {
   'kitchen-cabinets-from-china-what-to-check.html': ['title'],
   'furnish-serviced-apartment-from-china.html': ['title']
 };
+// Lock the distinct furniture service intents, metadata lengths and cross-links.
+const furnitureIntents = [
+  [
+    "ffe-sourcing.html",
+    "FF&E Procurement from China for UK Hospitality | IK ENG",
+    "FF&E Procurement from China for Hospitality and Projects",
+    "Source furniture, fixtures and equipment for hospitality and project fit-outs. Coordinate schedules, samples, inspections and UK site delivery with IK ENG."
+  ],
+  [
+    "furniture-sourcing-china.html",
+    "Furniture Sourcing from China to the UK | IK ENG",
+    "Furniture Sourcing from China to the UK",
+    "Source furniture from China with IK ENG. Compare suppliers, agree specifications and samples, arrange inspections and coordinate delivery to your UK address."
+  ],
+  [
+    "property-developers.html",
+    "Furniture Packs & Show Homes for UK Developers | IK ENG",
+    "Furniture Packs and Show Homes for Property Developers",
+    "Plan developer furniture packs and show homes with IK ENG. Source to unit layouts, approve finishes and coordinate inspection and delivery around handover."
+  ],
+  [
+    "furniture-for-multiple-properties.html",
+    "BTR Furniture Packs & Portfolio Rollouts UK | IK ENG",
+    "BTR Furniture Packs and Portfolio Rollouts",
+    "Coordinate Build to Rent furniture packs and portfolio rollouts with IK ENG. Use a master specification, property schedules and agreed delivery stages."
+  ],
+  [
+    "whole-house-furniture-package.html",
+    "Whole House Furniture Packages UK | IK ENG",
+    "Whole House Furniture Packages for Individual Properties",
+    "Furnish one property with a whole-house furniture package from China. Agree a room schedule, finishes, inspections and delivery scope with IK ENG."
+  ],
+  [
+    "interior-design-studios.html",
+    "Furniture Sourcing for Interior Designers | IK ENG",
+    "Furniture Sourcing for Interior Designers",
+    "Furniture sourcing for interior designers: retain specification control while IK ENG coordinates suppliers, samples, approvals, inspections and repeat orders."
+  ]
+];
+for (const [file, title, h1, description] of furnitureIntents) {
+  const html = fs.readFileSync(path.join(root, file), 'utf8');
+  const encode = text => text.replace(/&/g, '&amp;');
+  assert.equal(html.match(/<title>(.*?)<\/title>/)[1], encode(title), file + ': intent title');
+  assert.equal(html.match(/<h1>(.*?)<\/h1>/)[1], encode(h1), file + ': intent H1');
+  assert.equal(html.match(/<meta content="([^"]+)" name="description"/)[1], encode(description));
+  assert(title.length <= 60 && description.length >= 120 && description.length <= 160, file + ': metadata lengths');
+  const chooser = html.match(/<section aria-labelledby="which-service">([\s\S]*?)<\/section>/)[1];
+  for (const [other] of furnitureIntents) if (other !== file) assert(chooser.includes('href="/' + other + '"'), file + ': cross-link to ' + other);
+}
 assert.equal(fs.readFileSync(path.join(root, 'china-sourcing-inspection-and-visits.html'), 'utf8').match(/<h1>(.*?)<\/h1>/)[1], 'Factory and Pre-shipment Inspections in China for UK Buyers');
 for (const file of htmlFiles) {
   const html = fs.readFileSync(path.join(root, file), 'utf8');
