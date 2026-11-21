@@ -130,6 +130,34 @@ for (const file of holidayGuides) {
   const visible = html.match(/<section aria-label="Frequently asked questions">([\s\S]*?)<\/section>/)[1];
   assert.deepEqual([...visible.matchAll(/<h3>(.*?)<\/h3><p>(.*?)<\/p>/g)].map(m => [m[1], m[2]]), faq.mainEntity.map(q => [q.name, q.acceptedAnswer.text]), file + ': visible FAQ matches schema');
 }
+// Free tools are indexable landing pages; the blank download remains under /downloads/.
+const freeTools = ['cbm-calculator.html', 'furniture-inspection-checklist-template.html', 'room-schedule-template.html'];
+for (const file of freeTools) {
+  const html = fs.readFileSync(path.join(root, file), 'utf8');
+  const schemas = [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map(m => JSON.parse(m[1]));
+  assert(schemas.some(s => s['@type'] === 'BreadcrumbList'), file + ': breadcrumbs');
+  assert(schemas.some(s => ['WebApplication', 'HowTo'].includes(s['@type'])), file + ': tool schema');
+  assert(html.includes('class="related-guides"'), file + ': related guides');
+  for (const discovery of ['guides.html', 'sitemap.xml', 'llms.txt']) assert(fs.readFileSync(path.join(root, discovery), 'utf8').includes(file), file + ': ' + discovery);
+  const redirects = fs.readFileSync(path.join(root, 'netlify.toml'), 'utf8');
+  assert(redirects.includes('from = "/' + file.replace('.html', '') + '"\n  to = "/' + file + '"\n  status = 301\n  force = true'), file + ': explicit redirect');
+}
+const { calculateCartons, csvCell } = require('../ik-v4/free-tools.js');
+const cm = calculateCartons([{ unit: 'cm', values: [120, 60, 20, 10, 18] }]);
+const mm = calculateCartons([{ unit: 'mm', values: [1200, 600, 200, 10, 18] }]);
+assert.deepEqual(cm, mm, 'cm/mm conversions agree');
+assert(Math.abs(cm.cbm - 1.44) < 1e-12);
+assert.equal(cm.weight, 180); assert.equal(cm.air, 240); assert.equal(cm.airComparison, 240);
+const dense = calculateCartons([{ unit: 'cm', values: [100, 100, 100, 1, 2000] }]);
+assert.equal(dense.sea, 2); assert.equal(dense.airComparison, 2000);
+const mixed = calculateCartons([{ unit: 'cm', values: [100, 100, 100, 2, 10] }, { unit: 'mm', values: [1000, 500, 500, 4, 5] }]);
+assert.equal(mixed.cbm, 3); assert.equal(mixed.weight, 40);
+for (const values of [[0, 1, 1, 1, 1], [1, 1, 1, 1.5, 1], [1, 1, 1, 1, -1], [NaN, 1, 1, 1, 1]]) assert.throws(() => calculateCartons([{unit: 'cm', values}]));
+assert.equal(csvCell('Room, "A"'), '\"Room, \"\"A\"\"\"');
+assert(csvCell('=1+1').startsWith('"\''));
+assert(csvCell('  @SUM(A1)').startsWith('"\''));
+assert.equal(csvCell('line 1\nline 2'), '"line 1\nline 2"');
+assert(!/fetch\(|XMLHttpRequest|sendBeacon|localStorage|sessionStorage/.test(fs.readFileSync(path.join(root, 'free-tools.js'), 'utf8')), 'Tool data stays local');
 const intentionalChanges = {
   'china-sourcing-inspection-and-visits.html': ['title', 'h1'],
   'serviced-apartments.html': ['title'],
