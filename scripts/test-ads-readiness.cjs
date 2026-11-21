@@ -85,8 +85,8 @@ for (const [file, cta] of practicalGuides) {
   assert.deepEqual([...visible.matchAll(/<h3>(.*?)<\/h3><p>(.*?)<\/p>/g)].map(m => [m[1], m[2]]), faq.mainEntity.map(q => [q.name, q.acceptedAnswer.text]), file + ': visible FAQ matches schema');
   assert(html.includes('class="btn btn-primary" href="/' + cta + '"'));
 }
-const newGuides = ['furniture-shipping-insurance-china-to-uk.html', 'chinese-kitchen-cabinets-uk-appliance-sizes.html'];
-for (const file of newGuides) {
+const insuranceApplianceGuides = ['furniture-shipping-insurance-china-to-uk.html', 'chinese-kitchen-cabinets-uk-appliance-sizes.html'];
+for (const file of insuranceApplianceGuides) {
   const html = fs.readFileSync(path.join(root, file), 'utf8');
   const title = html.match(/<title>(.*?)<\/title>/)[1];
   const description = html.match(/<meta content="([^"]+)" name="description"/)[1];
