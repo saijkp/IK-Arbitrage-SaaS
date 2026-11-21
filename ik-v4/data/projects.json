@@ -1,0 +1,152 @@
+[
+  {
+    "id": "41",
+    "title": "Furniture for a 56-room HMO",
+    "location": "Bristol",
+    "sector": "Residential",
+    "scope": [
+      "Made-to-size bed, wardrobe, chest, bedside, desk and chair per room"
+    ],
+    "approach": "Next: confirm the product specification.",
+    "stage": "Factory comparison",
+    "stage_confirmed": false,
+    "updated": "2026-11",
+    "consent": true,
+    "photos": []
+  },
+  {
+    "id": "39",
+    "title": "Six-bedroom house",
+    "location": "Surrey",
+    "sector": "Residential",
+    "scope": [
+      "Aluminium glazing, two kitchens, flooring, lighting and bathrooms"
+    ],
+    "approach": "Next: confirm the product specification.",
+    "stage": "Factory comparison",
+    "stage_confirmed": false,
+    "updated": "2026-11",
+    "consent": true,
+    "photos": []
+  },
+  {
+    "id": "54",
+    "title": "Whole-house cabinetry",
+    "location": "Southampton area",
+    "sector": "Residential",
+    "scope": [
+      "Two kitchens, dressing rooms and wardrobes, including loft eaves"
+    ],
+    "approach": "Next: confirm the product specification.",
+    "stage": "Factory comparison",
+    "stage_confirmed": false,
+    "updated": "2026-11",
+    "consent": true,
+    "photos": []
+  },
+  {
+    "id": "52",
+    "title": "Full-house package",
+    "location": "",
+    "sector": "Residential",
+    "scope": [
+      "Windows, doors and bathrooms first; kitchen later"
+    ],
+    "approach": "Next: confirm the product specification.",
+    "stage": "Brief and specification",
+    "stage_confirmed": false,
+    "updated": "2026-11",
+    "consent": true,
+    "photos": []
+  },
+  {
+    "id": "3",
+    "title": "Fitted furniture and joinery",
+    "location": "",
+    "sector": "Joinery",
+    "scope": [
+      "Fitted furniture and joinery package"
+    ],
+    "approach": "Next: confirm the product specification.",
+    "stage": "Factory comparison",
+    "stage_confirmed": false,
+    "updated": "2026-11",
+    "consent": true,
+    "photos": []
+  },
+  {
+    "id": "30",
+    "title": "New-build kitchen and bathrooms",
+    "location": "",
+    "sector": "Residential",
+    "scope": [
+      "Kitchen and bathrooms"
+    ],
+    "approach": "Next: confirm the product specification.",
+    "stage": "Brief and specification",
+    "stage_confirmed": false,
+    "updated": "2026-11",
+    "consent": true,
+    "photos": []
+  },
+  {
+    "id": "51",
+    "title": "PVC wall panels",
+    "location": "Lincolnshire",
+    "sector": "Shipping",
+    "scope": [
+      "Door-to-door shipment from China"
+    ],
+    "approach": "Next: confirm the shipping specification.",
+    "stage": "Brief and specification",
+    "stage_confirmed": false,
+    "updated": "2026-11",
+    "consent": true,
+    "photos": []
+  },
+  {
+    "id": "48",
+    "title": "Brewery and distillery machinery",
+    "location": "London",
+    "sector": "Shipping",
+    "scope": [
+      "20ft container from China"
+    ],
+    "approach": "Next: confirm the shipping specification.",
+    "stage": "Brief and specification",
+    "stage_confirmed": false,
+    "updated": "2026-11",
+    "consent": true,
+    "photos": []
+  },
+  {
+    "id": "46",
+    "title": "Gym equipment",
+    "location": "Greater Manchester",
+    "sector": "Shipping",
+    "scope": [
+      "20ft container from China"
+    ],
+    "approach": "Next: confirm the shipping specification.",
+    "stage": "Brief and specification",
+    "stage_confirmed": false,
+    "updated": "2026-11",
+    "consent": true,
+    "photos": []
+  },
+  {
+    "id": "47",
+    "title": "Toys shipment",
+    "location": "London",
+    "sector": "Shipping",
+    "scope": [
+      "Part-container from Shenzhen with customs clearance"
+    ],
+    "approach": "Next: confirm the shipping specification.",
+    "stage": "Brief and specification",
+    "stage_confirmed": false,
+    "updated": "2026-11",
+    "consent": true,
+    "photos": []
+  }
+]
