@@ -42,7 +42,8 @@ assert.equal(page('?utm_source=a%2Bb._-+c', false).submit(), 'utm: a+b._- c');
 const htmlFiles = fs.readdirSync(root).filter(name => name.endsWith('.html'));
 const broken = [];
 const shippingGuides = ['ship-from-alibaba-to-uk.html', 'lcl-vs-fcl-shipping.html', 'what-is-ddp-shipping.html', 'china-to-uk-shipping-costs-explained.html', 'freight-forwarder-vs-shipping-agent.html', 'how-to-import-furniture-from-china-to-uk.html', 'eori-number-for-importing-from-china.html', 'uk-customs-clearance-for-goods-from-china.html'];
-for (const file of shippingGuides) {
+const newGuides = ['kitchen-cabinets-from-china-vs-uk-suppliers.html', 'consolidate-shipments-from-china-to-uk.html'];
+for (const file of [...shippingGuides, ...newGuides]) {
   const html = fs.readFileSync(path.join(root, file), 'utf8');
   const title = html.match(/<title>(.*?)<\/title>/)[1];
   const description = html.match(/<meta content="([^"]+)" name="description"/)[1];
@@ -50,8 +51,9 @@ for (const file of shippingGuides) {
   assert(description.length >= 140 && description.length <= 155, file + ': description length');
   const schemas = [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map(m => JSON.parse(m[1]));
   const article = schemas.find(s => s['@type'] === 'Article');
-  assert.equal(article.datePublished, '2026-11-10');
-  assert.equal(article.dateModified, '2026-11-10');
+  const expectedDate = newGuides.includes(file) ? '2026-11-21' : '2026-11-10';
+  assert.equal(article.datePublished, expectedDate);
+  assert.equal(article.dateModified, expectedDate);
   const faq = schemas.find(s => s['@type'] === 'FAQPage');
   const visible = html.match(/<section aria-label="Frequently asked questions">([\s\S]*?)<\/section>/)[1];
   const decode = text => text.replace(/&amp;/g, '&').replace(/&#x27;/g, "'").replace(/&quot;/g, '"').replace(/&lt;/g, '<').replace(/&gt;/g, '>');
