@@ -81,6 +81,7 @@ for (const [file, cta] of practicalGuides) {
   assert(html.includes('class="btn btn-primary" href="/' + cta + '"'));
 }
 const intentionalChanges = {
+  'china-sourcing-inspection-and-visits.html': ['title', 'h1'],
   'serviced-apartments.html': ['title'],
   'property-developers.html': ['title'],
   'hmo-landlords.html': ['title'],
@@ -90,6 +91,7 @@ const intentionalChanges = {
   'kitchen-cabinets-from-china-what-to-check.html': ['title'],
   'furnish-serviced-apartment-from-china.html': ['title']
 };
+assert.equal(fs.readFileSync(path.join(root, 'china-sourcing-inspection-and-visits.html'), 'utf8').match(/<h1>(.*?)<\/h1>/)[1], 'Factory and Pre-shipment Inspections in China for UK Buyers');
 for (const file of htmlFiles) {
   const html = fs.readFileSync(path.join(root, file), 'utf8');
   assert(!html.includes('\0'), file + ': no NULL bytes');
