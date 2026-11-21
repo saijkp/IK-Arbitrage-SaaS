@@ -60,7 +60,10 @@ for (const file of [...shippingGuides, ...newGuides]) {
   assert(faq.mainEntity.length >= 3 && faq.mainEntity.length <= 5);
   assert.deepEqual([...visible.matchAll(/<h3>(.*?)<\/h3><p>(.*?)<\/p>/g)].map(m => [decode(m[1]), decode(m[2])]), faq.mainEntity.map(q => [q.name, q.acceptedAnswer.text]), file + ': visible FAQ matches schema');
   assert(html.includes('Checked November 2026. Rules change; confirm with your customs broker before shipping.'));
-  assert(html.includes('href="/shipping-from-china-to-uk.html#shipping-quote">Get a shipping quote</a>'));
+  const mainCta = file === 'kitchen-cabinets-from-china-vs-uk-suppliers.html'
+    ? 'href="/kitchen-cabinets-sourcing-china.html">Explore kitchen sourcing</a>'
+    : 'href="/shipping-from-china-to-uk.html#shipping-quote">Get a shipping quote</a>';
+  assert(html.includes(mainCta));
 }
 const intentionalChanges = {
   'serviced-apartments.html': ['title'],
