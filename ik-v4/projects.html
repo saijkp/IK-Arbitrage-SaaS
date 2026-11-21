@@ -105,7 +105,7 @@ header.site .wrap{flex-wrap:wrap;gap:14px;}
 <header class="site"><div class="wrap"><a class="logo" href="/">IK <em>ENG</em></a><nav aria-label="Main navigation"><a href="/">Home</a><a href="/projects.html" aria-current="page">Projects</a><a href="/how-it-works.html">How it works</a><a href="/shipping-from-china-to-uk.html">Shipping only</a><a href="/#brief">Send a brief</a></nav></div></header>
 <main class="wrap"><p class="kicker">Project evidence</p><h1>Projects</h1><p>Delivered work, current client briefs and the work of our team in China.</p>
 <section aria-labelledby="delivered-heading"><h2 id="delivered-heading">Delivered</h2>
-<article class="card"><span class="badge delivered">Delivered</span><h3>Full-house supply from China</h3><p>Private residence, Malappuram, India.</p><div class="video" data-project-video><button type="button">Play project video</button></div><p class="meta">Video by the project architects, Arif Associates.</p></article>
+<article class="card"><span class="badge delivered">Delivered</span><h3>Full-house supply from China</h3><p>Private residence, Malappuram, India.</p><p><a href="/case-study-malappuram-full-house.html">Read the case study</a></p><div class="video" data-project-video><button type="button">Play project video</button></div><p class="meta">Video by the project architects, Arif Associates.</p></article>
 <article class="card"><span class="badge delivered">Delivered</span><h3>China to UK shipment</h3><p>Pre-shipment inspection by our team in China.</p></article>
 <div id="delivered-photos" aria-live="polite"></div></section>
 <section aria-labelledby="progress-heading"><h2 id="progress-heading">Projects in progress</h2><p class="meta">Current briefs. Stage labels marked “to confirm” await a project update.</p><p id="projects-status" role="status">Loading current projects…</p><div class="grid" id="projects"></div><noscript><p>Enable JavaScript to view consented current project briefs.</p></noscript></section>
@@ -134,7 +134,7 @@ header.site .wrap{flex-wrap:wrap;gap:14px;}
       host.append(card);
     });
   }).catch(() => { document.getElementById('projects-status').textContent = 'Current projects could not be loaded. Please try again later.'; });
-  const titles = {vatakara:'Delivered: lighting and interior finishes, private residence, Vatakara, India (2025)', residence:'Delivered: private residence, India', 'guest-rooms':'Delivered: furnished guest rooms — beds, upholstered headboards, seating, tables, wall lights', gate:'Delivered: carved entrance gate, from factory to site'};
+  const titles = {vatakara:'Delivered: chandeliers and lighting, private house, Vatakara, India (2025)', residence:'Delivered: private residence, India', 'guest-rooms':'Delivered: guest-room furniture and lighting, hotel, Ireland', gate:'Delivered: carved entrance gate for the Kerala residence, from factory to site'};
   read('/data/process-photos.json').then(entries => {
     const groups = new Map();
     entries.filter(p => localImage(p.file) && p.caption).forEach(p => {
@@ -144,7 +144,7 @@ header.site .wrap{flex-wrap:wrap;gap:14px;}
     });
     groups.forEach((photos, key) => {
       const delivered = Boolean(titles[key]), set = el('article', '', 'photo-set');
-      set.append(badge(delivered ? 'Delivered' : 'Process evidence', delivered ? 'delivered' : 'process'), el('h3', titles[key] || key));
+      set.append(badge(delivered ? 'Delivered' : 'Process evidence', delivered ? 'delivered' : 'process'), el('h3', titles[key] || key)); const cs = {vatakara:'/case-study-vatakara-house-chandeliers.html', 'guest-rooms':'/case-study-ireland-hotel-guest-rooms.html', gate:'/case-study-malappuram-full-house.html', residence:'/case-study-malappuram-full-house.html'}[key]; if (cs) { const a = document.createElement('a'); a.href = cs; a.textContent = 'Read the case study'; const pp = el('p', ''); pp.append(a); set.append(pp); }
       const grid = el('div', '', 'grid'); photos.forEach(p => grid.append(figure(p))); set.append(grid);
       document.getElementById(delivered ? 'delivered-photos' : 'process-photos').append(set);
       if (!delivered) document.getElementById('process-section').hidden = false;
