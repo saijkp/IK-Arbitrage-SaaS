@@ -1,0 +1,371 @@
+[
+  {
+    "file": "/images/process/photo-01.jpg",
+    "caption": "Factory production floor",
+    "stage": "Factory visits",
+    "date": "",
+    "project_ref": "",
+    "needs_sai_caption": false,
+    "source_number": 1
+  },
+  {
+    "file": "/images/process/photo-02.jpg",
+    "caption": "Production machinery and material rolls",
+    "stage": "Factory visits",
+    "date": "",
+    "project_ref": "",
+    "needs_sai_caption": false,
+    "source_number": 2
+  },
+  {
+    "file": "/images/process/photo-04.jpg",
+    "caption": "Machinery on the factory floor",
+    "stage": "Factory visits",
+    "date": "",
+    "project_ref": "",
+    "needs_sai_caption": false,
+    "source_number": 4
+  },
+  {
+    "file": "/images/process/photo-05.jpg",
+    "caption": "Factory production aisle",
+    "stage": "Factory visits",
+    "date": "",
+    "project_ref": "",
+    "needs_sai_caption": false,
+    "source_number": 5
+  },
+  {
+    "file": "/images/process/photo-06.jpg",
+    "caption": "Material rolls staged in the factory",
+    "stage": "Factory visits",
+    "date": "",
+    "project_ref": "",
+    "needs_sai_caption": false,
+    "source_number": 6
+  },
+  {
+    "file": "/images/process/photo-09.jpg",
+    "caption": "Profile sample checked by hand",
+    "stage": "Material and sample checks",
+    "date": "",
+    "project_ref": "",
+    "needs_sai_caption": false,
+    "source_number": 9
+  },
+  {
+    "file": "/images/process/photo-10.jpg",
+    "caption": "Chandelier and decorative ceiling",
+    "stage": "Delivered",
+    "date": "2025-08",
+    "project_ref": "vatakara",
+    "needs_sai_caption": false,
+    "source_number": 10
+  },
+  {
+    "file": "/images/process/photo-11.jpg",
+    "caption": "Lighting and ceiling details",
+    "stage": "Delivered",
+    "date": "2025-08",
+    "project_ref": "vatakara",
+    "needs_sai_caption": false,
+    "source_number": 11
+  },
+  {
+    "file": "/images/process/photo-12.jpg",
+    "caption": "Chandelier detail",
+    "stage": "Delivered",
+    "date": "2025-08",
+    "project_ref": "vatakara",
+    "needs_sai_caption": false,
+    "source_number": 12
+  },
+  {
+    "file": "/images/process/photo-13.jpg",
+    "caption": "Stairwell lighting and decorative ceiling",
+    "stage": "Delivered",
+    "date": "2025-08",
+    "project_ref": "vatakara",
+    "needs_sai_caption": false,
+    "source_number": 13
+  },
+  {
+    "file": "/images/process/photo-17.jpg",
+    "caption": "Kitchen cabinetry on site",
+    "stage": "Delivered",
+    "date": "",
+    "project_ref": "residence",
+    "needs_sai_caption": false,
+    "source_number": 17
+  },
+  {
+    "file": "/images/process/photo-21.jpg",
+    "caption": "Decorative interior screen",
+    "stage": "Delivered",
+    "date": "",
+    "project_ref": "residence",
+    "needs_sai_caption": false,
+    "source_number": 21
+  },
+  {
+    "file": "/images/process/photo-22.jpg",
+    "caption": "Residence exterior",
+    "stage": "Delivered",
+    "date": "",
+    "project_ref": "residence",
+    "needs_sai_caption": false,
+    "source_number": 22
+  },
+  {
+    "file": "/images/process/photo-23.jpg",
+    "caption": "Decorative exterior railing",
+    "stage": "Delivered",
+    "date": "",
+    "project_ref": "residence",
+    "needs_sai_caption": false,
+    "source_number": 23
+  },
+  {
+    "file": "/images/process/photo-27.jpg",
+    "caption": "Crated goods inside a container",
+    "stage": "Container loading",
+    "date": "",
+    "project_ref": "",
+    "needs_sai_caption": false,
+    "source_number": 27
+  },
+  {
+    "file": "/images/process/photo-28.jpg",
+    "caption": "Packed cartons inside a container",
+    "stage": "Container loading",
+    "date": "",
+    "project_ref": "",
+    "needs_sai_caption": false,
+    "source_number": 28
+  },
+  {
+    "file": "/images/process/photo-33.jpg",
+    "caption": "Chandelier components before shipment",
+    "stage": "Pre-shipment inspection",
+    "date": "",
+    "project_ref": "",
+    "needs_sai_caption": false,
+    "source_number": 33
+  },
+  {
+    "file": "/images/process/photo-34.jpg",
+    "caption": "Chandelier finish detail",
+    "stage": "Pre-shipment inspection",
+    "date": "",
+    "project_ref": "",
+    "needs_sai_caption": false,
+    "source_number": 34
+  },
+  {
+    "file": "/images/process/photo-35.jpg",
+    "caption": "Chandelier assembly before shipment",
+    "stage": "Pre-shipment inspection",
+    "date": "",
+    "project_ref": "",
+    "needs_sai_caption": false,
+    "source_number": 35
+  },
+  {
+    "file": "/images/process/photo-37.jpg",
+    "caption": "Doors in a factory showroom",
+    "stage": "Factory showroom",
+    "date": "",
+    "project_ref": "",
+    "needs_sai_caption": false,
+    "source_number": 37
+  },
+  {
+    "file": "/images/process/photo-38.jpg",
+    "caption": "Decorative door in a factory showroom",
+    "stage": "Factory showroom",
+    "date": "",
+    "project_ref": "",
+    "needs_sai_caption": false,
+    "source_number": 38
+  },
+  {
+    "file": "/images/process/photo-39.jpg",
+    "caption": "Screen doors in a factory showroom",
+    "stage": "Factory showroom",
+    "date": "",
+    "project_ref": "",
+    "needs_sai_caption": false,
+    "source_number": 39
+  },
+  {
+    "file": "/images/process/photo-40.jpg",
+    "caption": "Door in a factory showroom",
+    "stage": "Factory showroom",
+    "date": "",
+    "project_ref": "",
+    "needs_sai_caption": false,
+    "source_number": 40
+  },
+  {
+    "file": "/images/process/photo-42.jpg",
+    "caption": "Mirror before shipment",
+    "stage": "Pre-shipment inspection",
+    "date": "",
+    "project_ref": "",
+    "needs_sai_caption": false,
+    "source_number": 42
+  },
+  {
+    "file": "/images/process/photo-43.jpg",
+    "caption": "Rug detail before shipment",
+    "stage": "Pre-shipment inspection",
+    "date": "",
+    "project_ref": "",
+    "needs_sai_caption": false,
+    "source_number": 43
+  },
+  {
+    "file": "/images/process/photo-47.jpg",
+    "caption": "Vanity cabinet before basin fitting",
+    "stage": "Pre-shipment inspection",
+    "date": "",
+    "project_ref": "",
+    "needs_sai_caption": false,
+    "source_number": 47
+  },
+  {
+    "file": "/images/process/photo-48.jpg",
+    "caption": "Vanity cabinet with basin fitted",
+    "stage": "Pre-shipment inspection",
+    "date": "",
+    "project_ref": "",
+    "needs_sai_caption": false,
+    "source_number": 48
+  },
+  {
+    "file": "/images/process/photo-49.jpg",
+    "caption": "Basin and worktop detail",
+    "stage": "Pre-shipment inspection",
+    "date": "",
+    "project_ref": "",
+    "needs_sai_caption": false,
+    "source_number": 49
+  },
+  {
+    "file": "/images/process/photo-51.jpg",
+    "caption": "Basin checked with a tape measure",
+    "stage": "Pre-shipment inspection",
+    "date": "",
+    "project_ref": "",
+    "needs_sai_caption": false,
+    "source_number": 51
+  },
+  {
+    "file": "/images/process/photo-52.jpg",
+    "caption": "Dining table before shipment",
+    "stage": "Pre-shipment inspection",
+    "date": "",
+    "project_ref": "",
+    "needs_sai_caption": false,
+    "source_number": 52
+  },
+  {
+    "file": "/images/process/photo-53.jpg",
+    "caption": "Marble dining tabletop",
+    "stage": "Pre-shipment inspection",
+    "date": "",
+    "project_ref": "",
+    "needs_sai_caption": false,
+    "source_number": 53
+  },
+  {
+    "file": "/images/process/photo-54.jpg",
+    "caption": "Tabletop finish detail",
+    "stage": "Pre-shipment inspection",
+    "date": "",
+    "project_ref": "",
+    "needs_sai_caption": false,
+    "source_number": 54
+  },
+  {
+    "file": "/images/process/photo-55.jpg",
+    "caption": "Desk, chair and wall lights",
+    "stage": "Delivered",
+    "date": "",
+    "project_ref": "guest-rooms",
+    "needs_sai_caption": false,
+    "source_number": 55
+  },
+  {
+    "file": "/images/process/photo-56.jpg",
+    "caption": "Seating and side table",
+    "stage": "Delivered",
+    "date": "",
+    "project_ref": "guest-rooms",
+    "needs_sai_caption": false,
+    "source_number": 56
+  },
+  {
+    "file": "/images/process/photo-57.jpg",
+    "caption": "Beds and upholstered headboards",
+    "stage": "Delivered",
+    "date": "",
+    "project_ref": "guest-rooms",
+    "needs_sai_caption": false,
+    "source_number": 57
+  },
+  {
+    "file": "/images/process/photo-58.jpg",
+    "caption": "Upholstered seating",
+    "stage": "Delivered",
+    "date": "",
+    "project_ref": "guest-rooms",
+    "needs_sai_caption": false,
+    "source_number": 58
+  },
+  {
+    "file": "/images/process/photo-59.jpg",
+    "caption": "Guest room seating and tables",
+    "stage": "Delivered",
+    "date": "",
+    "project_ref": "guest-rooms",
+    "needs_sai_caption": false,
+    "source_number": 59
+  },
+  {
+    "file": "/images/process/photo-60.jpg",
+    "caption": "Furnished bedroom and seating",
+    "stage": "Delivered",
+    "date": "",
+    "project_ref": "guest-rooms",
+    "needs_sai_caption": false,
+    "source_number": 60
+  },
+  {
+    "file": "/images/process/photo-61.jpg",
+    "caption": "Bedroom set in a factory showroom",
+    "stage": "Factory showroom",
+    "date": "",
+    "project_ref": "",
+    "needs_sai_caption": false,
+    "source_number": 61
+  },
+  {
+    "file": "/images/process/photo-62.jpg",
+    "caption": "Before: carved entrance gate at the factory",
+    "stage": "Delivered",
+    "date": "",
+    "project_ref": "gate",
+    "needs_sai_caption": false,
+    "source_number": 62
+  },
+  {
+    "file": "/images/process/photo-63.jpg",
+    "caption": "After: carved entrance gate installed",
+    "stage": "Delivered",
+    "date": "",
+    "project_ref": "gate",
+    "needs_sai_caption": false,
+    "source_number": 63
+  }
+]
