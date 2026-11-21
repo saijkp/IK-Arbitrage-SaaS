@@ -365,3 +365,63 @@
   to = "/"
   status = 301
   force = true
+
+[[redirects]]
+  from = "/furniture-pre-shipment-inspection-checklist"
+  to = "/furniture-pre-shipment-inspection-checklist.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/how-to-calculate-cbm-furniture-shipping"
+  to = "/how-to-calculate-cbm-furniture-shipping.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/kitchen-cabinets-from-china-vs-uk-suppliers"
+  to = "/kitchen-cabinets-from-china-vs-uk-suppliers.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/consolidate-shipments-from-china-to-uk"
+  to = "/consolidate-shipments-from-china-to-uk.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/furniture-shipping-insurance-china-to-uk"
+  to = "/furniture-shipping-insurance-china-to-uk.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/chinese-kitchen-cabinets-uk-appliance-sizes"
+  to = "/chinese-kitchen-cabinets-uk-appliance-sizes.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/import-bathroom-fittings-from-china-uk-checklist"
+  to = "/import-bathroom-fittings-from-china-uk-checklist.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/student-accommodation-furniture-specification-checklist"
+  to = "/student-accommodation-furniture-specification-checklist.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/chinese-new-year-furniture-production-delays"
+  to = "/chinese-new-year-furniture-production-delays.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/hotel-bedroom-furniture-cost-per-room"
+  to = "/hotel-bedroom-furniture-cost-per-room.html"
+  status = 301
+  force = true
