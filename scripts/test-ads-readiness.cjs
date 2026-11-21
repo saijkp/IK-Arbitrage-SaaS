@@ -85,6 +85,25 @@ for (const [file, cta] of practicalGuides) {
   assert.deepEqual([...visible.matchAll(/<h3>(.*?)<\/h3><p>(.*?)<\/p>/g)].map(m => [m[1], m[2]]), faq.mainEntity.map(q => [q.name, q.acceptedAnswer.text]), file + ': visible FAQ matches schema');
   assert(html.includes('class="btn btn-primary" href="/' + cta + '"'));
 }
+const insuranceApplianceGuides = ['furniture-shipping-insurance-china-to-uk.html', 'chinese-kitchen-cabinets-uk-appliance-sizes.html'];
+for (const file of insuranceApplianceGuides) {
+  const html = fs.readFileSync(path.join(root, file), 'utf8');
+  const title = html.match(/<title>(.*?)<\/title>/)[1];
+  const description = html.match(/<meta content="([^"]+)" name="description"/)[1];
+  assert(title.length > 0 && title.length <= 60, file + ': title length');
+  assert(description.length >= 120 && description.length <= 160, file + ': description length');
+  const schemas = [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map(m => JSON.parse(m[1]));
+  const article = schemas.find(s => s['@type'] === 'Article');
+  assert.equal(article.datePublished, '2026-11-21');
+  assert.equal(article.dateModified, '2026-11-21');
+  assert.equal(article.mainEntityOfPage, 'https://ikeng.co.uk/' + file);
+  assert(schemas.some(s => s['@type'] === 'BreadcrumbList'));
+  const faq = schemas.find(s => s['@type'] === 'FAQPage');
+  const visible = html.match(/<section aria-label="Frequently asked questions">([\s\S]*?)<\/section>/)[1];
+  const decode = text => text.replace(/&amp;/g, '&').replace(/&#x27;/g, "'").replace(/&quot;/g, '"');
+  assert(faq.mainEntity.length >= 3 && faq.mainEntity.length <= 5);
+  assert.deepEqual([...visible.matchAll(/<h3>(.*?)<\/h3><p>(.*?)<\/p>/g)].map(m => [decode(m[1]), decode(m[2])]), faq.mainEntity.map(q => [q.name, q.acceptedAnswer.text]), file + ': visible FAQ matches schema');
+}
 const intentionalChanges = {
   'china-sourcing-inspection-and-visits.html': ['title', 'h1'],
   'serviced-apartments.html': ['title'],
