@@ -104,6 +104,19 @@ for (const file of insuranceApplianceGuides) {
   assert(faq.mainEntity.length >= 3 && faq.mainEntity.length <= 5);
   assert.deepEqual([...visible.matchAll(/<h3>(.*?)<\/h3><p>(.*?)<\/p>/g)].map(m => [decode(m[1]), decode(m[2])]), faq.mainEntity.map(q => [q.name, q.acceptedAnswer.text]), file + ': visible FAQ matches schema');
 }
+// Specification guides use their own publication dates and service CTAs.
+const specificationGuides = ['import-bathroom-fittings-from-china-uk-checklist.html', 'student-accommodation-furniture-specification-checklist.html'];
+for (const file of specificationGuides) {
+  const html = fs.readFileSync(path.join(root, file), 'utf8');
+  assert(html.match(/<title>(.*?)<\/title>/)[1].length <= 60, file + ': title length');
+  const description = html.match(/<meta content="([^"]+)" name="description"/)[1];
+  assert(description.length >= 120 && description.length <= 160, file + ': description length');
+  const schemas = [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map(m => JSON.parse(m[1]));
+  for (const type of ['Article', 'FAQPage', 'BreadcrumbList']) assert(schemas.some(s => s['@type'] === type), file + ': ' + type);
+  const faq = schemas.find(s => s['@type'] === 'FAQPage');
+  const visible = html.match(/<section aria-label="Frequently asked questions">([\s\S]*?)<\/section>/)[1];
+  assert.deepEqual([...visible.matchAll(/<h3>(.*?)<\/h3><p>(.*?)<\/p>/g)].map(m => [m[1], m[2]]), faq.mainEntity.map(q => [q.name, q.acceptedAnswer.text]), file + ': visible FAQ matches schema');
+}
 const intentionalChanges = {
   'china-sourcing-inspection-and-visits.html': ['title', 'h1'],
   'serviced-apartments.html': ['title'],
