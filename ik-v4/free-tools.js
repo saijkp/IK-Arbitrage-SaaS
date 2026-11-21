@@ -29,8 +29,8 @@
   function update() {
     const output = document.getElementById('carton-results');
     try {
-      const cartons = [...document.querySelectorAll('.carton')];
-      if (!cartons.length) { output.textContent = 'Add a carton group to calculate totals.'; return; }
+      const cartons = [...document.querySelectorAll('.carton')].filter(row => [...row.querySelectorAll('input')].some(input => input.value.trim() !== '' || input.validity.badInput));
+      if (!cartons.length) { output.textContent = 'Enter carton dimensions, quantity and gross weight to see totals.'; return; }
       const totals = calculateCartons(cartons.map(row => ({ unit: row.querySelector('select').value, values: [...row.querySelectorAll('input')].map(input => input.value.trim() === '' ? NaN : Number(input.value)) })));
       output.textContent = `Total volume: ${fmt(totals.cbm)} CBM. Total gross weight: ${fmt(totals.weight)} kg. Sea LCL comparison: ${fmt(totals.cbm)} CBM versus ${fmt(totals.weight / 1000)} tonnes; larger measure: ${fmt(totals.sea)} W/M units. Air volumetric weight (6,000 divisor): ${fmt(totals.air)} kg; larger of total gross and volumetric weight: ${fmt(totals.airComparison)} kg. Estimates only; confirm the service rules with your forwarder.`;
     } catch (error) { output.textContent = error.message; }
@@ -38,7 +38,7 @@
   function addCarton(focus) {
     const id = ++cartonId;
     const group = document.createElement('fieldset'); group.className = 'carton';
-    group.innerHTML = `<legend>Carton group ${id}</legend><div class="fields"><label>Dimensions unit<select aria-label="Carton group ${id}: dimensions unit"><option value="cm">cm</option><option value="mm">mm</option></select></label>${['Length','Width','Height','Quantity','Gross kg per carton'].map((name, i) => `<label>${name}<input aria-label="Carton group ${id}: ${name}" type="number" min="${i === 3 ? '1' : '0'}" step="${i === 3 ? '1' : 'any'}" ${i === 3 ? 'value="1"' : ''} required></label>`).join('')}</div><button type="button" aria-label="Remove carton group ${id}">Remove group</button>`;
+    group.innerHTML = `<legend>Carton group ${id}</legend><div class="fields"><label>Dimensions unit<select aria-label="Carton group ${id}: dimensions unit"><option value="cm">cm</option><option value="mm">mm</option></select></label>${['Length','Width','Height','Quantity','Gross kg per carton'].map((name, i) => `<label>${name}<input aria-label="Carton group ${id}: ${name}" type="number" min="${i === 3 ? '1' : '0'}" step="${i === 3 ? '1' : 'any'}" required></label>`).join('')}</div><button type="button" aria-label="Remove carton group ${id}">Remove group</button>`;
     group.querySelector('button').addEventListener('click', () => { group.remove(); document.getElementById('add-carton').focus(); update(); });
     document.getElementById('carton-rows').append(group);
     if (focus) group.querySelector('input').focus();

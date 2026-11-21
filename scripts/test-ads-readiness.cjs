@@ -159,6 +159,11 @@ assert(csvCell('  @SUM(A1)').startsWith('"\''));
 assert.equal(csvCell('line 1\nline 2'), '"line 1\nline 2"');
 assert(!/fetch\(|XMLHttpRequest|sendBeacon|localStorage|sessionStorage/.test(fs.readFileSync(path.join(root, 'free-tools.js'), 'utf8')), 'Tool data stays local');
 const intentionalChanges = {
+  'collection.html': ['title', 'h1'],
+  'collection-kitchens.html': ['title', 'h1'],
+  'collection-wardrobes.html': ['title', 'h1'],
+  'collection-furniture.html': ['title', 'h1'],
+
   'china-sourcing-inspection-and-visits.html': ['title', 'h1'],
   'serviced-apartments.html': ['title'],
   'property-developers.html': ['title', 'h1'],
@@ -243,6 +248,8 @@ for (const file of htmlFiles) {
     if (field !== 'canonical' && (intentionalChanges[file] || []).includes(field)) continue;
     assert.deepEqual(html.match(pattern), before.match(pattern), file + ': ' + field + ' unchanged');
   }
+  // The static projects page has no lead form or tracked contact CTA.
+  if (file !== 'projects.html') {
   assert.equal((html.match(/src="\/lead-source.js"/g) || []).length, 1);
   const clickScript = [...html.matchAll(/<script>([\s\S]*?)<\/script>/g)].map(m => m[1]).find(s => s.includes('whatsapp_click'));
   assert(clickScript, file);
@@ -252,6 +259,7 @@ for (const file of htmlFiles) {
     vm.runInNewContext(clickScript, context);
     for (const href of ['https://wa.me/447767990007', 'https://example.test/#brief', 'tel:+447767990007']) click({ target: { closest: () => ({ href }) } });
     assert.deepEqual(events.map(e => e.event), consent ? ['whatsapp_click', 'brief_cta_click', 'phone_click'] : []);
+  }
   }
   for (const match of html.matchAll(/<form\b[^>]*name="(sourcing-brief|package-brief|trade-catalogue|guide-download|shipping-quote)"[^>]*>([\s\S]*?)<\/form>/g)) assert.equal((match[2].match(/name="lead_source"/g) || []).length, 1, file);
   for (const match of html.matchAll(/(?:href|src)="([^"]+)"/g)) {
