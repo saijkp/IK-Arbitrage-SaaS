@@ -1,3 +1,5 @@
+"$schema" = "https://open-api.netlify.com/netlify.schema.json"
+
 [build]
   command = "npm install"
   publish = "."
@@ -271,5 +273,95 @@
 [[redirects]]
   from = "/kitchen-cabinets-from-china-what-to-check"
   to = "/kitchen-cabinets-from-china-what-to-check.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/hs-code-kitchen-cabinets"
+  to = "/hs-code-kitchen-cabinets.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/ukca-marking-led-lights-from-china"
+  to = "/ukca-marking-led-lights-from-china.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/moq-furniture-from-china"
+  to = "/moq-furniture-from-china.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/shipping-from-china-to-uk"
+  to = "/shipping-from-china-to-uk.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/ship-from-alibaba-to-uk"
+  to = "/ship-from-alibaba-to-uk.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/lcl-vs-fcl-shipping"
+  to = "/lcl-vs-fcl-shipping.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/what-is-ddp-shipping"
+  to = "/what-is-ddp-shipping.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/china-to-uk-shipping-costs-explained"
+  to = "/china-to-uk-shipping-costs-explained.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/freight-forwarder-vs-shipping-agent"
+  to = "/freight-forwarder-vs-shipping-agent.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/how-to-import-furniture-from-china-to-uk"
+  to = "/how-to-import-furniture-from-china-to-uk.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/eori-number-for-importing-from-china"
+  to = "/eori-number-for-importing-from-china.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/uk-customs-clearance-for-goods-from-china"
+  to = "/uk-customs-clearance-for-goods-from-china.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/fitted-wardrobes-from-china-measuring-and-drawings"
+  to = "/fitted-wardrobes-from-china-measuring-and-drawings.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/ordering-samples-from-china"
+  to = "/ordering-samples-from-china.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/index.html"
+  to = "/"
   status = 301
   force = true
