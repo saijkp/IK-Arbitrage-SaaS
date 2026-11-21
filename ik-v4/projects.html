@@ -134,7 +134,7 @@ header.site .wrap{flex-wrap:wrap;gap:14px;}
       host.append(card);
     });
   }).catch(() => { document.getElementById('projects-status').textContent = 'Current projects could not be loaded. Please try again later.'; });
-  const titles = {vatakara:'Delivered: lighting and interior finishes, private residence, Vatakara, India (2025)', residence:'Delivered: private residence, India', 'guest-rooms':'Delivered: furnished guest rooms — beds, upholstered headboards, seating, tables, wall lights', gate:'Delivered: carved entrance gate, from factory to site'};
+  const titles = {vatakara:'Delivered: chandeliers and lighting, private house, Vatakara, India (2025)', residence:'Delivered: private residence, India', 'guest-rooms':'Delivered: guest-room furniture and lighting, hotel, Ireland', gate:'Delivered: carved entrance gate for the Kerala residence, from factory to site'};
   read('/data/process-photos.json').then(entries => {
     const groups = new Map();
     entries.filter(p => localImage(p.file) && p.caption).forEach(p => {
@@ -144,7 +144,7 @@ header.site .wrap{flex-wrap:wrap;gap:14px;}
     });
     groups.forEach((photos, key) => {
       const delivered = Boolean(titles[key]), set = el('article', '', 'photo-set');
-      set.append(badge(delivered ? 'Delivered' : 'Process evidence', delivered ? 'delivered' : 'process'), el('h3', titles[key] || key));
+      set.append(badge(delivered ? 'Delivered' : 'Process evidence', delivered ? 'delivered' : 'process'), el('h3', titles[key] || key)); const cs = {vatakara:'/case-study-vatakara-house-chandeliers.html', 'guest-rooms':'/case-study-ireland-hotel-guest-rooms.html', gate:'/case-study-malappuram-full-house.html', residence:'/case-study-malappuram-full-house.html'}[key]; if (cs) { const a = document.createElement('a'); a.href = cs; a.textContent = 'Read the case study'; const pp = el('p', ''); pp.append(a); set.append(pp); }
       const grid = el('div', '', 'grid'); photos.forEach(p => grid.append(figure(p))); set.append(grid);
       document.getElementById(delivered ? 'delivered-photos' : 'process-photos').append(set);
       if (!delivered) document.getElementById('process-section').hidden = false;
