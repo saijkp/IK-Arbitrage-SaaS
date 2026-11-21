@@ -65,7 +65,28 @@ for (const file of [...shippingGuides, ...newGuides]) {
     : 'href="/shipping-from-china-to-uk.html#shipping-quote">Get a shipping quote</a>';
   assert(html.includes(mainCta));
 }
+// New practical guides have their own publication date and service CTA.
+const practicalGuides = [
+  ['furniture-pre-shipment-inspection-checklist.html', 'china-sourcing-inspection-and-visits.html'],
+  ['how-to-calculate-cbm-furniture-shipping.html', 'shipping-from-china-to-uk.html']
+];
+for (const [file, cta] of practicalGuides) {
+  const html = fs.readFileSync(path.join(root, file), 'utf8');
+  assert(html.match(/<title>(.*?)<\/title>/)[1].length <= 60, file + ': title length');
+  const description = html.match(/<meta content="([^"]+)" name="description"/)[1];
+  assert(description.length >= 120 && description.length <= 160, file + ': description length');
+  const schemas = [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map(m => JSON.parse(m[1]));
+  const article = schemas.find(s => s['@type'] === 'Article');
+  assert.equal(article.datePublished, '2026-11-21');
+  assert.equal(article.dateModified, '2026-11-21');
+  assert(schemas.some(s => s['@type'] === 'BreadcrumbList'));
+  const faq = schemas.find(s => s['@type'] === 'FAQPage');
+  const visible = html.match(/<section aria-label="Frequently asked questions">([\s\S]*?)<\/section>/)[1];
+  assert.deepEqual([...visible.matchAll(/<h3>(.*?)<\/h3><p>(.*?)<\/p>/g)].map(m => [m[1], m[2]]), faq.mainEntity.map(q => [q.name, q.acceptedAnswer.text]), file + ': visible FAQ matches schema');
+  assert(html.includes('class="btn btn-primary" href="/' + cta + '"'));
+}
 const intentionalChanges = {
+  'china-sourcing-inspection-and-visits.html': ['title', 'h1'],
   'serviced-apartments.html': ['title'],
   'property-developers.html': ['title'],
   'hmo-landlords.html': ['title'],
@@ -75,6 +96,7 @@ const intentionalChanges = {
   'kitchen-cabinets-from-china-what-to-check.html': ['title'],
   'furnish-serviced-apartment-from-china.html': ['title']
 };
+assert.equal(fs.readFileSync(path.join(root, 'china-sourcing-inspection-and-visits.html'), 'utf8').match(/<h1>(.*?)<\/h1>/)[1], 'Factory and Pre-shipment Inspections in China for UK Buyers');
 for (const file of htmlFiles) {
   const html = fs.readFileSync(path.join(root, file), 'utf8');
   assert(!html.includes('\0'), file + ': no NULL bytes');
