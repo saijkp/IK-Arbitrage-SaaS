@@ -455,3 +455,21 @@
   to = "/downloads/furniture-inspection-checklist.html"
   status = 301
   force = true
+
+[[redirects]]
+  from = "/hmo-kitchen-cost"
+  to = "/hmo-kitchen-cost.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/student-room-furniture-cost-per-bed"
+  to = "/student-room-furniture-cost-per-bed.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/serviced-apartment-furnishing-timeline"
+  to = "/serviced-apartment-furnishing-timeline.html"
+  status = 301
+  force = true
