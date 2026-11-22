@@ -40,6 +40,26 @@ for (const query of ['?gclid=<script>', '?gclid=' + 'a'.repeat(201), '?utm_sourc
 assert.equal(page('?gclid=' + 'a'.repeat(200), false).submit(), 'google-ads | gclid ' + 'a'.repeat(200));
 assert.equal(page('?utm_source=a%2Bb._-+c', false).submit(), 'utm: a+b._- c');
 const htmlFiles = fs.readdirSync(root).filter(name => name.endsWith('.html'));
+const accommodationGuides = ['hmo-kitchen-cost.html', 'student-room-furniture-cost-per-bed.html', 'serviced-apartment-furnishing-timeline.html'];
+for (const file of accommodationGuides) {
+  const html = fs.readFileSync(path.join(root, file), 'utf8');
+  assert(html.match(/<title>(.*?)<\/title>/)[1].length <= 60, file + ': title length');
+  const schemas = [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map(m => JSON.parse(m[1]));
+  for (const type of ['Article', 'FAQPage', 'BreadcrumbList']) assert(schemas.some(s => s['@type'] === type), file + ': ' + type);
+  const article = schemas.find(s => s['@type'] === 'Article');
+  assert.equal(article.mainEntityOfPage, 'https://ikeng.co.uk/' + file);
+  assert.equal(article.datePublished, '2026-11-22');
+  const faq = schemas.find(s => s['@type'] === 'FAQPage');
+  assert(faq.mainEntity.length >= 4 && faq.mainEntity.length <= 6);
+  const visible = html.match(/<section aria-label="Frequently asked questions">([\s\S]*?)<\/section>/)[1];
+  const decode = s => s.replace(/&amp;/g, '&').replace(/&#x27;/g, "'").replace(/&quot;/g, '"').replace(/&lt;/g, '<').replace(/&gt;/g, '>');
+  assert.deepEqual([...visible.matchAll(/<h3>(.*?)<\/h3><p>(.*?)<\/p>/g)].map(m => [decode(m[1]), decode(m[2])]), faq.mainEntity.map(q => [q.name, q.acceptedAnswer.text]), file + ': visible FAQ matches schema');
+  for (const discovery of ['guides.html', 'sitemap.xml', 'llms.txt']) assert(fs.readFileSync(path.join(root, discovery), 'utf8').includes(file), file + ': ' + discovery);
+  const redirects = fs.readFileSync(path.join(root, 'netlify.toml'), 'utf8');
+  assert(redirects.includes('from = "/' + file.replace('.html', '') + '"\n  to = "/' + file + '"\n  status = 301\n  force = true'), file + ': explicit redirect');
+  const incoming = htmlFiles.filter(other => other !== file && /<section class="related-guides"[\s\S]*?<\/section>/.exec(fs.readFileSync(path.join(root, other), 'utf8'))?.[0].includes('href="/' + file + '"'));
+  assert(incoming.length >= 2, file + ': incoming related-guide links');
+}
 const broken = [];
 const shippingGuides = ['ship-from-alibaba-to-uk.html', 'lcl-vs-fcl-shipping.html', 'what-is-ddp-shipping.html', 'china-to-uk-shipping-costs-explained.html', 'freight-forwarder-vs-shipping-agent.html', 'how-to-import-furniture-from-china-to-uk.html', 'eori-number-for-importing-from-china.html', 'uk-customs-clearance-for-goods-from-china.html'];
 const newGuides = ['kitchen-cabinets-from-china-vs-uk-suppliers.html', 'consolidate-shipments-from-china-to-uk.html'];
