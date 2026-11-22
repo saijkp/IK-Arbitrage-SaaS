@@ -77,6 +77,12 @@
   force = true
 
 [[redirects]]
+  from = "/case-study-kitchen-cabinets-middleman-recovery"
+  to = "/case-study-kitchen-cabinets-middleman-recovery.html"
+  status = 301
+  force = true
+
+[[redirects]]
   from = "/case-study-manchester-hmo"
   to = "/case-study-manchester-hmo.html"
   status = 301
