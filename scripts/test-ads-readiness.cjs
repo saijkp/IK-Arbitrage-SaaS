@@ -39,6 +39,16 @@ assert.equal(page('?gbraid=TEST', false).submit(), 'google-ads | gbraid TEST');
 for (const query of ['?gclid=<script>', '?gclid=' + 'a'.repeat(201), '?utm_source=' + 'a'.repeat(101), '?utm_source=%3Cb%3E', '?utm_campaign=a%0Ab', '?utm_source=a%0A', '?gclid=a%0D', '?unknown=anything']) assert.equal(page(query, true).submit(), 'direct/organic');
 assert.equal(page('?gclid=' + 'a'.repeat(200), false).submit(), 'google-ads | gclid ' + 'a'.repeat(200));
 assert.equal(page('?utm_source=a%2Bb._-+c', false).submit(), 'utm: a+b._- c');
+// Lock the sauna landing page intent and canonical.
+{
+  const html = fs.readFileSync(path.join(root, 'sauna-sourcing-china.html'), 'utf8');
+  assert.equal(html.match(/<h1>(.*?)<\/h1>/)[1], 'Saunas from China, Delivered to the UK');
+  assert.equal(html.match(/<link href="([^"]+)" rel="canonical"/)[1], 'https://ikeng.co.uk/sauna-sourcing-china.html');
+  const faq = [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map(m => JSON.parse(m[1])).find(s => s['@type'] === 'FAQPage');
+  const visible = html.match(/<section aria-labelledby="faq">([\s\S]*?)<\/section>/)[1];
+  const plain = text => text.replace(/<[^>]*>/g, '').replace(/&amp;/g, '&');
+  assert.deepEqual([...visible.matchAll(/<h3>(.*?)<\/h3><p>(.*?)<\/p>/g)].map(m => [plain(m[1]), plain(m[2])]), faq.mainEntity.map(q => [q.name, q.acceptedAnswer.text]), 'Sauna FAQ matches schema');
+}
 const htmlFiles = fs.readdirSync(root).filter(name => name.endsWith('.html'));
 const accommodationGuides = ['hmo-kitchen-cost.html', 'student-room-furniture-cost-per-bed.html', 'serviced-apartment-furnishing-timeline.html'];
 for (const file of accommodationGuides) {
