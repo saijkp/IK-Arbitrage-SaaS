@@ -473,3 +473,51 @@
   to = "/serviced-apartment-furnishing-timeline.html"
   status = 301
   force = true
+
+[[redirects]]
+  from = "/hotel-refurbishment-furniture-packages"
+  to = "/hotel-refurbishment-furniture-packages.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/holiday-let-furniture-packages"
+  to = "/holiday-let-furniture-packages.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/hotel-room-refurbishment-furniture-checklist"
+  to = "/hotel-room-refurbishment-furniture-checklist.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/hotel-holiday-let-furniture-fire-safety"
+  to = "/hotel-holiday-let-furniture-fire-safety.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/how-to-furnish-a-holiday-let"
+  to = "/how-to-furnish-a-holiday-let.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/pergola-planning-permission-uk"
+  to = "/pergola-planning-permission-uk.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/louvred-vs-fixed-vs-retractable-pergola"
+  to = "/louvred-vs-fixed-vs-retractable-pergola.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/buying-aluminium-pergola-from-china-what-to-check"
+  to = "/buying-aluminium-pergola-from-china-what-to-check.html"
+  status = 301
+  force = true

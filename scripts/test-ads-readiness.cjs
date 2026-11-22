@@ -102,6 +102,107 @@ for (const file of saunaGuides) {
   assert.equal(new URL(whatsapp).searchParams.get('text'), "Hi IK ENG, I'm interested in a sauna from China");
 }
 
+
+// Hospitality package intent locks and hospitality/pergola guide checks.
+const hospitalityPergolaPages = {
+  "hotel-refurbishment-furniture-packages": {
+    "title": "Hotel Refurbishment Furniture Packages (10–40 Rooms) | IK ENG",
+    "h1": "Hotel Refurbishment Furniture Packages, Made to Your Room Specification",
+    "wa": "Hi IK ENG, I'm planning a hotel room refurbishment",
+    "landing": true
+  },
+  "holiday-let-furniture-packages": {
+    "title": "Holiday Let Furniture Packages from China | IK ENG",
+    "h1": "Holiday Let Furniture Packages, Room by Room",
+    "wa": "Hi IK ENG, I'm furnishing a holiday let",
+    "landing": true
+  },
+  "hotel-room-refurbishment-furniture-checklist": {
+    "title": "Hotel Room Refurbishment: Furniture Checklist & Timeline | IK ENG",
+    "h1": "Hotel Room Refurbishment Furniture Checklist",
+    "wa": "Hi IK ENG, I'm planning a hotel room refurbishment",
+    "landing": false
+  },
+  "hotel-holiday-let-furniture-fire-safety": {
+    "title": "Fire Safety Rules for Hotel & Holiday Let Furniture (UK) | IK ENG",
+    "h1": "Fire Safety for Hotel and Holiday Let Furniture in the UK",
+    "wa": "Hi IK ENG, I'm planning furniture for guest accommodation",
+    "landing": false
+  },
+  "how-to-furnish-a-holiday-let": {
+    "title": "How to Furnish a Holiday Let: What to Buy & What Guests Expect | IK ENG",
+    "h1": "How to Furnish a Holiday Let",
+    "wa": "Hi IK ENG, I'm furnishing a holiday let",
+    "landing": false
+  },
+  "pergola-planning-permission-uk": {
+    "title": "Do You Need Planning Permission for a Pergola? (UK) | IK ENG",
+    "h1": "Pergola Planning Permission in the UK",
+    "wa": "Hi IK ENG, I'm interested in an aluminium pergola from China",
+    "landing": false
+  },
+  "louvred-vs-fixed-vs-retractable-pergola": {
+    "title": "Louvred vs Fixed vs Retractable Pergola: Which to Choose? | IK ENG",
+    "h1": "Louvred, Fixed-Roof or Retractable Pergola?",
+    "wa": "Hi IK ENG, I'm interested in an aluminium pergola from China",
+    "landing": false
+  },
+  "buying-aluminium-pergola-from-china-what-to-check": {
+    "title": "Buying an Aluminium Pergola from China: What to Check | IK ENG",
+    "h1": "Buying an Aluminium Pergola from China: What to Check",
+    "wa": "Hi IK ENG, I'm interested in an aluminium pergola from China",
+    "landing": false
+  }
+};
+const hospitalityGuides = ['hotel-room-refurbishment-furniture-checklist', 'hotel-holiday-let-furniture-fire-safety', 'how-to-furnish-a-holiday-let'];
+const pergolaGuides = ['pergola-planning-permission-uk', 'louvred-vs-fixed-vs-retractable-pergola', 'buying-aluminium-pergola-from-china-what-to-check'];
+const packagePages = ['hotel-refurbishment-furniture-packages', 'holiday-let-furniture-packages'];
+for (const [slug, intent] of Object.entries(hospitalityPergolaPages)) {
+  const file = slug + '.html';
+  const html = fs.readFileSync(path.join(root, file), 'utf8');
+  const decode = s => s.replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/&#x27;/g, "'").replace(/&lt;/g, '<').replace(/&gt;/g, '>');
+  const url = 'https://ikeng.co.uk/' + file;
+  assert.equal(decode(html.match(/<title>(.*?)<\/title>/)[1]), intent.title, file + ': title lock');
+  assert.equal(decode(html.match(/<h1>(.*?)<\/h1>/)[1]), intent.h1, file + ': H1 lock');
+  assert.equal(html.match(/<link href="([^"]+)" rel="canonical"/)[1], url, file + ': canonical lock');
+  const description = decode(html.match(/<meta content="([^"]+)" name="description"/)[1]);
+  assert(description.length > 0 && description.length <= 155, file + ': description length');
+  for (const [attribute, field, expectedValue] of [['property', 'og:title', intent.title], ['name', 'twitter:title', intent.title], ['property', 'og:description', description], ['name', 'twitter:description', description], ['property', 'og:url', url]]) {
+    assert.equal(decode(html.match(new RegExp('<meta content="([^"]+)" ' + attribute + '="' + field + '"'))[1]), expectedValue, file + ': ' + field);
+  }
+  const schemas = [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map(m => JSON.parse(m[1]));
+  for (const type of [intent.landing ? 'Service' : 'Article', 'FAQPage', 'BreadcrumbList']) assert.equal(schemas.filter(s => s['@type'] === type).length, 1, file + ': ' + type);
+  const primary = schemas.find(s => s['@type'] === (intent.landing ? 'Service' : 'Article'));
+  if (intent.landing) {
+    assert.equal(primary.provider['@id'], 'https://ikeng.co.uk/#organization');
+    assert.equal(primary.areaServed, 'GB');
+    assert(html.includes('class="hero-cta"'), file + ': immediate brief and WhatsApp buttons');
+    const template = fs.readFileSync(path.join(root, 'sauna-sourcing-china.html'), 'utf8');
+    assert.equal(html.match(/<style>[\s\S]*?<\/style>/)[0], template.match(/<style>[\s\S]*?<\/style>/)[0], file + ': template CSS');
+    assert.equal(html.match(/<div class="facts">[\s\S]*?<\/div>/)[0], template.match(/<div class="facts">[\s\S]*?<\/div>/)[0], file + ': facts block');
+  } else {
+    assert.equal(primary.datePublished, '2026-11-22');
+    assert.equal(primary.mainEntityOfPage, url);
+    assert.equal(primary.publisher['@id'], 'https://ikeng.co.uk/#organization');
+  }
+  const breadcrumb = schemas.find(s => s['@type'] === 'BreadcrumbList').itemListElement;
+  assert.deepEqual(breadcrumb.map(b => b.item), ['https://ikeng.co.uk/', ...(intent.landing ? [] : ['https://ikeng.co.uk/guides.html']), url]);
+  const faq = schemas.find(s => s['@type'] === 'FAQPage');
+  assert(faq.mainEntity.length >= (intent.landing ? 4 : 3) && faq.mainEntity.length <= 5);
+  const visible = html.match(/<section aria-label="Frequently asked questions">([\s\S]*?)<\/section>/)[1];
+  assert.deepEqual([...visible.matchAll(/<h3>(.*?)<\/h3><p>(.*?)<\/p>/g)].map(m => [decode(m[1]), decode(m[2])]), faq.mainEntity.map(q => [q.name, q.acceptedAnswer.text]), file + ': visible FAQ matches schema');
+  for (const whatsapp of html.matchAll(/href="(https:\/\/wa.me\/[^"]+\?text=[^"]+)"/g)) assert.equal(new URL(whatsapp[1]).searchParams.get('text'), intent.wa, file + ': WhatsApp prefill');
+  for (const discovery of ['sitemap.xml', 'llms.txt', ...(intent.landing ? ['index.html'] : ['guides.html'])]) assert(fs.readFileSync(path.join(root, discovery), 'utf8').includes(file), file + ': ' + discovery);
+  const related = html.match(/<section class="related-guides"[\s\S]*?<\/section>/)[0];
+  const group = pergolaGuides.includes(slug) ? [...pergolaGuides, 'pergola-sourcing-china'] : [...hospitalityGuides, ...packagePages];
+  for (const other of group.filter(x => x !== slug)) assert(related.includes('href="/' + other + '.html"'), file + ': related ' + other);
+  if (pergolaGuides.includes(slug)) {
+    assert(html.includes('<h2>Planning a pergola?</h2>'));
+    assert(html.includes('class="btn btn-primary" href="/pergola-sourcing-china.html"'));
+    assert(fs.readFileSync(path.join(root, 'pergola-sourcing-china.html'), 'utf8').includes(file));
+  }
+}
+
 const broken = [];
 const shippingGuides = ['ship-from-alibaba-to-uk.html', 'lcl-vs-fcl-shipping.html', 'what-is-ddp-shipping.html', 'china-to-uk-shipping-costs-explained.html', 'freight-forwarder-vs-shipping-agent.html', 'how-to-import-furniture-from-china-to-uk.html', 'eori-number-for-importing-from-china.html', 'uk-customs-clearance-for-goods-from-china.html'];
 const newGuides = ['kitchen-cabinets-from-china-vs-uk-suppliers.html', 'consolidate-shipments-from-china-to-uk.html'];
