@@ -70,6 +70,38 @@ for (const file of accommodationGuides) {
   const incoming = htmlFiles.filter(other => other !== file && /<section class="related-guides"[\s\S]*?<\/section>/.exec(fs.readFileSync(path.join(root, other), 'utf8'))?.[0].includes('href="/' + file + '"'));
   assert(incoming.length >= 2, file + ': incoming related-guide links');
 }
+// Sauna buying guides follow the existing guide metadata, FAQ and discovery checks.
+const saunaGuides = ['outdoor-sauna-planning-permission-uk.html', 'sauna-electrical-requirements-uk.html', 'barrel-vs-cabin-vs-infrared-sauna.html', 'buying-a-sauna-from-china-what-to-check.html'];
+for (const file of saunaGuides) {
+  const html = fs.readFileSync(path.join(root, file), 'utf8');
+  const decode = text => text.replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/&#x27;/g, "'");
+  const title = decode(html.match(/<title>(.*?)<\/title>/)[1]);
+  const description = decode(html.match(/<meta content="([^"]+)" name="description"/)[1]);
+  assert(description.length > 0 && description.length <= 155, file + ': description length');
+  for (const [attribute, field, expectedValue] of [['property', 'og:title', title], ['name', 'twitter:title', title], ['property', 'og:description', description], ['name', 'twitter:description', description], ['property', 'og:url', 'https://ikeng.co.uk/' + file]]) {
+    assert.equal(decode(html.match(new RegExp('<meta content="([^"]+)" ' + attribute + '="' + field + '"'))[1]), expectedValue, file + ': ' + field);
+  }
+  const schemas = [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map(m => JSON.parse(m[1]));
+  for (const type of ['Article', 'BreadcrumbList', 'FAQPage']) assert.equal(schemas.filter(s => s['@type'] === type).length, 1, file + ': ' + type);
+  const article = schemas.find(s => s['@type'] === 'Article');
+  assert.equal(article.datePublished, '2026-11-22');
+  assert.equal(article.mainEntityOfPage, 'https://ikeng.co.uk/' + file);
+  assert.equal(article.publisher['@id'], 'https://ikeng.co.uk/#organization');
+  const breadcrumb = schemas.find(s => s['@type'] === 'BreadcrumbList').itemListElement;
+  assert.deepEqual(breadcrumb.map(b => b.item), ['https://ikeng.co.uk/', 'https://ikeng.co.uk/guides.html', 'https://ikeng.co.uk/' + file]);
+  const faq = schemas.find(s => s['@type'] === 'FAQPage');
+  assert(faq.mainEntity.length >= 3 && faq.mainEntity.length <= 5);
+  const visible = html.match(/<section aria-label="Frequently asked questions">([\s\S]*?)<\/section>/)[1];
+  assert.deepEqual([...visible.matchAll(/<h3>(.*?)<\/h3><p>(.*?)<\/p>/g)].map(m => [decode(m[1]), decode(m[2])]), faq.mainEntity.map(q => [q.name, q.acceptedAnswer.text]), file + ': visible FAQ matches schema');
+  for (const discovery of ['guides.html', 'sauna-sourcing-china.html', 'sitemap.xml', 'llms.txt']) assert(fs.readFileSync(path.join(root, discovery), 'utf8').includes(file), file + ': ' + discovery);
+  const related = html.match(/<section class="related-guides"[\s\S]*?<\/section>/)[0];
+  for (const other of saunaGuides.filter(other => other !== file)) assert(related.includes('href="/' + other + '"'), file + ': related ' + other);
+  assert(related.includes('href="/sauna-sourcing-china.html"'));
+  assert(html.includes('<h2>Looking for a sauna?</h2>'));
+  const whatsapp = html.match(/href="(https:\/\/wa.me\/[^"]+\?text=[^"]+)"/)[1];
+  assert.equal(new URL(whatsapp).searchParams.get('text'), "Hi IK ENG, I'm interested in a sauna from China");
+}
+
 const broken = [];
 const shippingGuides = ['ship-from-alibaba-to-uk.html', 'lcl-vs-fcl-shipping.html', 'what-is-ddp-shipping.html', 'china-to-uk-shipping-costs-explained.html', 'freight-forwarder-vs-shipping-agent.html', 'how-to-import-furniture-from-china-to-uk.html', 'eori-number-for-importing-from-china.html', 'uk-customs-clearance-for-goods-from-china.html'];
 const newGuides = ['kitchen-cabinets-from-china-vs-uk-suppliers.html', 'consolidate-shipments-from-china-to-uk.html'];
