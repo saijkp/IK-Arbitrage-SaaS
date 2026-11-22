@@ -178,6 +178,10 @@ assert(csvCell('=1+1').startsWith('"\''));
 assert(csvCell('  @SUM(A1)').startsWith('"\''));
 assert.equal(csvCell('line 1\nline 2'), '"line 1\nline 2"');
 assert(!/fetch\(|XMLHttpRequest|sendBeacon|localStorage|sessionStorage/.test(fs.readFileSync(path.join(root, 'free-tools.js'), 'utf8')), 'Tool data stays local');
+// Lock the pergola landing page intent and canonical URL.
+const pergolaHtml = fs.readFileSync(path.join(root, 'pergola-sourcing-china.html'), 'utf8');
+assert.equal(pergolaHtml.match(/<h1>(.*?)<\/h1>/)[1], 'Aluminium Pergolas from China, Made to Your Sizes');
+assert.equal(pergolaHtml.match(/<link href="([^"]+)" rel="canonical"/)[1], 'https://ikeng.co.uk/pergola-sourcing-china.html');
 const intentionalChanges = {
   'collection.html': ['title', 'h1'],
   'collection-kitchens.html': ['title', 'h1'],
