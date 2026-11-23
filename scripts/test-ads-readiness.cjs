@@ -325,6 +325,20 @@ assert(!/fetch\(|XMLHttpRequest|sendBeacon|localStorage|sessionStorage/.test(fs.
 const pergolaHtml = fs.readFileSync(path.join(root, 'pergola-sourcing-china.html'), 'utf8');
 assert.equal(pergolaHtml.match(/<h1>(.*?)<\/h1>/)[1], 'Aluminium Pergolas from China, Made to Your Sizes');
 assert.equal(pergolaHtml.match(/<link href="([^"]+)" rel="canonical"/)[1], 'https://ikeng.co.uk/pergola-sourcing-china.html');
+// Lock the garden room landing page intent and canonical URL.
+const gardenRoomHtml = fs.readFileSync(path.join(root, 'garden-room-sourcing-china.html'), 'utf8');
+assert.equal(gardenRoomHtml.match(/<h1>(.*?)<\/h1>/)[1], 'Garden Rooms Made to Your Size, Sourced from China');
+assert.equal(gardenRoomHtml.match(/<link href="([^"]+)" rel="canonical"/)[1], 'https://ikeng.co.uk/garden-room-sourcing-china.html');
+for (const file of ['garden-room-sourcing-china.html', 'buying-a-garden-room-from-china-what-to-check.html']) {
+  const html = fs.readFileSync(path.join(root, file), 'utf8');
+  const schemas = [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map(m => JSON.parse(m[1]));
+  const faq = schemas.find(s => s['@type'] === 'FAQPage');
+  const visible = html.match(/<section (?:aria-labelledby="faq"|aria-label="Frequently asked questions")>([\s\S]*?)<\/section>/)[1];
+  const decode = text => text.replace(/&amp;/g, '&').replace(/&#x27;/g, "'").replace(/&quot;/g, '"');
+  assert.deepEqual([...visible.matchAll(/<h3>(.*?)<\/h3><p>(.*?)<\/p>/g)].map(m => [decode(m[1]), decode(m[2])]), faq.mainEntity.map(q => [q.name, q.acceptedAnswer.text]), file + ': FAQ matches schema');
+  assert(schemas.some(s => s['@type'] === 'BreadcrumbList'));
+  if (file.startsWith('buying-')) assert.equal(schemas.find(s => s['@type'] === 'Article').datePublished, '2026-11-23');
+}
 const intentionalChanges = {
   'collection.html': ['title', 'h1'],
   'collection-kitchens.html': ['title', 'h1'],
